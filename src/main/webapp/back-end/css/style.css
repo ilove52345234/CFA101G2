@@ -1,0 +1,142 @@
+* {
+    margin: 0;
+    padding: 0;
+    /*從邊框開始算*/
+    box-sizing: border-box;
+    /*字體*/
+    font-family: "PingFang SC", "Microsoft Yahei", sans-serif;
+}
+
+header {
+    width: 100vw;
+    height: 100vh;
+    max-width: 100%;
+    background-image: url("../img/FFXIV.png");
+    background-size: cover;
+}
+
+nav {
+    /*放到上方*/
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5vw;
+    height: 80px;
+    background-color: rgba(65, 81, 101, 0.9);
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 600;
+    color: #dadbdd;
+    flex: 1;
+}
+
+.nav-menu {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    max-width: 550px;
+}
+
+span{
+    list-style: none;
+    color: #dadbdd;
+    font-weight: 600;
+}
+
+.nav-menu li {
+    list-style: none;
+    color: #dadbdd;
+    font-weight: 600;
+}
+
+.burger div {
+    width: 25px;
+    height: 3px;
+    background-color: #dadbdd;
+    margin: 4px;
+
+}
+
+
+.burger {
+    /*默認不顯示*/
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .nav-menu {
+        position: absolute;
+        top: 80px;
+        right: 0;
+        bottom: 0;
+        width: 50vw;
+        height: calc(100vh - 80px);
+
+        background-color: rgba(65, 81, 101, 0.9);
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+
+        /*默認不顯示,水平移動到最右邊*/
+        transform: translateX(100%);
+        transition: 0.4s ease-in-out;
+    }
+
+
+    .nav-menu.open {
+        transform: translateX(0);
+
+    }
+
+    .nav-menu li {
+        margin: 3vh;
+        transform: translateX(20px);
+        opacity: 0;
+    }
+
+    .burger {
+        display: block;
+    }
+
+
+    .burger.active div {
+        transition: 0.3s ease-in-out 0.3s;
+
+    }
+
+    .burger.active .top-line {
+        transform: rotate(45deg) translate(4px, 6px);
+    }
+
+    .burger.active .bottom-line {
+        transform: rotate(-45deg) translate(4px, -6px);
+    }
+
+
+    .burger.active .middle-line {
+        /*先往右邊移動,延遲0.3秒換上面兩條線*/
+        opacity: 0;
+        transform: translateX(10px);
+        transition: 0.3s ease-in-out 0.3s;
+    }
+
+
+    @keyframes slideIn {
+        from {
+            transform: translateX(20px);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+    }
+
+}

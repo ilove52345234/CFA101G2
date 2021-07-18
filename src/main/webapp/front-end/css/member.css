@@ -1,0 +1,49 @@
+/*----------------mem.html------------------------*/
+.member_data{
+  padding-left: 17%;
+  padding-right: 30%;
+}
+
+/*小螢幕(ex:iphone)*/
+@media only screen and (max-width: 600px){
+  .member_data{
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+}
+
+/*中螢幕(ex:ipad)*/
+@media only screen and (max-width: 768px) and (min-width: 601px){
+  .member_data{
+    padding-left: 15%;
+    padding-right: 15%;
+  }
+}
+
+
+/*-----------------mem_avt.html-----------------------*/
+
+.avt_img{
+  width: 100%;
+}
+.member_activities{
+  padding-left: 0px;
+  padding-right: 0px;
+  border-style:dotted;
+  border-width:1px; 
+  border-color:#939699;
+}
+.search{
+  padding-left: 10px;
+  padding-right: 10px;
+}
+/*小螢幕(ex:iphone)*/
+@media only screen and (max-width: 600px){
+  .avt_img{
+    width: 100%;
+  }
+  .avt_con{
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+}

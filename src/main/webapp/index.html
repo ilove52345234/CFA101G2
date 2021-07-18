@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<!-- 網頁使用的語言 -->
+<html lang="zh-CN">
+<head>
+    <!-- 指定字符集 -->
+    <meta charset="utf-8">
+    <!-- 使用Edge最新的瀏覽器的渲染方式 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- viewport視口：網頁可以根據設置的寬度自動進行適配，在瀏覽器的內部虛擬一個容器，容器的寬度與設備的寬度相同。
+    width: 默認寬度與設備的寬度相同
+    initial-scale: 初始的縮放比，為1:1 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3個meta標籤*必須*放在最前面，任何其他內容都*必須*跟隨其後！ -->
+    <title>管理系統</title>
+
+    <!-- 1. 導入CSS的全局樣式 -->
+    <link href="front-end/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 2. jQuery導入，建議使用1.9以上的版本 -->
+    <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <!-- 3. 導入bootstrap的js文件 -->
+    <script src="back-end/js/bootstrap.min.js"></script>
+    <!--    <script type="text/javascript" src="js/include.js"></script>-->
+
+    <link rel="stylesheet" href="back-end/css/style.css">
+    <style type="text/css">
+        td, th {
+            text-align: center;
+        }
+
+        #sp1 {
+            /*border: 1px solid black;*/
+            color: #9a9d9f;
+            position: fixed;
+            left: 5%;
+            top: 0px;
+        }
+
+        #a1 {
+            position: fixed;
+            left: 97%;
+
+        }
+
+
+    </style>
+
+
+    <script>
+        $(function () {
+            $.get("/CFA101G2/emp/empServlet/findEmpServlet", {}, function (data) {
+                let msg = "歡迎回來," + data.empName;
+                $("#sp1").text(msg);
+            });
+
+        });
+    </script>
+
+
+</head>
+<body>
+
+<!--    <SPAN id="sp1"></SPAN>-->
+<!--    <a id="a1" href="javascript:location.href='/CFA101G2/emp/empServlet/exitServlet';">登出</a>-->
+
+
+<nav>
+    <div class="logo">島旅管理頁面</div>
+    <ul class="nav-menu">
+        <!--            <li><a href="/CFA101G2/emp/findEmpByPageServlet" style="text-decoration:none;font-size:33px">管理系統</a></li>-->
+
+        <li><a class="nav-link" href="/CFA101G2/emp/findEmpByPageServlet">管理系統</a></li>
+        <li><a class="nav-link" href="#">活動系統</a></li>
+        <li><a class="nav-link" href="#">商城系統</a></li>
+        <li><a class="nav-link" href="/CFA101G2/back-end/addRoom.html">訂房系統</a></li>
+        <li><a class="nav-link" href="#">社群系統</a></li>
+
+    </ul>
+    <SPAN id="sp1"></SPAN>
+    <a id="a1" href="javascript:location.href='/CFA101G2/emp/empServlet/exitServlet';">登出</a>
+    <div class="burger">
+        <div class="top-line"></div>
+        <div class="middle-line"></div>
+        <div class="bottom-line"></div>
+    </div>
+</nav>
+<header></header>
+
+
+<script src="back-end/js/index.js" type="text/javascript"></script>
+
+
+</body>
+
+</html>

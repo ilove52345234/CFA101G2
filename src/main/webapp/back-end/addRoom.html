@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>新增房型</title>
+    <link rel="stylesheet" type="text/css" href="css/common.css">
+    <link rel="stylesheet" href="css/register.css">
+    <style type="text/css">
+        .float {
+            float: left;
+            width: 200px;
+            height: 200px;
+            overflow: hidden;
+            border: 1px solid #CCCCCC;
+            border-radius: 10px;
+            padding: 5px;
+            margin: 5px;
+        }
+
+        img {
+            position: relative;
+        }
+
+        .result {
+            width: 200px;
+            height: 200px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+
+        #file_input {
+            display: none;
+        }
+
+
+        .delete {
+            width: 200px;
+            height: 200px;
+            position: absolute;
+            text-align: center;
+            line-height: 200px;
+            z-index: 10;
+            font-size: 30px;
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #777;
+            opacity: 0;
+            transition-duration: 0.7s;
+            -webkit-transition-duration: 0.7s;
+        }
+
+
+        .delete:hover {
+            cursor: pointer;
+            opacity: 1;
+        }
+
+
+        span {
+            position: relative;
+            text-align: left;
+            width: 80%;
+            display: inline-block;
+            bottom: 25px;
+            left: 110%;
+        }
+
+        .error {
+            color: red;
+        }
+
+    </style>
+
+    <script src="js/addRoom.js"></script>
+    <!--    <link href="css/bootstrap.min.css" rel="stylesheet">-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!--    <script src="js/bootstrap.min.js"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+
+
+    <!--導入jquery-->
+    <script src="js/jquery-2.1.0.min.js"></script>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+
+
+    <script>
+        /*
+        表單校驗：
+        1.用戶名：單詞字符，長度8到20位
+        2.密碼：單詞字符，長度8到20位
+        3.email：郵件格式
+        4.姓名：非空
+        5.手機號：手機號格式
+        6.出生日期：非空
+        7.驗證碼：非空
+        */
+
+        //校驗房間名稱
+        //單詞字符，長度8到20位
+        function checkroomName() {
+            //1.獲取用房間名
+            var roomName = $("#roomName").val();
+            //2.定義正則
+            var reg_roomName = /^[\u4E00-\u9FA5]{3,12}$/;
+
+
+            var s_roomName = document.getElementById("s_roomName");
+            //3.判斷，給出提示信息
+            var flag = reg_roomName.test(roomName);
+            if (flag) {
+                //合法
+                $("#roomName").css("border", "");
+                s_roomName.innerHTML = "<img width='35' height='20' src='images/gou.png'/>";
+
+            } else {
+                //非法,加一個紅色邊框
+                $("#roomName").css("border", "1px solid red");
+                s_roomName.innerHTML = "請輸入3~12字的中文字";
+            }
+
+            return flag;
+        }
+
+        //校驗價格
+        //不可以0開頭
+        function checkroomPrice() {
+            //1.獲取價格
+            var roomPrice = $("#roomPrice").val();
+            //2.定義正則
+            var reg_roomPrice = /^[1-9]\d*(.\d{1,2})?$/;
+            var s_roomPrice = document.getElementById("s_roomPrice");
+
+
+            //3.判斷，給出提示信息
+            var flag = reg_roomPrice.test(roomPrice);
+            if (flag) {
+                //合法
+                $("#roomPrice").css("border", "");
+                s_roomPrice.innerHTML = "<img width='35' height='20' src='images/gou.png'/>";
+
+            } else {
+                //非法,加一個紅色邊框
+                $("#roomPrice").css("border", "1px solid red");
+                s_roomPrice.innerHTML = "無法輸入0或0開頭的數字"
+
+            }
+
+            return flag;
+        }
+
+        //校驗房間數量
+        //最小1,最大100
+        function checkroomTypeAmount() {
+            //1.獲取房間數量
+            var roomTypeAmount = $("#roomTypeAmount").val();
+            //2.定義正則
+            var reg_roomTypeAmount = /^([1-9]\d?|100)$/;
+
+            var s_roomTypeAmount = document.getElementById("s_roomTypeAmount");
+
+            //3.判斷
+            var flag = reg_roomTypeAmount.test(roomTypeAmount);
+            if (flag) {
+                $("#roomTypeAmount").css("border", "");
+                s_roomTypeAmount.innerHTML = "<img width='35' height='20' src='images/gou.png'/>";
+            } else {
+                $("#roomTypeAmount").css("border", "1px solid red");
+                s_roomTypeAmount.innerHTML = "最小為1,最大為100";
+            }
+
+            return flag;
+        }
+
+        // $(function () {
+        //     //當表單提交時，調用所有的校驗方法
+        //     $("#registerForm").submit(function () {
+        //         //1.發送數據到服務器
+        //         if (checkroomName() && checkroomPrice() && checkroomTypeAmount()) {
+        //             //校驗通過,發送ajax請求，提交表單的數據 username=zhangsan&password=123
+        //
+        //             $.post("user/regist", $(this).serialize(), function (data) {
+        //                 //處理服務器響應的數據 data {flag:true,errorMsg:"註冊失敗"}
+        //
+        //                 if (data.flag) {
+        //                     //註冊成功，跳轉成功頁面
+        //                     location.href = "register_ok.html";
+        //                 } else {
+        //                     //註冊失敗,給errorMsg添加提示信息
+        //                     $("#errorMsg").html(data.errorMsg);
+        //
+        //                 }
+        //             });
+        //
+        //         }
+        //         //2.不讓頁面跳轉
+        //         return false;
+        //         //如果這個方法沒有返回值，或者返回為true，則表單提交，如果返回為false，則表單不提交
+        //     });
+        //
+        //     //當某一個組件失去焦點是，調用對應的校驗方法
+        //     $("#roomName").blur(checkroomName);
+        //     $("#roomPrice").blur(checkroomPrice);
+        //     $("#roomTypeAmount").blur(checkroomTypeAmount);
+        //
+        //
+        // });
+
+
+        window.onload = function () {
+            var input = document.getElementById("file_input");
+            var result;
+            var dataArr = []; // 儲存所選圖片的結果(文件名和base64數據)
+            // var fd; //FormData方式發送請求
+            var oSelect = document.getElementById("select");
+            var oAdd = document.getElementById("add");
+            var oSubmit = document.getElementById("submit");
+            var oInput = document.getElementById("file_input");
+
+            if (typeof FileReader === 'undefined') {
+                alert("抱歉，你的瀏覽器不支持 FileReader");
+                input.setAttribute('disabled', 'disabled');
+            } else {
+                input.addEventListener('change', readFile, false);
+            }　　　　　//handler
+
+
+            function readFile() {
+                // fd = new FormData();
+                var iLen = this.files.length;
+                for (var i = 0; i < iLen; i++) {
+                    // alert(this.files[i].name)
+                    // input['value']
+                    if (!this.files[i].name.match(/.jpg|.gif|.png|.jpeg|.bmp/i)) {　　//判斷上傳文件格式
+                        return alert("上傳的圖片格式不正確，請重新選擇");
+                    }
+                    var reader = new FileReader();
+                    // fd.append(i, this.files[i]);
+                    reader.readAsDataURL(this.files[i]); //轉成base64
+                    reader.fileName = this.files[i].name;
+                    reader.onload = function (e) {
+                        var imgMsg = {
+                            name: this.fileName,//獲取文件名
+                            base64: this.result //reader.readAsDataURL方法執行完後，base64數據儲存在reader.result裡
+                        }
+
+                        dataArr.push(imgMsg);
+                        result = '<div class="delete">delete</div><div class="result"><img class="subPic" src="' + this.result + '" alt="' + this.fileName + ' "/></div>';
+                        var div = document.createElement('div');
+                        div.innerHTML = result;
+                        div['className'] = 'float';
+                        document.getElementsByTagName('body')[0].appendChild(div); 　　//插入dom樹
+                        var img = div.getElementsByTagName('img')[0];
+                        img.onload = function () {
+                            var nowHeight = ReSizePic(this); //設置圖片大小
+                            this.parentNode.style.display = 'block';
+                            var oParent = this.parentNode;
+                            if (nowHeight) {
+                                oParent.style.paddingTop = (oParent.offsetHeight - nowHeight) / 2 + 'px';
+                            }
+                        }
+                        div.onclick = function () {
+                            $(this).remove(); // 在頁面中刪除該圖片元素
+                        }
+                    }
+                }
+            }
+
+            function send(submitArr) {
+                if (checkroomName() && checkroomPrice() && checkroomTypeAmount()) {
+                    $('input[name=roomSaleStatus]:checked').val()
+
+                    var data1Arr = {
+                        roomName: $('#roomName').val(),
+                        roomPrice: $('#roomPrice').val(),
+                        roomTypeAmount: $('#roomTypeAmount').val(),
+                        roomSaleStatus: $('input[name=roomSaleStatus]:checked').val(),
+                        roomTypeContent: $('#roomTypeContent').val()
+                    };
+
+                    // var submitArr = [];
+                    //
+                    // $('.subPic').each(function () {
+                    //         submitArr.push({
+                    //             name: $(this).attr('alt'),
+                    //             base64: $(this).attr('src')
+                    //         });
+                    //     });
+
+                    $.ajax({
+                        url: '/CFA101G2/rmtype/addRoomTypeServlet',
+                        type: 'post',
+                        data: {
+                            'date': JSON.stringify(data1Arr),
+                            'submitArr': JSON.stringify(submitArr)
+                        },
+                        dataType: 'json',
+                        //processData: false, 用FormData傳fd時需有這兩項
+                        //contentType: false,
+                        success: function (data) {
+                            $("#submit").removeAttr("disabled");
+                            $("#select").removeAttr("disabled");
+                            $("#add").removeAttr("disabled");
+
+                            if (data.flag) {
+                                alert("新增成功")
+                                // 成功，跳轉成功頁面
+                                location.href = "/CFA101G2/back-end/addRoom.html";
+                            } else {
+                                //失敗,給errorMsg添加提示信息
+                                $("#errorMsg").html(data.errorMsg);
+
+                            }
+                        }
+                    })
+                }
+
+                return false;
+                //如果這個方法沒有返回值，或者返回為true，則表單提交，如果返回為false，則表單不提交
+            }
+
+
+            oSelect.onclick = function () {
+                oInput.value = ""; // 先將oInput值清空，否則選擇圖片與上次相同時change事件不會觸發
+                //清空已選圖片
+                $('.float').remove();
+                oInput.click();
+            }
+
+
+            oAdd.onclick = function () {
+                oInput.value = ""; // 先將oInput值清空，否則選擇圖片與上次相同時change事件不會觸發
+                oInput.click();
+            }
+
+
+            oSubmit.onclick = function () {
+                var submitArr = [];
+
+                $('.subPic').each(function () {
+                    submitArr.push({
+                        name: $(this).attr('alt'),
+                        base64: $(this).attr('src')
+                    });
+                });
+                // if (!dataArr.length) {
+                //     return alert('請先選擇圖片');
+                // }
+
+                if (!submitArr.length) {
+                    return alert('請先選擇圖片');
+                }
+                send(submitArr);
+                $("#submit").attr("disabled", true);
+                $("#select").attr("disabled", true);
+                $("#add").attr("disabled", true);
+            }
+
+
+            // 當某一個組件失去焦點是，調用對應的校驗方法
+            $("#roomName").blur(checkroomName);
+            $("#roomPrice").blur(checkroomPrice);
+            $("#roomTypeAmount").blur(checkroomTypeAmount);
+
+
+        }
+
+        /*
+     用ajax發送fd參數時要告訴jQuery不要去處理發送的數據，
+     不要去設置Content-Type請求頭才可以發送成功，否則會報“Illegal invocation”的錯誤，
+     也就是非法調用，所以要加上“processData: false,contentType: false,”
+     * */
+
+
+        function ReSizePic(ThisPic) {
+            var RePicWidth = 200; //這裡修改為您想顯示的寬度值
+            var TrueWidth = ThisPic.width; //圖片實際寬度
+            var TrueHeight = ThisPic.height; //圖片實際高度
+
+            if (TrueWidth > TrueHeight) {
+                //寬大於高
+                var reWidth = RePicWidth;
+                ThisPic.width = reWidth;
+                //垂直居中
+                var nowHeight = TrueHeight * (reWidth / TrueWidth);
+
+                return nowHeight; //將圖片修改後的高度返回，供垂直居中用
+            } else {
+                //寬小於高
+                var reHeight = RePicWidth;
+                ThisPic.height = reHeight;
+            }
+        }
+
+
+    </script>
+
+</head>
+<body>
+
+<div class="rg_layout">
+    <div class="rg_form clearfix">
+        <div class="rg_form_left">
+            <p>新增房型</p>
+            <p>ROOM TYPE</p>
+        </div>
+        <div class="rg_form_center">
+            <div id="errorMsg" style="color:red;text-align: center"></div>
+            <!--註冊表單-->
+            <form id="registerForm" action="user">
+                <!--提交處理請求的標識符-->
+                <input type="hidden" name="action" value="register">
+                <table style="margin-top: 25px;">
+                    <tr>
+                        <td class="td_left">
+                            <label for="roomName">房型名稱</label>
+                        </td>
+                        <td class="td_right">
+                            <input type="text" id="roomName" name="roomName" placeholder="請輸入房型名稱">
+                            <span id="s_roomName" class="error"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td_left">
+                            <label for="roomPrice">房型價格</label>
+                        </td>
+                        <td class="td_right">
+                            <input type="text" id="roomPrice" name="roomPrice" placeholder="請輸入價格">
+                            <span id="s_roomPrice" class="error"></span>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td_left">
+                            <label for="roomTypeAmount">房型數量</label>
+                        </td>
+                        <td class="td_right">
+                            <input type="text" id="roomTypeAmount" name="roomTypeAmount" placeholder="請輸入最大房間數量">
+                            <span id="s_roomTypeAmount" class="error"></span>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td class="td_left">
+                            <label for="roomSaleStatus">房型狀態</label>
+                        </td>
+                        <td class="td_right gender">
+                            <input type="radio" id="roomSaleStatus" name="roomSaleStatus" value=0 checked> 下架中
+                            <input type="radio" name="roomSaleStatus" value=1> 上架中
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="td_left">
+                            <label for="roomTypeContent">房型說明</label>
+                        </td>
+                        <td class="td_right">
+                            <textarea rows="6" cols="20" id="roomTypeContent" name="roomTypeContent"
+                                      placeholder="請輸入房型說明"
+                                      required></textarea>
+                        </td>
+
+
+                    </tr>
+
+
+                    <tr>
+                        <td class="td_left">
+                        </td>
+                        <td class="td_right check">
+                            <button id="submit" type="button" class="btn btn-primary">送出新增</button>
+
+                            <!--                            <button id="submit">上傳</button>-->
+                        </td>
+                    </tr>
+
+
+                </table>
+            </form>
+
+
+            <div class="container">
+                <label>請選擇圖片：</label>
+                <!--                <button id="select">選擇圖片</button>-->
+                <button id="select" class="btn btn-outline-secondary">選擇圖片</button>
+                <button id="add" type="button" class="btn btn-outline-secondary">增加圖片</button>
+                <!--                <button id="add">增加圖片</button>-->
+                <input type="file" id="file_input" multiple/> <!--用input標籤並選擇type=file，記得帶上multiple，不然就只能單選圖片了-->
+                <!--                <button id="submit">上傳</button>-->
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

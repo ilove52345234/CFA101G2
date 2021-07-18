@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+
+<body bgcolor=#fef4d9><br><br>
+<center>密碼的隱藏與顯示</center>
+<br>
+<center>
+    <table bordercolor=#cc0000 border=5 borderlight="green">
+        <tbody>
+        <tr>
+            <td align=middle>
+                <div align="center">效果顯示</div>
+            </td>
+        </tr>
+        <tr>
+            <td align=middle>
+                <form name=forms action="" method=post><span id=box>
+<input type=password value=523654 name=password></span> <span id=click><a href="javascript:ps()">顯示密碼</a></span>
+                    <script language=javascript>
+                        function ps() {
+                            if (this.forms.password.type = "password")
+                                box.innerhtml = "<input type="
+                            html
+                            " name="
+                            password
+                            " size="
+                            20
+                            " value=" + this.forms.password.value + ">";
+                            click.innerhtml = "<a href="
+                            javascript:txt()
+                            ">隱藏密碼</a>"
+                        }
+
+                        function txt() {
+                            if (this.forms.password.type = "text")
+                                box.innerhtml = "<input type="
+                            password
+                            " name="
+                            password
+                            " size="
+                            20
+                            " value=" + this.forms.password.value + ">";
+                            click.innerhtml = "<a href="
+                            javascript:ps()
+                            ">顯示密碼</a>"
+                        }
+                    </script>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</center>
+</body>
+</html>
