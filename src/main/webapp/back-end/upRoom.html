@@ -258,13 +258,13 @@
                     }
                     //增加點擊刪除事件
                     div.onclick = function () {
-                        if (confirm("確定要刪除這張圖片嗎?")) {
+
                             //取得要刪除圖片的id
                             deleteArr.push({
                                 roomPhotoId: item.name
                             })
                             $(this).remove(); // 在頁面中刪除該圖片元素
-                        }
+
                     }
                 })
             }
@@ -324,6 +324,9 @@
 
             function send(submitArr) {
                 //調用所有驗證方法,都有填才能傳送
+                $("#submit").attr("disabled", true);
+                $("#select").attr("disabled", true);
+                $("#add").attr("disabled", true);
                 if (checkroomName() && checkroomPrice() && checkroomTypeAmount()) {
                     $('input[name=roomSaleStatus]:checked').val()
 
@@ -360,19 +363,26 @@
                         //contentType: false,
                         success: function (data) {
                             //禁用按鈕防止多次提交
-                            $("#submit").removeAttr("disabled");
-                            $("#select").removeAttr("disabled");
-                            $("#add").removeAttr("disabled");
+
                             if (data.flag) {
                                 alert("修改完成")
                                 // 成功，重整
+                                // self.location = document.referrer;
                                 location.reload();
+
                             } else {
                                 //失敗,給errorMsg添加提示信息
                                 $("#errorMsg").html(data.errorMsg);
                             }
                         }
                     })
+                }
+               else {
+
+                    $("#submit").removeAttr("disabled");
+                    $("#select").removeAttr("disabled");
+                    $("#add").removeAttr("disabled");
+
                 }
 
                 return false;
@@ -383,7 +393,6 @@
             oSelect.onclick = function () {
                 oInput.value = ""; // 先將oInput值清空，否則選擇圖片與上次相同時change事件不會觸發
                 if (flag) {
-                    if (confirm("要刪除所有圖片重新選擇嗎")) {
                         //將所有圖片放入要刪除的陣列
                         $('.showPic').each(function () {
                             deleteArr.push({
@@ -393,9 +402,6 @@
                         allArr = [];
                         //只有在第一次重新選擇的時候執行
                         flag = false;
-                    }
-
-
                 }
 
                 $('.float').remove();
@@ -437,9 +443,7 @@
 
                 //傳送要新增的圖片
                 send(submitArr);
-                $("#submit").attr("disabled", true);
-                $("#select").attr("disabled", true);
-                $("#add").attr("disabled", true);
+
 
 
             }

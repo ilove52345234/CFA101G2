@@ -19,11 +19,18 @@
     </style>
     <script>
         $(function () {
+            // var id = getParameter("id");
+            // if (id === "end"){
+            //     load(1,id);
+            // }else {
+            //
+            // }
             load();
         })
 
 
-        function load(currentPage) {
+        function load(currentPage , end) {
+            // var id = end;
             var ROOM_NAME = $('#ROOM_NAME').val();
             var ROOM_PRICE = $('#ROOM_PRICE').val();
             $.ajax({
@@ -38,6 +45,10 @@
                 //processData: false, 用FormData傳fd時需有這兩項
                 //contentType: false,
                 success: function (pb) {
+                   // if (id === "end"){
+                   //     load(pb.totalPage);
+                   //     return;
+                   // }
                     //1.分頁處理
                     $('#totalPage').html(pb.totalPage);
                     $('#totalCount').html(pb.totalCount);
@@ -123,7 +134,7 @@
                     //     //拼接
                     //     lis += li;
                     // }
-                    var lastPage = `<li onclick="javascript:load(${pb.totalPage})" class="threeword"><a href="javascript:void()">末頁</a></li>`;
+                    var lastPage = `<li onclick="javascript:load(${pb.totalPage})" class="threeword" id="end"><a href="javascript:void()">末頁</a></li>`;
 
                     //上一頁的處理
                     var nextNum = pb.currentPage + 1;
@@ -169,6 +180,8 @@
             });
 
         }
+
+
     </script>
 </head>
 <body>
