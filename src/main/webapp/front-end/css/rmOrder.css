@@ -1,0 +1,47 @@
+
+th{
+    background-color: blue;
+    text-align: center; 
+    padding-right: 50px;
+  }
+
+table.table-bordered{
+    border:1px solid rgb(147, 201, 140)lue;
+    margin-top:20px;
+  }
+table.table-bordered > thead > tr > th{
+    border:1px solid rgb(147, 201, 140);
+}
+table.table-bordered > tbody > tr > td{
+    border:1px solid rgb(147, 201, 140);
+}
+  
+.td1{
+    width: 10%;
+    background-color: rgb(203, 235, 243)
+}
+
+.td2{
+    width: 15%;
+    background-color:rgb(203, 235, 243)
+}
+
+.td3{
+    width: 10%;
+}
+
+.td4{
+    text-align: center;
+}
+
+#booking{
+    text-align: center;
+}
+
+.press-confirm{
+   background-color: rgb(207, 88, 88);
+   color: white;
+   border-color:rgb(207, 88, 88);
+   border-radius: 6px;
+   text-align: right;
+}

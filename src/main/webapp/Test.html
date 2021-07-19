@@ -3,8 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
 </head>
 <body>
 
+<div id="div">
+    <el-form ref="form" :model="form" label-width="80px">
+        <el-form-item label="活動名稱">
+            <el-input v-model="form.name"></el-input>
+        </el-form-item>
+        <el-form-item label="活動區域">
+            <el-select v-model="form.region" placeholder="請選擇活動區域">
+                <el-option label="區域一" value="shanghai"></el-option>
+                <el-option label="區域二" value="beijing"></el-option>
+            </el-select>
+        </el-form-item>
+        <el-form-item label="活動時間">
+            <el-col :span="11">
+                <el-date-picker type="date" placeholder="選擇日期" v-model="form.date1"
+                                style="width: 100%;"></el-date-picker>
+            </el-col>
+            <el-col class="line" :span="2">-</el-col>
+            <el-col :span="11">
+                <el-time-picker placeholder="選擇時間" v-model="form.date2" style="width: 100%;"></el-time-picker>
+            </el-col>
+        </el-form-item>
+        <el-form-item label="即時配送">
+            <el-switch v-model="form.delivery"></el-switch>
+        </el-form-item>
+        <el-form-item label="活動性質">
+            <el-checkbox-group v-model="form.type">
+                <el-checkbox label="美食/餐廳線上活動" name="type"></el-checkbox>
+                <el-checkbox label="地推活動" name="type"></el-checkbox>
+                <el-checkbox label="線下主題活動" name="type"></el-checkbox>
+                <el-checkbox label="單純品牌曝光" name="type"></el-checkbox>
+            </el-checkbox-group>
+        </el-form-item>
+        <el-form-item label="特殊資源">
+            <el-radio-group v-model="form.resource">
+                <el-radio label="線上品牌商贊助"></el-radio>
+                <el-radio label="線下場地免費"></el-radio>
+            </el-radio-group>
+        </el-form-item>
+        <el-form-item label="活動形式">
+            <el-input type="textarea" v-model="form.desc"></el-input>
+        </el-form-item>
+        <el-form-item>
+            <el-button type="primary" @click="onSubmit">立即創建</el-button>
+            <el-button>取消</el-button>
+        </el-form-item>
+    </el-form>
+
+</div>
+
 </body>
+
+
+<script>
+    new Vue({
+        el: "#div",
+        data: {
+            form: {
+                name: '',
+                region: '',
+                date1: '',
+                date2: '',
+                delivery: false,
+                type: [],
+                resource: '',
+                desc: ''
+            }
+        }, methods: {
+            onSubmit() {
+                console.log('submit!');
+            }
+        }
+
+
+    });
+
+</script>
+
+
 </html>

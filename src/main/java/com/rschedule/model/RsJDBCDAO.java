@@ -20,11 +20,11 @@ public class RsJDBCDAO implements RsDAO_interface {
 	String userid = "CFA101G2";
 	String passwd = "123456";
 
-	private static final String INSERT_STMT = "INSERT INTO ROOM_SCHEDULE (ROOM_CATEGORY_ID, ROOM_SCHEDULE_DATE, ROOM_AMOUNT, ROOM_RSV_BOOKED) VALUES (?,?,?,?)";
-	private static final String GET_ALL_STMT = "SELECT ROOM_SCHEDULE_ID, ROOM_CATEGORY_ID, ROOM_SCHEDULE_DATE, ROOM_AMOUNT, ROOM_RSV_BOOKED FROM ROOM_SCHEDULE order by ROOM_SCHEDULE_ID";
-	private static final String GET_ONE_STMT = "SELECT ROOM_SCHEDULE_ID, ROOM_CATEGORY_ID, ROOM_SCHEDULE_DATE, ROOM_AMOUNT, ROOM_RSV_BOOKED FROM ROOM_SCHEDULE where ROOM_SCHEDULE_ID = ?";
+	private static final String INSERT_STMT = "INSERT INTO ROOM_SCHEDULE (ROOM_CATEGORY_ID, ROOM_SCHEDULE_DATE, ROOM_AMOUNT, ROOM_RSV_BOOKED,ROOM_CHECK_OUT,ROOM_CHECK_IN) VALUES (?,?,?,?,?,?)";
+	private static final String GET_ALL_STMT = "SELECT ROOM_SCHEDULE_ID, ROOM_CATEGORY_ID, ROOM_SCHEDULE_DATE, ROOM_AMOUNT, ROOM_RSV_BOOKED,ROOM_CHECK_OUT,ROOM_CHECK_IN FROM ROOM_SCHEDULE order by ROOM_SCHEDULE_ID";
+	private static final String GET_ONE_STMT = "SELECT ROOM_SCHEDULE_ID, ROOM_CATEGORY_ID, ROOM_SCHEDULE_DATE, ROOM_AMOUNT, ROOM_RSV_BOOKED,ROOM_CHECK_OUT,ROOM_CHECK_IN FROM ROOM_SCHEDULE where ROOM_SCHEDULE_ID = ?";
 	private static final String DELETE = "DELETE FROM ROOM_SCHEDULE where ROOM_SCHEDULE_ID = ?";
-	private static final String UPDATE = "UPDATE ROOM_SCHEDULE set ROOM_CATEGORY_ID=?, ROOM_SCHEDULE_DATE=?, ROOM_AMOUNT=?, ROOM_RSV_BOOKED=? where ROOM_SCHEDULE_ID = ?";
+	private static final String UPDATE = "UPDATE ROOM_SCHEDULE set ROOM_CATEGORY_ID=?, ROOM_SCHEDULE_DATE=?, ROOM_AMOUNT=?, ROOM_RSV_BOOKED=? ROOM_CHECK_OUT =?,ROOM_CHECK_IN =? where ROOM_SCHEDULE_ID = ?";
 
 	@Override
 	public void insert(RsVO rsVO) {
@@ -38,9 +38,11 @@ public class RsJDBCDAO implements RsDAO_interface {
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setInt(1, rsVO.getRoomCategoryId());
-			pstmt.setTimestamp(2, rsVO.getRoomScheduleDate());
+			pstmt.setDate(2, rsVO.getRoomScheduleDate());
 			pstmt.setInt(3, rsVO.getRoomAmount());
 			pstmt.setInt(4, rsVO.getRoomRsvBooked());
+			pstmt.setInt(5, rsVO.getRoomCheckOut());
+			pstmt.setInt(6, rsVO.getRoomCheckOut());
 
 			pstmt.executeUpdate();
 
@@ -79,10 +81,12 @@ public class RsJDBCDAO implements RsDAO_interface {
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setInt(1, rsVO.getRoomCategoryId());
-			pstmt.setTimestamp(2, rsVO.getRoomScheduleDate());
+			pstmt.setDate(2, rsVO.getRoomScheduleDate());
 			pstmt.setInt(3, rsVO.getRoomAmount());
 			pstmt.setInt(4, rsVO.getRoomRsvBooked());
 			pstmt.setInt(5, rsVO.getRoomScheduleId());
+			pstmt.setInt(6, rsVO.getRoomCheckOut());
+			pstmt.setInt(7, rsVO.getRoomCheckIn());
 
 			pstmt.executeUpdate();
 
@@ -166,9 +170,11 @@ public class RsJDBCDAO implements RsDAO_interface {
 				rsVO = new RsVO();
 				rsVO.setRoomScheduleId(rs.getInt("ROOM_SCHEDULE_ID"));
 				rsVO.setRoomCategoryId(rs.getInt("ROOM_CATEGORY_ID"));
-				rsVO.setRoomScheduleDate(rs.getTimestamp("ROOM_SCHEDULE_DATE"));
+				rsVO.setRoomScheduleDate(rs.getDate("ROOM_SCHEDULE_DATE"));
 				rsVO.setRoomAmount(rs.getInt("ROOM_AMOUNT"));
 				rsVO.setRoomRsvBooked(rs.getInt("ROOM_RSV_BOOKED"));
+				rsVO.setRoomCheckOut(rs.getInt("ROOM_CHECK_OUT"));
+				rsVO.setRoomCheckIn(rs.getInt("ROOM_CHECK_IN"));
 
 			}
 		} catch (ClassNotFoundException e) {
@@ -223,9 +229,11 @@ public class RsJDBCDAO implements RsDAO_interface {
 				rsVO = new RsVO();
 				rsVO.setRoomScheduleId(rs.getInt("ROOM_SCHEDULE_ID"));
 				rsVO.setRoomCategoryId(rs.getInt("ROOM_CATEGORY_ID"));
-				rsVO.setRoomScheduleDate(rs.getTimestamp("ROOM_SCHEDULE_DATE"));
+				rsVO.setRoomScheduleDate(rs.getDate("ROOM_SCHEDULE_DATE"));
 				rsVO.setRoomAmount(rs.getInt("ROOM_AMOUNT"));
 				rsVO.setRoomRsvBooked(rs.getInt("ROOM_RSV_BOOKED"));
+				rsVO.setRoomCheckOut(rs.getInt("ROOM_CHECK_OUT"));
+				rsVO.setRoomCheckIn(rs.getInt("ROOM_CHECK_IN"));
 
 				list.add(rsVO);
 			}
@@ -261,72 +269,6 @@ public class RsJDBCDAO implements RsDAO_interface {
 		return list;
 	}
 
-	public static void main(String[] args) {
-
-		//現在時間
-		Timestamp ts = new Timestamp(System.currentTimeMillis());
-		System.out.println("現在時間:"+ts);
-
-//		//自定義時間
-//		String tsStr = "2011-05-09 11:49:45";
-//		try {
-//			ts = Timestamp.valueOf(tsStr);
-//			System.out.println("自定義時間:"+ts);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-		
-		//=======================================
-
-		RsJDBCDAO dao = new RsJDBCDAO();
-		// 新增
-		RsVO rsVO1 = new RsVO();
-		rsVO1.setRoomCategoryId(1);
-		rsVO1.setRoomScheduleDate(ts);
-		rsVO1.setRoomAmount(1);
-		rsVO1.setRoomRsvBooked(1);
-		dao.insert(rsVO1);
-
-		// 修改
-		RsVO rsVO2 = new RsVO();
-		rsVO2.setRoomScheduleId(1);
-		rsVO2.setRoomCategoryId(1);
-		rsVO2.setRoomScheduleDate(ts);
-		rsVO2.setRoomAmount(1);
-		rsVO2.setRoomRsvBooked(1);
-
-		dao.update(rsVO2);
-
-		// 刪除
-		dao.delete(7002);
-		
-//		Integer roomNo=1;
-
-		// 查詢
-		RsVO rsVO3 = dao.findByPrimaryKey(1);
-      	if(rsVO3==null) {
-			throw new RuntimeException("PK:not found") ;
-		}
-		
-		System.out.println(rsVO3.getRoomScheduleId() + ",");
-		System.out.println(rsVO3.getRoomCategoryId() + ",");
-		System.out.println(rsVO3.getRoomScheduleDate() + ",");
-		System.out.println(rsVO3.getRoomAmount() + ",");
-		System.out.println(rsVO3.getRoomRsvBooked() + ",");
-		System.out.println("---------------------");
-
-		// 查詢all
-		List<RsVO> list = dao.getAll();
-		for (RsVO aRs : list) {
-			System.out.println(aRs.getRoomScheduleId() + ",");
-			System.out.println(aRs.getRoomCategoryId() + ",");
-			System.out.println(aRs.getRoomScheduleDate() + ",");
-			System.out.println(aRs.getRoomAmount() + ",");
-			System.out.println(aRs.getRoomRsvBooked() + ",");
-			System.out.println("---------------------");
-
-		}
-	}
 
 
 }

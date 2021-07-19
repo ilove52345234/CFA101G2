@@ -13,8 +13,7 @@ public class PageBean<T> {
     private int currentPage; //當前頁碼
     private int rows; //每頁顯示的條數
 
-    public PageBean() {
-    }
+    public PageBean() { }
 
     public PageBean(int totalCount, int totalPage, List<T> list, int currentPage, int rows) {
         this.totalCount = totalCount;
