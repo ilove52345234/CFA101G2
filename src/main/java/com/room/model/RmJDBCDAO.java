@@ -1,5 +1,10 @@
 package com.room.model;
 
+import com.emp.model.EmpVO;
+import com.utils.JDBCUtils;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -7,12 +12,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 
 public class RmJDBCDAO implements RmDAO_interface {
+
+	JDBCUtils jdbcUtils = new JDBCUtils();
+
 	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3306/CFA101G2?serverTimezone=Asia/Taipei";
-	String userid = "David";
+	String url = "jdbc:mysql://35.221.136.103:3306/CFA101G2?serverTimezone=Asia/Taipei";
+	String userid = "CFA101G2";
 	String passwd = "123456";
 	
 	private static final String INSERT_STMT =
@@ -265,56 +275,108 @@ public class RmJDBCDAO implements RmDAO_interface {
 		}
 		return list;
 	}
-	
-	public static void main(String[] args) {
-		RmJDBCDAO dao = new RmJDBCDAO();
-		
-		// 新增
-		RmVO rmVO1 = new RmVO();
-		rmVO1.setRoomCategoryId(7001);
-		rmVO1.setRoomCheckStatus(new Integer(1).byteValue());
-		rmVO1.setRoomSaleStatus(new Integer(1).byteValue());
-		rmVO1.setRoomInformation("fssff");
-		dao.insert(rmVO1);
-		
-		// 修改
-		RmVO rmVO2 = new RmVO();
-		rmVO2.setRoomId(1);
-		rmVO2.setRoomCategoryId(7001);
-		rmVO2.setRoomCheckStatus(new Integer(1).byteValue());
-		rmVO2.setRoomSaleStatus(new Integer(1).byteValue());
-		rmVO2.setRoomInformation("www");
 
-		dao.update(rmVO2);
-		
-		// 刪除
-		dao.delete(7007);
-		
-		
-		// 查詢
-		RmVO rmVO3 = dao.findByPrimaryKey(1);;
-		System.out.println(rmVO3.getRoomId()+",");
-		System.out.println(rmVO3.getRoomCategoryId()+",");
-		System.out.println(rmVO3.getRoomCheckStatus()+",");
-		System.out.println(rmVO3.getRoomSaleStatus()+",");
-		System.out.println(rmVO3.getRoomInformation()+",");
-		System.out.println("---------------------");
-		
-		// 查詢all
-		List<RmVO> list = dao.getAll();
-		for(RmVO aRm:list) {
-			System.out.println(aRm.getRoomId()+",");
-			System.out.println(aRm.getRoomCategoryId()+",");
-			System.out.println(aRm.getRoomCheckStatus()+",");
-			System.out.println(aRm.getRoomSaleStatus()+",");
-			System.out.println(aRm.getRoomInformation()+",");
-			System.out.println("---------------------");
-			
+	@Override
+	public int findTotalCount(Map<String, String> condition) {
+//        ("total方法開始");
+
+
+		JdbcTemplate Template = new JdbcTemplate(jdbcUtils.getDataSource());
+		//定義模板語句
+		String GET_ALL_COUNT =
+				"select count(*) from ROOM where 1 = 1 ";
+
+		StringBuilder sb = new StringBuilder(GET_ALL_COUNT);
+
+
+		//迭代map
+		Set<String> keySet = condition.keySet();
+		//定義參數的集合
+		List<Object> params = new ArrayList<Object>();
+
+		for (String key : keySet) {
+
+//            ("Key:"+key);
+			//排除分頁條件參數
+			if ("currentPage".equals(key)||
+					"rows".equals(key) ||
+					"funs".equals(key)||
+					"delEmpId".equals(key)){
+				continue;
+			}
+
+			//獲取值
+			String value = condition.get(key);
+//            ("value:"+value);
+
+			//判斷是否有值
+			if (value != null && !"".equals(value)) {
+				//有值
+				sb.append(" and " + key + " like ? ");
+				params.add("%"+value+"%"); //加問號條件的值
+			}
 		}
+
+
+//        (params);
+
+
+
+		return Template.queryForObject(sb.toString(), Integer.class, params.toArray());
+
 	}
 
+	@Override
+	public List<RmVO> findByPage(int start, int rows, Map<String, String> condition){
 
-	
+		JdbcTemplate Template = new JdbcTemplate(jdbcUtils.getDataSource());
+		String GET_LIMIT =
+				"select * from ROOM where 1 = 1 ";
+
+//        ("ByPage方法開始");
+
+		StringBuilder sb = new StringBuilder(GET_LIMIT);
+
+		//迭代map
+		Set<String> keySet = condition.keySet();
+
+		//定義參數的集合
+
+		List<Object> params = new ArrayList<Object>();
+
+		for (String key : keySet) {
+			//排除分頁條件參數
+			if ("currentPage".equals(key)||
+					"rows".equals(key) ||
+					"funs".equals(key)||
+					"delEmpId".equals(key)){
+				continue;
+			}
+
+			//獲取值
+			String value = condition.get(key);
+
+			//判斷是否有值
+			if (value != null && !"".equals(value)) {
+				//有值
+				sb.append(" and " + key + " like ? ");
+				params.add("%"+value+"%"); //加問號條件的值
+			}
+		}
+
+		//添加分頁查詢
+		sb.append("limit ?,?");
+
+		//添加分頁查詢的參數
+
+		params.add(start);
+		params.add(rows);
 
 
+		String sql = sb.toString();
+
+		return Template.query(sql,new BeanPropertyRowMapper<RmVO>(RmVO.class),params.toArray());
+
+
+	}
 }

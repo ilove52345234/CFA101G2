@@ -1,13 +1,17 @@
 package com.room.model;
 
+import com.emp.model.EmpVO;
+import com.utils.PageBean;
+
 import java.util.List;
+import java.util.Map;
 
 public class RmService {
 
 		private RmDAO_interface dao;
 		
 		public RmService() {
-			dao = new RmDAO();
+			dao = new RmJDBCDAO();
 		}
 		
 		public RmVO addRmVO(Integer roomCategoryId, Byte roomCheckStatus, Byte roomSaleStatus, String roomInformation) {
@@ -42,5 +46,46 @@ public class RmService {
 		public List<RmVO> getAll(){
 			return dao.getAll();
 		}
-		
+
+
+		public PageBean<RmVO> findrmByPage(String _currentPage, String _rows, Map<String, String> condition) {
+		//1.創建一個空的PageBean物件
+		PageBean<RmVO> rmVOPageBean = new PageBean<RmVO>();
+
+		int currentPage = Integer.parseInt(_currentPage);
+		int rows = Integer.parseInt(_rows);
+
+
+
+		//2.設置參數
+		rmVOPageBean.setCurrentPage(currentPage);
+		rmVOPageBean.setRows(rows);
+
+		//3.調用dao查詢總記錄數
+		int totalCount= dao.findTotalCount(condition);
+
+		rmVOPageBean.setTotalCount(totalCount);
+
+		//4.調用dao查詢List數據集合
+
+		//計算開始的索引值
+		int start = (currentPage - 1) * rows;
+
+		List list = dao.findByPage(start,rows,condition);
+
+		rmVOPageBean.setList(list);
+
+		//5.計算總頁碼
+
+		int totalPage = (totalCount % rows) == 0 ? (totalCount / rows) : (totalCount / rows) + 1;
+
+		rmVOPageBean.setTotalPage(totalPage);
+
+
+
+		return rmVOPageBean;
+	}
+
+
+
 }

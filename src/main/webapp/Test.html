@@ -6,55 +6,110 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.js"></script>
+    <script src="//unpkg.com/element-ui"></script>
+    <script src="//unpkg.com/element-ui/lib/umd/locale/zh-TW.js"></script>
+
+
+    <style>
+        #div{
+            width: 100%;
+            height: 4rem;
+            line-height: 4rem;
+            text-align: center;
+        }
+
+    </style>
 </head>
 <body>
 
+
 <div id="div">
-    <el-form ref="form" :model="form" label-width="80px">
-        <el-form-item label="活動名稱">
-            <el-input v-model="form.name"></el-input>
-        </el-form-item>
-        <el-form-item label="活動區域">
-            <el-select v-model="form.region" placeholder="請選擇活動區域">
-                <el-option label="區域一" value="shanghai"></el-option>
-                <el-option label="區域二" value="beijing"></el-option>
-            </el-select>
-        </el-form-item>
-        <el-form-item label="活動時間">
-            <el-col :span="11">
-                <el-date-picker type="date" placeholder="選擇日期" v-model="form.date1"
-                                style="width: 100%;"></el-date-picker>
-            </el-col>
-            <el-col class="line" :span="2">-</el-col>
-            <el-col :span="11">
-                <el-time-picker placeholder="選擇時間" v-model="form.date2" style="width: 100%;"></el-time-picker>
-            </el-col>
-        </el-form-item>
-        <el-form-item label="即時配送">
-            <el-switch v-model="form.delivery"></el-switch>
-        </el-form-item>
-        <el-form-item label="活動性質">
-            <el-checkbox-group v-model="form.type">
-                <el-checkbox label="美食/餐廳線上活動" name="type"></el-checkbox>
-                <el-checkbox label="地推活動" name="type"></el-checkbox>
-                <el-checkbox label="線下主題活動" name="type"></el-checkbox>
-                <el-checkbox label="單純品牌曝光" name="type"></el-checkbox>
-            </el-checkbox-group>
-        </el-form-item>
-        <el-form-item label="特殊資源">
-            <el-radio-group v-model="form.resource">
-                <el-radio label="線上品牌商贊助"></el-radio>
-                <el-radio label="線下場地免費"></el-radio>
-            </el-radio-group>
-        </el-form-item>
-        <el-form-item label="活動形式">
-            <el-input type="textarea" v-model="form.desc"></el-input>
-        </el-form-item>
-        <el-form-item>
-            <el-button type="primary" @click="onSubmit">立即創建</el-button>
-            <el-button>取消</el-button>
-        </el-form-item>
-    </el-form>
+    <div >
+
+        <form class="form-inline" action="1111" method="post">
+            <div class="form-group">
+                <label for="ROOM_ORDER_ID">訂單編號</label>
+                <input type="text" name="ROOM_ORDER_ID" value="" class="form-control"
+                       id="ROOM_ORDER_ID">
+            </div>
+
+            <div class="form-group">
+                <label for="MEM_ID">會員編號</label>
+                <input type="text" name="MEM_ID" value="" class="form-control"
+                       id="MEM_ID">
+            </div>
+            <button type="button" onclick="javascript:load()" class="btn btn-default">查詢</button>
+        </form>
+
+    </div>
+
+
+    <el-row type="flex" class="row-bg" justify="center">
+        <el-col :span="3"><div class="grid-content bg-purple"></div></el-col>
+        <el-col :span="18"><el-table :data="tableData" style="width: 100%" >
+            <el-table-column
+                    prop="roomId"
+                    label="訂單編號"
+                    width="180">
+            </el-table-column>
+            <el-table-column
+                    prop="roomCategoryId"
+                    label="會員編號"
+                    width="180">
+            </el-table-column>
+            <el-table-column
+                    prop="roomCheckStatus"
+                    label="訂單日期">
+            </el-table-column>
+            <el-table-column
+                    prop="ROOM_ORDER_STATUS"
+                    label="訂單狀態">
+            </el-table-column>
+            <el-table-column
+                    prop="TOTAL_PRICE"
+                    label="訂單金額">
+            </el-table-column>
+            <el-table-column
+                    prop="ROOM_ORDER_LIST"
+                    label="訂單明細">
+                <el-link type="info">查看</el-link>
+            </el-table-column>
+            <el-table-column
+                    label="操作">
+                <el-button type="primary"  >修改</el-button>
+            </el-table-column>
+
+        </el-table> </el-col>
+        <el-col :span="3"><div class="grid-content bg-purple"></div></el-col>
+    </el-row>
+
+    <!--
+        分頁組件
+          @size-change： 當改變每頁條數時觸發的函數
+          @current-change：當改變頁碼時觸發的函數
+          current-page ：默認的頁碼
+          :page-sizes：每頁條數選擇框中顯示的值
+          :page-size : 默認的每頁條數
+          layout： 分頁組件的佈局
+              total（總條數）, sizes(每頁條數), prev（上一頁）, pager(所有的頁碼), next(下一頁), jumper（跳轉頁碼）
+          :total: 總條數
+    -->
+
+
+    <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page="pagination.currentPage"
+            :page-sizes="[5,10]"
+            :page-size="pagination.rows"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="pagination.totalCount">
+    </el-pagination>
+
+
 
 </div>
 
@@ -62,27 +117,62 @@
 
 
 <script>
+    ELEMENT.locale(ELEMENT.lang.zhTW)
+
+
     new Vue({
+
         el: "#div",
         data: {
-            form: {
-                name: '',
-                region: '',
-                date1: '',
-                date2: '',
-                delivery: false,
-                type: [],
-                resource: '',
-                desc: ''
+            formDate:{},
+            tableData:[],
+            pagination:{
+                currentPage:1,
+                rows:5,
+                totalCount: 0
             }
-        }, methods: {
-            onSubmit() {
-                console.log('submit!');
+        },
+
+        methods:{
+            selectByPage(){
+                axios.post("/CFA101G2/rmtype/selectRoomTypeServlet","currentPage="+this.pagination.currentPage+"&rows="+this.pagination.rows).then(resp=>{
+
+                    this.tableData =resp.data.list;
+
+                    this.pagination.currentPage = resp.data.currentPage;
+
+                    this.pagination.totalCount = resp.data.totalCount;
+                })
+            },
+            //改變每頁條數時執行的函數
+            handleSizeChange(rows) {
+                //修改分頁查詢的參數
+                this.pagination.rows = rows;
+                //重新執行查詢
+                this.selectByPage();
+            },//改變頁碼時執行的函數
+            handleCurrentChange(currentPage) {
+                //修改分頁查詢的參數
+                this.pagination.currentPage = currentPage;
+                //重新執行查詢
+                this.selectByPage();
             }
+
+
+
+
+
+        },
+
+        mounted(){
+            this.selectByPage();
         }
 
-
     });
+
+
+
+
 
 </script>
 

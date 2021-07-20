@@ -6,6 +6,18 @@ public class RmVO implements java.io.Serializable{
 	private Byte roomCheckStatus;
 	private Byte roomSaleStatus;
 	private String roomInformation;
+
+	@Override
+	public String toString() {
+		return "RmVO{" +
+				"roomId=" + roomId +
+				", roomCategoryId=" + roomCategoryId +
+				", roomCheckStatus=" + roomCheckStatus +
+				", roomSaleStatus=" + roomSaleStatus +
+				", roomInformation='" + roomInformation + '\'' +
+				'}';
+	}
+
 	public  RmVO() {
 	}
 	public Integer getRoomId() {
