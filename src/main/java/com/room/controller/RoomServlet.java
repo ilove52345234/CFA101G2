@@ -41,7 +41,7 @@ public class RoomServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 
-		doPost(request,response);
+		this.doPost(request,response);
 	}
 
 	/**
@@ -89,7 +89,9 @@ public class RoomServlet extends HttpServlet {
 			String ROOM_INFORMATION = request.getParameter("ROOM_INFORMATION");
 			String ROOM_CHECK_STATUS = request.getParameter("ROOM_CHECK_STATUS");
 
-
+			System.out.println(ROOM_CHECK_STATUS);
+			System.out.println(ROOM_ID);
+			System.out.println(ROOM_INFORMATION);
 			condition.put("ROOM_ID",ROOM_ID);
 			condition.put("ROOM_INFORMATION",ROOM_INFORMATION);
 			condition.put("ROOM_CHECK_STATUS",ROOM_CHECK_STATUS);
@@ -125,8 +127,6 @@ public class RoomServlet extends HttpServlet {
 					.getRequestDispatcher("/back-end/room/roomlist.jsp");
 			failureView.forward(request, response);
 		}
-
-
 
 	}
 

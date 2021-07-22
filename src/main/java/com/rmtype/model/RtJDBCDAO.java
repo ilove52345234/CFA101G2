@@ -369,7 +369,7 @@
 			/* 370 */       con.setAutoCommit(false);
 			/*     */
 			/*     */
-			/* 373 */     String[]  cols = new String[] { "ROOM_CATEGORY_ID" };
+			/* 373 */     	String[]  cols = new String[] { "ROOM_CATEGORY_ID" };
 			/*     */
 			/* 375 */       pstmt = con.prepareStatement("INSERT INTO ROOM_TYPE (ROOM_TYPE_AMOUNT, ROOM_TYPE_CONTENT, ROOM_SALE_STATUS, ROOM_TOTAL_PERSON, ROOM_TOTAL_SCORE,ROOM_NAME, ROOM_PRICE) VALUES (?,?,?,?,?,?,?)", cols);
 			/*     */
@@ -382,6 +382,7 @@
 			/* 383 */       pstmt.setString(6, rtVO.getRoomName());
 			/* 384 */       pstmt.setInt(7, rtVO.getRoomPrice().intValue());
 			/*     */
+
 			/* 386 */       int i = pstmt.executeUpdate();
 			/*     */
 			/*     */
@@ -407,6 +408,7 @@
 			/*     */
 			/* 409 */       System.out.println("list.size()-A=" + list.size());
 			/*     */
+
 			/* 411 */       int nrcid = Integer.parseInt(nextRoomCategoryId);
 			/*     */
 			/* 413 */       RtpService rtpService = new RtpService();

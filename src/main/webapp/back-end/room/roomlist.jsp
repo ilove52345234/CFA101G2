@@ -83,7 +83,7 @@
 <%--                        <option value=3>待退房</option>--%>
 <%--                    </c:if>--%>
 
-                    <c:if test="${ condition.ROOM_CHECK_STATUS == 0 }">
+                    <c:if test="${ condition.ROOM_CHECK_STATUS == 0 || empty condition.ROOM_CHECK_STATUS}">
                         <option value= "" >查全部</option>
                         <option value=0 selected>未使用</option>
                         <option value=1>待入住</option>
@@ -157,7 +157,7 @@
                             <c:if test="${rtVO.roomCategoryId eq rms.roomCategoryId}">${rtVO.roomName}</c:if>
                         </c:forEach></td>
                     <td><c:if test="${rms.roomCheckStatus == 0 }">
-                        未使用
+                            未使用
                     </c:if>
                         <c:if test="${rms.roomCheckStatus == 1 }">
                             待入住

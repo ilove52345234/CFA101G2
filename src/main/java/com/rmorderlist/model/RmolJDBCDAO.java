@@ -1,5 +1,10 @@
 package com.rmorderlist.model;
 
+import com.rmorder.model.RmoVO;
+import com.utils.JDBCUtils;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -8,13 +13,16 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 
 public class RmolJDBCDAO implements RmolDAO_interface{
 	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3306/CFA101G2?serverTimezone=Asia/Taipei";
-	String userid = "David";
+	String url = "jdbc:mysql://35.221.136.103:3306/CFA101G2?serverTimezone=Asia/Taipei";
+	String userid = "CFA101G2";
 	String passwd = "123456";
+	JDBCUtils jdbcUtils = new JDBCUtils();
 
 	private static final String INSERT_STMT = "INSERT INTO ROOM_ORDER_LIST (ROOM_ORDER_ID, ROOM_CATEGORY_ID, ROOM_PROMOTION_ID, ROOM_ID,MEM_NAME, MEM_NUMBER, CHECK_IN_DATE, CHECK_OUT_DATE, ROOM_TOTAL_PRICE) VALUES (?,?,?,?,?,?,?,?,?)";
 	private static final String GET_ALL_STMT = "SELECT ORDER_LIST_ID,ROOM_ORDER_ID, ROOM_CATEGORY_ID, ROOM_PROMOTION_ID, ROOM_ID,MEM_NAME, MEM_NUMBER, CHECK_IN_DATE, CHECK_OUT_DATE, ROOM_TOTAL_PRICE FROM ROOM_ORDER_LIST order by ORDER_LIST_ID";
@@ -277,82 +285,114 @@ public class RmolJDBCDAO implements RmolDAO_interface{
 		}
 		return list;
 	}
-public static void main(String[] args) {
-		
-		//現在時間
-				Timestamp ts = new Timestamp(System.currentTimeMillis());
-				System.out.println("現在時間:"+ts);
-				
-		RmolJDBCDAO dao = new RmolJDBCDAO();
-		// 新增
-		RmolVO rmolVO1 = new RmolVO();
-		rmolVO1.setRoomOrderId(1);
-		rmolVO1.setRoomCategoryId(7001);
-		rmolVO1.setRoomPromotionId(1);
-		rmolVO1.setRoomId(1);
-		rmolVO1.setMemName("GB");
-		rmolVO1.setMemNumber(2);
-		rmolVO1.setCheckInDate(ts);
-		rmolVO1.setCheckOutDate(ts);
-		rmolVO1.setRoomTotalPrice(2000);
-		dao.insert(rmolVO1);
 
-		// 修改
-		RmolVO rmolVO2 = new RmolVO();
-		rmolVO2.setOrderListId(1);
-		rmolVO2.setRoomOrderId(1);
-		rmolVO2.setRoomCategoryId(7001);
-		rmolVO2.setRoomPromotionId(1);
-		rmolVO2.setRoomId(1);
-		rmolVO2.setMemName("kk");
-		rmolVO2.setMemNumber(2);
-		rmolVO2.setCheckInDate(ts);
-		rmolVO2.setCheckOutDate(ts);
-		rmolVO2.setRoomTotalPrice(2000);
+	@Override
+	public int findTotalCount(Map<String, String> condition){
+//        ("total方法開始");
 
-		dao.update(rmolVO2);
 
-		// 刪除
-		dao.delete(2);
-		
-//		Integer roomNo=1;
+		JdbcTemplate Template = new JdbcTemplate(jdbcUtils.getDataSource());
+		//定義模板語句
+		String GET_ALL_COUNT =
+				"select count(*) from ROOM_ORDER_LIST where 1 = 1 ";
 
-		// 查詢
-		RmolVO rmolVO3 = dao.findByPrimaryKey(1);
-      	if(rmolVO3==null) {
-			throw new RuntimeException("PK:not found") ;
+		StringBuilder sb = new StringBuilder(GET_ALL_COUNT);
+
+
+		//迭代map
+		Set<String> keySet = condition.keySet();
+		//定義參數的集合
+		List<Object> params = new ArrayList<Object>();
+
+		for (String key : keySet) {
+
+//            ("Key:"+key);
+			//排除分頁條件參數
+			if ("currentPage".equals(key)||
+					"rows".equals(key) ||
+					"funs".equals(key)||
+					"delEmpId".equals(key)){
+				continue;
+			}
+
+			//獲取值
+			String value = condition.get(key);
+//            ("value:"+value);
+
+			//判斷是否有值
+			if (value != null && !"".equals(value)) {
+				//有值
+				sb.append(" and " + key + " like ? ");
+				params.add("%"+value+"%"); //加問號條件的值
+			}
 		}
-		
-		System.out.println(rmolVO3.getOrderListId() + ",");
-		System.out.println(rmolVO3.getRoomOrderId() + ",");
-		System.out.println(rmolVO3.getRoomCategoryId() + ",");
-		System.out.println(rmolVO3.getRoomPromotionId() + ",");
-		System.out.println(rmolVO3.getRoomId() + ",");
-		System.out.println(rmolVO3.getMemName() + ",");
-		System.out.println(rmolVO3.getMemNumber() + ",");
-		System.out.println(rmolVO3.getCheckInDate() + ",");
-		System.out.println(rmolVO3.getCheckOutDate() + ",");
-		System.out.println(rmolVO3.getRoomTotalPrice() + ",");
-		System.out.println("---------------------");
 
-		// 查詢all
-		List<RmolVO> list = dao.getAll();
-		for (RmolVO aRmol : list) {
-			System.out.println(aRmol.getOrderListId() + ",");
-			System.out.println(aRmol.getRoomOrderId() + ",");
-			System.out.println(aRmol.getRoomCategoryId() + ",");
-			System.out.println(aRmol.getRoomPromotionId() + ",");
-			System.out.println(aRmol.getRoomId() + ",");
-			System.out.println(aRmol.getMemName() + ",");
-			System.out.println(aRmol.getMemNumber() + ",");
-			System.out.println(aRmol.getCheckInDate() + ",");
-			System.out.println(aRmol.getCheckOutDate() + ",");
-			System.out.println(aRmol.getRoomTotalPrice() + ",");
-			System.out.println("---------------------");
 
-		}
+//        (params);
+
+
+
+		return Template.queryForObject(sb.toString(), Integer.class, params.toArray());
+
 	}
 
-	
+	@Override
+	public List<RmolVO> findByPage(int start, int rows, Map<String, String> condition){
+
+		JdbcTemplate Template = new JdbcTemplate(jdbcUtils.getDataSource());
+		String GET_LIMIT =
+				"select * from ROOM_ORDER_LIST where 1 = 1 ";
+
+//        ("ByPage方法開始");
+
+
+
+		StringBuilder sb = new StringBuilder(GET_LIMIT);
+
+		//迭代map
+		Set<String> keySet = condition.keySet();
+
+		//定義參數的集合
+
+		List<Object> params = new ArrayList<Object>();
+
+		for (String key : keySet) {
+			//排除分頁條件參數
+			if ("currentPage".equals(key)||
+					"rows".equals(key) ||
+					"funs".equals(key)||
+					"delEmpId".equals(key)){
+				continue;
+			}
+
+			//獲取值
+			String value = condition.get(key);
+
+//            (value);
+			//判斷是否有值
+			if (value != null && !"".equals(value)) {
+				//有值
+				sb.append(" and " + key + " like ? ");
+				params.add("%"+value+"%"); //加問號條件的值
+			}
+		}
+
+		//添加分頁查詢
+		sb.append("limit ?,?");
+
+		//添加分頁查詢的參數
+
+		params.add(start);
+		params.add(rows);
+
+
+		String sql = sb.toString();
+
+
+		return Template.query(sql,new BeanPropertyRowMapper<RmolVO>(RmolVO.class),params.toArray());
+
+
+	}
+
 
 }

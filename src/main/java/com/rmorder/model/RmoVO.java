@@ -11,7 +11,18 @@ public class RmoVO implements java.io.Serializable{
 	
 	public RmoVO() {
 	}
-	
+
+	@Override
+	public String toString() {
+		return "RmoVO{" +
+				"roomOrderId=" + roomOrderId +
+				", memId=" + memId +
+				", orderDate=" + orderDate +
+				", roomOrderStatus=" + roomOrderStatus +
+				", totalPrice=" + totalPrice +
+				'}';
+	}
+
 	public Integer getRoomOrderId() {
 		return roomOrderId;
 	}

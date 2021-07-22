@@ -3,87 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.js"></script>
     <script src="//unpkg.com/element-ui"></script>
     <script src="//unpkg.com/element-ui/lib/umd/locale/zh-TW.js"></script>
-
+    <script type="text/javascript" src="https://cdn.bootcss.com/moment.js/2.21.0/moment.js"></script>
 
     <style>
-        #div{
+        #div {
             width: 100%;
             height: 4rem;
             line-height: 4rem;
             text-align: center;
         }
-
+        .demo-table-expand {
+            font-size: 0;
+        }
+        .demo-table-expand label {
+            width: 90px;
+            color: #99a9bf;
+        }
+        .demo-table-expand .el-form-item {
+            margin-right: 0;
+            margin-bottom: 0;
+            width: 50%;
+        }
     </style>
 </head>
 <body>
 
-
 <div id="div">
-    <div >
-
-        <form class="form-inline" action="1111" method="post">
+    <div>
+        <form class="form-inline" action="" method="post">
             <div class="form-group">
                 <label for="ROOM_ORDER_ID">訂單編號</label>
                 <input type="text" name="ROOM_ORDER_ID" value="" class="form-control"
-                       id="ROOM_ORDER_ID">
+                       id="ROOM_ORDER_ID" v-model="ROOM_ORDER_ID">
             </div>
-
             <div class="form-group">
                 <label for="MEM_ID">會員編號</label>
                 <input type="text" name="MEM_ID" value="" class="form-control"
-                       id="MEM_ID">
+                       id="MEM_ID" v-model="MEM_ID">
             </div>
-            <button type="button" onclick="javascript:load()" class="btn btn-default">查詢</button>
+            <button type="button" @click="send()" class="btn btn-default">查詢</button>
         </form>
 
     </div>
 
-
     <el-row type="flex" class="row-bg" justify="center">
-        <el-col :span="3"><div class="grid-content bg-purple"></div></el-col>
-        <el-col :span="18"><el-table :data="tableData" style="width: 100%" >
-            <el-table-column
-                    prop="roomId"
-                    label="訂單編號"
-                    width="180">
-            </el-table-column>
-            <el-table-column
-                    prop="roomCategoryId"
-                    label="會員編號"
-                    width="180">
-            </el-table-column>
-            <el-table-column
-                    prop="roomCheckStatus"
-                    label="訂單日期">
-            </el-table-column>
-            <el-table-column
-                    prop="ROOM_ORDER_STATUS"
-                    label="訂單狀態">
-            </el-table-column>
-            <el-table-column
-                    prop="TOTAL_PRICE"
-                    label="訂單金額">
-            </el-table-column>
-            <el-table-column
-                    prop="ROOM_ORDER_LIST"
-                    label="訂單明細">
-                <el-link type="info">查看</el-link>
-            </el-table-column>
-            <el-table-column
-                    label="操作">
-                <el-button type="primary"  >修改</el-button>
-            </el-table-column>
+        <el-col :span="3">
+            <div class="grid-content bg-purple"></div>
+        </el-col>
+        <el-col :span="18">
+            <el-table :data="tableData" style="width: 100%">
+                <el-table-column
+                        prop="roomOrderId"
+                        label="訂單編號"
+                        width="120" align="center">
+                </el-table-column>
+                <el-table-column
+                        prop="memId"
+                        label="會員編號"
+                        width="100" align="center">
+                </el-table-column>
+                <el-table-column
+                        prop="orderDate"
+                        label="訂單時間" align="center"  width="180">
+                    <template slot-scope="{row}">
+                        <span>{{row.orderDate | dateString('YYYY-MM-DD HH:mm')}}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column
+                        prop="roomOrderStatus"
+                        label="訂單狀態" align="center">
+                    <template slot-scope="{row}">
+                        <span v-if="row.roomOrderStatus===1"><el-tag>已確認</el-tag></span>
+                        <span v-if="row.roomOrderStatus===0"><el-tag type="danger">未確認</el-tag></span>
+                    </template>
+                </el-table-column>
+                <el-table-column
+                        prop="totalPrice"
+                        label="訂單總金額" align="center">
+                </el-table-column>
+                <el-table-column
+                        prop="roomOrderId"
+                        label="訂單明細" align="center">
+                    <!--                <el-link type="primary" :href="`XXX?id=${prop}`">查看</el-link>-->
+                    <template slot-scope="tableDataList">
+                        <!--                    <a :href="`XXX?id=${tableDataList.row.roomCategoryId}`"-->
+                        <!--                       target="_blank">查看-->
+                        <!--                    </a>-->
 
-        </el-table> </el-col>
-        <el-col :span="3"><div class="grid-content bg-purple"></div></el-col>
+<!--                        <el-link type="primary" :href="`XXX?id=${tableDataList.row.roomOrderId}`">查看</el-link>-->
+                        <el-link type="primary" @click="showEditStu(tableDataList.row.roomOrderId)" >查看</el-link>
+                    </template>
+                </el-table-column>
+                <el-table-column
+                        label="操作" align="center">
+                    <template slot-scope="{row}">
+                    <span v-if="row.roomOrderStatus===0"><el-button type="primary" icon="el-icon-success">確認</el-button></span>
+                        <span v-if="row.roomOrderStatus===1"><el-button type="success" icon="el-icon-s-tools">修改</el-button></span>
+
+                    </template>
+
+                </el-table-column>
+
+            </el-table>
+        </el-col>
+        <el-col :span="3">
+            <div class="grid-content bg-purple"></div>
+        </el-col>
     </el-row>
 
     <!--
@@ -94,53 +127,126 @@
           :page-sizes：每頁條數選擇框中顯示的值
           :page-size : 默認的每頁條數
           layout： 分頁組件的佈局
-              total（總條數）, sizes(每頁條數), prev（上一頁）, pager(所有的頁碼), next(下一頁), jumper（跳轉頁碼）
+          total（總條數）, sizes(每頁條數), prev（上一頁）, pager(所有的頁碼), next(下一頁), jumper（跳轉頁碼）
           :total: 總條數
     -->
 
+    <el-dialog title="訂單明細" :visible.sync="dialogTableVisible4list" @close="resetForm('addForm')">
+        <el-table
+                :data="roomData"
+                style="width: 100%">
+            <el-table-column type="expand">
+                <template slot-scope="props">
+                    <el-form label-position="left" inline class="demo-table-expand">
+                        <el-form-item label="明細編號">
+                            <span>{{ props.row.orderListId }}</span>
+                        </el-form-item>
+                        <el-form-item label="訂單編號">
+                            <span>{{ props.row.roomOrderId }}</span>
+                        </el-form-item>
+                        <el-form-item label="房型">
+                            <span>{{ props.row.roomCategoryId }}</span>
+                        </el-form-item><el-form-item label="會員姓名">
+                            <span>{{ props.row.memName }}</span>
+                        </el-form-item>
+                        <el-form-item label="優惠編號">
+                            <span>{{ props.row.roomPromotionId }}</span>
+                        </el-form-item>
+                        <el-form-item label="房間編號">
+                            <template>
+                                <el-select v-model="options.roomId" placeholder="請選擇">
+                                    <el-option
+                                            v-for="item in options"
+                                            :key="item.roomId"
+                                            :label="item.roomId"
+                                            :value="item.roomId">
+                                    </el-option>
+                                </el-select>
+                            </template>
+                            <span>{{ props.row.roomId }}</span>
+                        </el-form-item>
+                        <el-form-item label="入住日期">
+                            <span>{{props.row.checkInDate | dateString('YYYY-MM-DD')}}</span>
+                        </el-form-item><el-form-item label="退房日期">
+                            <span>{{props.row.CheckOutDate | dateString('YYYY-MM-DD')}}</span>
+                        </el-form-item>
+                        <el-form-item label="金額">
+                            <span>{{ props.row.roomTotalPrice }}</span>
+                        </el-form-item>
+                    </el-form>
+                </template>
+            </el-table-column>
+
+            <el-table-column
+                    label="房型"
+                    prop="roomCategoryId">
+            </el-table-column>
+
+            <el-table-column
+                    label="入住日期">
+                <template slot-scope="scope">{{scope.row.checkInDate | dateString('YYYY-MM-DD')}}</template>
+            </el-table-column>
+
+            <el-table-column
+                    label="退房日期">
+                <template slot-scope="scope">{{scope.row.CheckOutDate | dateString('YYYY-MM-DD')}}</template>
+
+            </el-table-column>
+
+            <el-table-column
+                    label="金額"
+                    prop="roomTotalPrice">
+            </el-table-column>
+
+        </el-table>
+    </el-dialog>
 
     <el-pagination
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="pagination.currentPage"
-            :page-sizes="[5,10]"
+            :page-sizes="[5]"
             :page-size="pagination.rows"
             layout="total, sizes, prev, pager, next, jumper"
             :total="pagination.totalCount">
     </el-pagination>
 
-
-
 </div>
 
 </body>
 
-
 <script>
     ELEMENT.locale(ELEMENT.lang.zhTW)
 
+    Vue.filter('dateString', function (value, format = 'YYYY-MM-DD HH:mm:ss') {
+        return moment(value).format(format)
+    })
 
     new Vue({
-
         el: "#div",
         data: {
-            formDate:{},
-            tableData:[],
-            pagination:{
-                currentPage:1,
-                rows:5,
-                totalCount: 0
-            }
+            dialogTableVisible4list:false,
+            options: [],
+            roomData:[],
+            formDate: {},
+            tableData: [],
+            pagination: {
+                currentPage: 1,
+                rows: 5,
+                totalCount: 0,
+            },
+            ROOM_ORDER_ID: "",
+            MEM_ID: ""
         },
-
-        methods:{
-            selectByPage(){
-                axios.post("/CFA101G2/rmtype/selectRoomTypeServlet","currentPage="+this.pagination.currentPage+"&rows="+this.pagination.rows).then(resp=>{
-
-                    this.tableData =resp.data.list;
-
+        methods: {
+            selectByPage() {
+                axios.post("/CFA101G2/rmorder/romListServlet",
+                    `currentPage=${this.pagination.currentPage}&
+                    rows=${this.pagination.rows}&
+                    ROOM_ORDER_ID=${this.ROOM_ORDER_ID}&MEM_ID=${this.MEM_ID}`,
+                ).then(resp => {
+                    this.tableData = resp.data.list;
                     this.pagination.currentPage = resp.data.currentPage;
-
                     this.pagination.totalCount = resp.data.totalCount;
                 })
             },
@@ -156,23 +262,28 @@
                 this.pagination.currentPage = currentPage;
                 //重新執行查詢
                 this.selectByPage();
+            },
+            send() {
+                this.selectByPage();
+            },
+            showEditStu(roomOrderId) {
+                //1.彈出窗口
+                this.dialogTableVisible4list =true;
+                axios.post("/CFA101G2/rmorderlist/romOrderListServlet",
+                    `ROOM_ORDER_ID=${roomOrderId}`,
+                ).then(resp => {
+                    this.roomData = resp.data.rmolByPage.list;
+                    this.options = resp.data.validRoom.list;
+
+                    this.pagination.currentPage = resp.data.rmolByPage.currentPage;
+                    this.pagination.totalCount = resp.data.rmolByPage.totalCount;
+                })
             }
-
-
-
-
-
         },
-
-        mounted(){
+        mounted() {
             this.selectByPage();
         }
-
     });
-
-
-
-
 
 </script>
 

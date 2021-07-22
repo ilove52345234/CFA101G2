@@ -3,6 +3,7 @@ package com.rmorderlist.model;
 import java.sql.Timestamp;
 
 public class RmolVO implements java.io.Serializable{
+
 	private Integer orderListId;
 	private Integer roomOrderId;
 	private Integer roomCategoryId;
@@ -13,8 +14,8 @@ public class RmolVO implements java.io.Serializable{
 	private Timestamp checkInDate;
 	private Timestamp CheckOutDate;
 	private Integer roomTotalPrice;
-	public RmolVO() {
-	}
+
+	public RmolVO() { }
 	public Integer getOrderListId() {
 		return orderListId;
 	}

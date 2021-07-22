@@ -116,7 +116,9 @@
                     <td>${emps.empName}</td>
                     <td>${emps.empAccount}</td>
                     <td>${emps.empPassword}</td>
-                    <td>${emps.empStatus==1?'啟用中':'未啟用'}</td>
+                    <td>
+                            ${emps.empStatus==1?'啟用中':'未啟用'}
+                    </td>
                     <td>${emps.empAddDate}</td>
                     <td><A HREF="javascript:presses${s.count}()">查看</a></td>
                     <td><a class="btn btn-default btn-sm"
