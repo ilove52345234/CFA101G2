@@ -80,9 +80,13 @@ public class RmolService {
 		//計算開始的索引值
 		int start = (currentPage - 1) * rows;
 
-		List list = dao.findByPage(start,rows,condition);
+		List<RmolVO> byPage = dao.findByPage(start, rows, condition);
 
-		RmolVOPageBean.setList(list);
+		for (RmolVO rmolVO : byPage) {
+			System.out.println(rmolVO);
+		}
+
+		RmolVOPageBean.setList(byPage);
 
 		//5.計算總頁碼
 
@@ -93,6 +97,9 @@ public class RmolService {
 		return RmolVOPageBean;
 	}
 
+	public List<RmolVO> getAllByROOM_ORDER_ID(Integer RoomOrderId){
+		return dao.getAllByRoomOrderId(RoomOrderId);
+	}
 
 }	
 

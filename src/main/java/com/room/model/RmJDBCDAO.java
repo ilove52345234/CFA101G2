@@ -356,6 +356,7 @@ public class RmJDBCDAO implements RmDAO_interface {
 			//獲取值
 			String value = condition.get(key);
 
+			System.out.println(value);
 			//判斷是否有值
 			if (value != null && !"".equals(value)) {
 				//有值
@@ -374,6 +375,8 @@ public class RmJDBCDAO implements RmDAO_interface {
 
 
 		String sql = sb.toString();
+
+		System.out.println(sql);
 
 		return Template.query(sql,new BeanPropertyRowMapper<RmVO>(RmVO.class),params.toArray());
 

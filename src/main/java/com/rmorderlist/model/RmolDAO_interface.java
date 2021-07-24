@@ -15,5 +15,6 @@ public interface RmolDAO_interface {
 	public int findTotalCount(Map<String, String> condition);
 	public List<RmolVO> findByPage(int start, int rows, Map<String, String> condition);
 
+	public List<RmolVO> getAllByRoomOrderId(Integer RoomOrderId);
 
 }

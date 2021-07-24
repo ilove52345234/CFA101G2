@@ -18,16 +18,87 @@
     <!-- 上述3個meta標籤*必須*放在最前面，任何其他內容都*必須*跟隨其後！ -->
     <title>後台管理系統</title>
 
+    <%--    <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>--%>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js"
+            type="text/javascript"></script>
+
+
+    <!-- 引入 layui.css -->
+    <link rel="stylesheet" href="//unpkg.com/layui@2.6.8/dist/css/layui.css">
+
+    <!-- 引入 layui.js -->
+    <script src="//unpkg.com/layui@2.6.8/dist/layui.js"></script>
+
     <!-- 1. 導入CSS的全局樣式 -->
     <link href="<%=request.getContextPath()%>/back-end/css/bootstrap.min.css" rel="stylesheet">
     <!-- 2. jQuery導入，建議使用1.9以上的版本 -->
-    <script src="<%=request.getContextPath()%>/back-end/js/jquery-2.1.0.min.js"></script>
+    <%--    <script src="<%=request.getContextPath()%>/back-end/js/jquery-2.1.0.min.js"></script>--%>
     <!-- 3. 導入bootstrap的js文件 -->
     <script src="<%=request.getContextPath()%>/back-end/js/bootstrap.min.js"></script>
     <style type="text/css">
         td, th {
             text-align: center;
         }
+
+        /*body { font-size: 62.5%; }*/
+        /*label, input { display:block; }*/
+        input.text {
+            margin-bottom: 12px;
+            width: 95%;
+            padding: .4em;
+        }
+
+        fieldset {
+            padding: 0;
+            border: 0;
+            margin-top: 25px;
+
+        }
+
+        h1 {
+            font-size: 1.2em;
+            margin: .6em 0;
+        }
+
+        div#users-contain {
+            width: 350px;
+            margin: 20px 0;
+        }
+
+        div#users-contain table {
+            margin: 1em 0;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        div#users-contain table td, div#users-contain table th {
+            border: 1px solid #eee;
+            padding: .6em 10px;
+            text-align: left;
+        }
+
+        .ui-dialog .ui-state-error {
+            padding: .3em;
+        }
+
+        .validateTips {
+            border: 1px solid transparent;
+            padding: 0.3em;
+        }
+
+        .swal2-container {
+
+            z-index: 19891016;
+        }
+
+
+
+
     </style>
 
 
@@ -51,7 +122,6 @@
 
     </c:if>
 
-
     <%
         request.removeAttribute("Msgs");
     %>
@@ -73,45 +143,42 @@
             <div class="form-group">
                 <label for="exampleInputEmail2">房間使用情況</label>
                 <select name="ROOM_CHECK_STATUS" class="form-control" id="exampleInputEmail3">
+                    <c:if test="${  empty condition.ROOM_CHECK_STATUS }">
+                        <option value="" selected>查全部</option>
+                        <option value=0>未使用</option>
+                        <option value=1>待入住</option>
+                        <option value=2>已入住</option>
+                        <option value=3>已退房</option>
+                    </c:if>
 
-
-<%--                    <c:if test="${  condition.ROOM_CHECK_STATUS eq ''}">--%>
-<%--                        <option value= "" selected>查全部</option>--%>
-<%--                        <option value=0 >未使用</option>--%>
-<%--                        <option value=1>待入住</option>--%>
-<%--                        <option value=2>已入住</option>--%>
-<%--                        <option value=3>待退房</option>--%>
-<%--                    </c:if>--%>
-
-                    <c:if test="${ condition.ROOM_CHECK_STATUS == 0 || empty condition.ROOM_CHECK_STATUS}">
-                        <option value= "" >查全部</option>
+                    <c:if test="${ condition.ROOM_CHECK_STATUS == 0}">
+                        <option value="">查全部</option>
                         <option value=0 selected>未使用</option>
                         <option value=1>待入住</option>
                         <option value=2>已入住</option>
-                        <option value=3>待退房</option>
+                        <option value=3>已退房</option>
                     </c:if>
                     <c:if test="${condition.ROOM_CHECK_STATUS == 1}">
                         <option value="">查全部</option>
                         <option value=0>未使用</option>
                         <option value=1 selected>待入住</option>
                         <option value=2>已入住</option>
-                        <option value=3>待退房</option>
+                        <option value=3>已退房</option>
                     </c:if>
                     <c:if test="${condition.ROOM_CHECK_STATUS == 2}">
-                        <option value="" >查全部</option>
+                        <option value="">查全部</option>
                         <option value=0>未使用</option>
                         <option value=1>待入住</option>
                         <option value=2 selected>已入住</option>
-                        <option value=3>待退房</option>
+                        <option value=3>已退房</option>
                     </c:if>
                     <c:if test="${condition.ROOM_CHECK_STATUS == 3}">
                         <option value="">查全部</option>
                         <option value=0>未使用</option>
                         <option value=1>待入住</option>
                         <option value=2>已入住</option>
-                        <option value=3 selected>待退房</option>
+                        <option value=3 selected>已退房</option>
                     </c:if>
-
 
                 </select>
             </div>
@@ -134,7 +201,6 @@
     <%--  用表單將整個table包起來,用來提交所有的勾選--%>
     <%--    <%=request.getContextPath()%>/emp/delSelectedServlet?currentPage=${pb.currentPage}&rows=5--%>
     <form id="empForm" action="" method="post">
-
         <table border="1" class="table table-bordered table-hover">
             <tr class="success">
                 <th>列表編號</th>
@@ -143,7 +209,6 @@
                 <th>房間使用情況</th>
                 <th>房間狀態</th>
                 <th>住客姓名與資訊</th>
-                <%--                <th>住客資訊</th>--%>
                 <th>操作</th>
             </tr>
             <%--        按選中送出時提交value出去--%>
@@ -156,9 +221,10 @@
                         <c:forEach items="${rtVOS}" var="rtVO">
                             <c:if test="${rtVO.roomCategoryId eq rms.roomCategoryId}">${rtVO.roomName}</c:if>
                         </c:forEach></td>
-                    <td><c:if test="${rms.roomCheckStatus == 0 }">
+                    <td>
+                        <c:if test="${rms.roomCheckStatus == 0 }">
                             未使用
-                    </c:if>
+                        </c:if>
                         <c:if test="${rms.roomCheckStatus == 1 }">
                             待入住
                         </c:if>
@@ -166,53 +232,65 @@
                             已入住
                         </c:if>
                         <c:if test="${rms.roomCheckStatus == 3 }">
-                            待退房
+                            已退房
                         </c:if>
 
                     </td>
-                    <td>${rms.roomSaleStatus==0?'可用':'不可用'}</td>
+                    <td>
+                        <c:if test="${rms.roomSaleStatus==0}">
+                            <span class="label label-success">可用</span>
+                        </c:if>
+                        <c:if test="${rms.roomSaleStatus==1}">
+                            <span class="label label-danger">不可用</span>
+                        </c:if>
+
+                    </td>
                         <%--                    <td>${emps.empStatus==1?'啟用中':'未啟用'}</td>--%>
                     <td>
-                        <c:if test="${rms.roomSaleStatus == 0 }">
+                        <c:if test="${rms.roomInformation == null }">
                             未入住
                         </c:if>
-                        <c:if test="${rms.roomSaleStatus == 1 }">
-                            <A HREF="javascript:presses${s.count}()">${rms.roomInformation}</a>
+                        <c:if test="${rms.roomInformation != null }">
+                            <A HREF="javascript:openif('${rms.roomId}','${rms.roomInformation}')">${rms.roomInformation}</a>
                         </c:if>
 
                     </td>
 
-                    <td><a class="btn btn-default btn-sm"
-                        <%--                        <%=request.getContextPath()%>/emp/GetOneEmpServlet?empId=${emps.empId}&currentPage=${pb.currentPage}&rows=5--%>
-                           href="">修改狀態</a>&nbsp;
+                    <td>
+                            <%--                        <a class="btn btn-default btn-sm"--%>
+                            <%--                        <%=request.getContextPath()%>/emp/GetOneEmpServlet?empId=${emps.empId}&currentPage=${pb.currentPage}&rows=5--%>
+                            <%--                           href="">修改狀態</a>&nbsp;--%>
 
-                        <c:if test="${rms.roomSaleStatus == 0 }">
-                            <a class="btn btn-default btn-sm"
-                               href="">入住</a>
+                        <c:if test="${rms.roomCheckStatus == 1 ||rms.roomCheckStatus == 0 }">
+                            <%--                            <a class="btn btn-default btn-sm"--%>
+                            <%--                               href="" οnclick="aa()">入住</a>--%>
+                            <a class="btn btn-success btn-sm"
+                               href="javascript:presses(${rms.roomId});">入住</a>
+
                         </c:if>
 
-                        <c:if test="${rms.roomSaleStatus == 1 }">
-                            <a class="btn btn-default btn-sm"
-                               href="">退房</a>
+                        <c:if test="${rms.roomCheckStatus == 2 }">
+                            <a class="btn btn-info btn-sm"
+                               href="javascript:checkOut('${rms.roomId}','${rms.roomInformation}')">退房</a>
                         </c:if>
+
+                                <c:if test="${rms.roomCheckStatus == 3 }">
+                                    <a class="btn btn-primary btn-sm"
+                                       href="javascript:done(${rms.roomId})">確認完成</a>
+                                </c:if>
 
 
                     </td>
                 </tr>
-                <%--                javascript:deleteEmp(${emps.empId});--%>
-                <%--                <script>--%>
-                <%--                    function presses${s.count}() {--%>
-                <%--                        document.open("<%=request.getContextPath()%>/emp/EmpFuncServlet?empId=${emps.empId}&empName=${emps.empName}", "", "height=250,width=850,left=65,top=157,resizable=yes,scrollbars=yes");--%>
-                <%--                    }--%>
-                <%--                </script>--%>
+
 
             </c:forEach>
-
 
         </table>
 
 
     </form>
+    <%--    分頁--%>
     <div>
         <nav aria-label="Page navigation">
             <ul class="pagination">
@@ -245,7 +323,6 @@
 
                 </c:forEach>
 
-
                 <c:if test="${pb.currentPage == pb.totalPage }">
                 <li class="disabled">
                     </c:if>
@@ -262,14 +339,162 @@
                 <span style="font-size: 25px;margin-left: 5px;">
                     總共有${pb.totalCount}間房間，共${pb.totalPage}頁
                 </span>
-
             </ul>
         </nav>
     </div>
+
+
 </div>
 
 
 <script>
+
+    function presses(roomId) {
+        <%--document.open("<%=request.getContextPath()%>/back-end/room/addRoom.jsp?roomId=" + roomId, "", "height=250,width=850,left=65,top=157,resizable=yes,scrollbars=yes");--%>
+
+
+        var url = "<%=request.getContextPath()%>/back-end/room/addRoom.jsp?roomId=" + roomId;
+
+        // if (top.layui.index) {
+        //     top.layui.index.openTabsPage(url, title)
+        // } else {
+        //     window.open(url)
+        // }
+
+
+        layer.open({
+            title: '住客登記',
+            type: 2,
+            content: url,
+            shade: 0.2,
+            shadeClose: true,
+            maxmin: true,
+            area: ['500px', '400px'],
+
+
+        });
+
+    }
+
+    function openif(roomId, roomInformation) {
+
+        var url = "<%=request.getContextPath()%>/back-end/information.jsp?roomId=" + roomId + "&name=" + roomInformation;
+
+        console.log(url)
+        layer.open({
+            title: '住客資訊',
+            type: 2,
+            content: url,
+            shade: 0.2,
+            shadeClose: true,
+            maxmin: true,
+            area: ['500px', '400px']
+
+        });
+
+    }
+
+
+    function checkOut(roomId, roomInformation) {
+
+        var url = "<%=request.getContextPath()%>/back-end/information.jsp?roomId=" + roomId + "&name=" + roomInformation;
+
+
+        layer.open({
+            title: ['請確認退房資訊與房卡','color: red'],
+            type: 2,
+            content: url,
+            shade: 0.2,
+            shadeClose: true,
+            maxmin: true,
+            area: ['500px', '400px'],
+            btn: ['Check out'],
+            yes: function (index, layero) {
+                // var group_name = $(layero).find("iframe")[0].contentWindow.group_name();
+                //
+                // alert(group_name)
+
+                $.ajax({
+                    type: "post",
+
+                    url: "/CFA101G2/room/checkOutServlet?roomId=" + roomId,
+
+                    data: {},//序列化表单数据
+
+                    success: function (data) {
+                        if (data.flag) {
+                            swal("完成!", "2秒後回到列表", "success",);
+                            setTimeout(function () {
+                                window.parent.location.reload(); //刷新父頁面
+                                var index = parent.layer.getFrameIndex(window.name); //獲取窗口索引
+                                parent.layer.close(index); // 關閉圖層
+                            }, 2000);
+                        } else {
+                            swal("失敗", "原因" + data.errorMsg, "error");
+                            setTimeout(function () {
+                                window.parent.location.reload(); //刷新父頁面
+                                var index = parent.layer.getFrameIndex(window.name); //獲取窗口索引
+                                parent.layer.close(index); // 關閉圖層
+                            }, 2000);
+                        }
+                    }
+                });
+            }, btnAlign: 'c'
+        });
+
+
+    }
+
+    function done(roomId) {
+
+        var url = "<%=request.getContextPath()%>/back-end/information.jsp?roomId=" + roomId ;
+
+
+        swal({
+            title: '確認房間清潔完成',
+            input: 'checkbox',
+            inputPlaceholder: '房況確認完畢'
+        }).then(function(result) {
+            if (result === 1) {
+                $.ajax({
+                    type: "post",
+
+                    url: "/CFA101G2/room/roomDoneServlet?roomId=" + roomId,
+
+                    data: {},
+
+                    success: function (data) {
+                        if (data.flag) {
+                            swal("完成!", "2秒後回到列表", "success",);
+                            setTimeout(function () {
+                                window.parent.location.reload(); //刷新父頁面
+                                var index = parent.layer.getFrameIndex(window.name); //獲取窗口索引
+                                parent.layer.close(index); // 關閉圖層
+                            }, 2000);
+                        } else {
+                            swal("失敗", "原因" + data.errorMsg, "error");
+                            setTimeout(function () {
+                                window.parent.location.reload(); //刷新父頁面
+                                var index = parent.layer.getFrameIndex(window.name); //獲取窗口索引
+                                parent.layer.close(index); // 關閉圖層
+                            }, 2000);
+                        }
+                    }
+                });
+
+            } else if (result === 0) {
+                swal({
+                    type: 'error',
+                    text: "請確認房況"
+                });
+            }
+        });
+
+
+
+
+
+    }
     <%--function deleteEmp(empId) {--%>
     <%--    //給安全提示--%>
     <%--    if (confirm("確定要刪除嗎?")) {--%>

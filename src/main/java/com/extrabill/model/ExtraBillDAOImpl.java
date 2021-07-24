@@ -1,5 +1,6 @@
 package com.extrabill.model;
 
+import com.ron.model.RonVO;
 import com.utils.JDBCUtils;
 
 import java.sql.Connection;
@@ -16,16 +17,18 @@ public class ExtraBillDAOImpl implements ExtraBillDAO {
 
 
     private static final String INSERT_STMT =
-            "insert into EXTRA_BILL(ORDER_LIST_ID, EXTRA_PRICE, AMOUNT, SERVICE_ITEM, CONSUMPTION_DATE) value (?,?,?,?,?)";
+            "insert into EXTRA_BILL (ROOM_ID, EXTRA_PRICE, INFORMATION_PHONE, SERVICE_ITEM, CHECK_IN_DATE, CHECK_OUT_DATE) value (?,?,?,?,?,?)";
     private static final String GET_ONE_STMT =
-            "select EXTRA_BILL_ID, ORDER_LIST_ID, EXTRA_PRICE, AMOUNT, SERVICE_ITEM, CONSUMPTION_DATE from EXTRA_BILL where EXTRA_BILL_ID=?";
+            "select * from EXTRA_BILL where ROOM_ID=?";
     private static final String GET_ALL_STMT =
             "select EXTRA_BILL_ID, ORDER_LIST_ID, EXTRA_PRICE, AMOUNT, SERVICE_ITEM, CONSUMPTION_DATE from EXTRA_BILL order by EXTRA_BILL_ID";
     private static final String DELETE =
             "delete from EXTRA_BILL where EXTRA_BILL_ID=?";
-    private static final String UPDATE =
-            "update EXTRA_BILL set ORDER_LIST_ID =?, EXTRA_PRICE =?, AMOUNT =?, SERVICE_ITEM =?, CONSUMPTION_DATE =? where EXTRA_BILL_ID=?";
 
+    private static final String DELETE_ROOM =
+            "delete from EXTRA_BILL where ROOM_ID=?";
+    private static final String UPDATE =
+            "update EXTRA_BILL set ROOM_ID=?,EXTRA_PRICE=?, INFORMATION_PHONE=? ,SERVICE_ITEM=? ,CHECK_IN_DATE=? ,CHECK_OUT_DATE=? where EXTRA_BILL_ID=?";
 
     @Override
     public void insert(ExtraBillVO extraBillVO) {
@@ -35,15 +38,14 @@ public class ExtraBillDAOImpl implements ExtraBillDAO {
             con = jdbcUtils.getConnection();
             pstmt = con.prepareStatement(INSERT_STMT);
 
-            pstmt.setInt(1, extraBillVO.getOrderListId());
+            pstmt.setInt(1, extraBillVO.getRoomId());
             pstmt.setInt(2, extraBillVO.getExtraPrice());
-            pstmt.setInt(3, extraBillVO.getAmount());
+            pstmt.setString(3, extraBillVO.getInformationPhone());
             pstmt.setString(4, extraBillVO.getServiceItem());
-            pstmt.setTimestamp(5, extraBillVO.getConsumptionDate());
+            pstmt.setTimestamp(5, extraBillVO.getCheckInDate());
+            pstmt.setTimestamp(6, extraBillVO.getCheckOutDate());
 
             int i = pstmt.executeUpdate();
-
-
             System.out.println("新增" + i + "筆完成");
 
 
@@ -63,12 +65,13 @@ public class ExtraBillDAOImpl implements ExtraBillDAO {
             con = jdbcUtils.getConnection();
             pstmt = con.prepareStatement(UPDATE);
 
-            pstmt.setInt(1, extraBillVO.getOrderListId());
+            pstmt.setInt(1, extraBillVO.getRoomId());
             pstmt.setInt(2, extraBillVO.getExtraPrice());
-            pstmt.setInt(3, extraBillVO.getAmount());
+            pstmt.setString(3, extraBillVO.getInformationPhone());
             pstmt.setString(4, extraBillVO.getServiceItem());
-            pstmt.setTimestamp(5, extraBillVO.getConsumptionDate());
-            pstmt.setInt(6, extraBillVO.getExtraBillId());
+            pstmt.setTimestamp(5, extraBillVO.getCheckInDate());
+            pstmt.setTimestamp(6, extraBillVO.getCheckOutDate());
+            pstmt.setInt(7, extraBillVO.getExtraBillId());
 
             int i = pstmt.executeUpdate();
 
@@ -84,8 +87,42 @@ public class ExtraBillDAOImpl implements ExtraBillDAO {
     }
 
     @Override
-    public void delete(Integer extraBillId) {
+    public ExtraBillVO getOneByRoomId(Integer roomId) {
 
+        ExtraBillVO extraBillVO = null;
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            con = jdbcUtils.getConnection();
+            pstmt = con.prepareStatement(GET_ONE_STMT);
+            pstmt.setInt(1, roomId);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                extraBillVO = new ExtraBillVO();
+                extraBillVO.setExtraBillId(rs.getInt("EXTRA_BILL_ID"));
+                extraBillVO.setRoomId(rs.getInt("ROOM_ID"));
+                extraBillVO.setExtraPrice(rs.getInt("EXTRA_PRICE"));
+                extraBillVO.setInformationPhone(rs.getString("INFORMATION_PHONE"));
+                extraBillVO.setServiceItem(rs.getString("SERVICE_ITEM"));
+                extraBillVO.setCheckInDate(rs.getTimestamp("CHECK_IN_DATE"));
+                extraBillVO.setCheckOutDate(rs.getTimestamp("CHECK_OUT_DATE"));
+
+            }
+            ;
+
+        } catch (SQLException se) {
+            throw new RuntimeException("發生錯誤:" + se.getMessage());
+        } finally {
+            jdbcUtils.close(rs, pstmt, con);
+        }
+        return extraBillVO;
+    }
+
+    @Override
+    public void delete(Integer extraBillId) {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
@@ -105,73 +142,26 @@ public class ExtraBillDAOImpl implements ExtraBillDAO {
             jdbcUtils.close(pstmt, con);
         }
     }
-
-    @Override
-    public ExtraBillVO findByPrimaryKey(Integer extraBillId) {
-        ExtraBillVO extraBillVO = null;
-        ResultSet rs = null;
+    public void deleteByRoomId(Integer roomId) {
         Connection con = null;
         PreparedStatement pstmt = null;
         try {
             con = jdbcUtils.getConnection();
-            pstmt = con.prepareStatement(GET_ONE_STMT);
-            pstmt.setInt(1,extraBillId);
+            pstmt = con.prepareStatement(DELETE_ROOM);
 
-            rs = pstmt.executeQuery();
+            pstmt.setInt(1, roomId);
 
-            while (rs.next()) {
-                extraBillVO = new ExtraBillVO();
+            int i = pstmt.executeUpdate();
 
-                extraBillVO.setExtraBillId(rs.getInt("EXTRA_BILL_ID"));
-                extraBillVO.setOrderListId(rs.getInt("ORDER_LIST_ID"));
-                extraBillVO.setExtraPrice(rs.getInt("EXTRA_PRICE"));
-                extraBillVO.setAmount(rs.getInt("AMOUNT"));
-                extraBillVO.setServiceItem(rs.getString("SERVICE_ITEM"));
-                extraBillVO.setConsumptionDate(rs.getTimestamp("CONSUMPTION_DATE"));
-
-            }
+            System.out.println("刪除" + i + "筆完成");
 
 
         } catch (SQLException se) {
             throw new RuntimeException("發生錯誤:" + se.getMessage());
         } finally {
-            jdbcUtils.close(rs,pstmt, con);
+            jdbcUtils.close(pstmt, con);
         }
-        return extraBillVO;
     }
 
-    @Override
-    public List<ExtraBillVO> getAll() {
-        ArrayList<ExtraBillVO> extraBillVOList = new ArrayList<ExtraBillVO>();
 
-        ExtraBillVO extraBillVO = null;
-        ResultSet rs = null;
-        Connection con = null;
-        PreparedStatement pstmt = null;
-        try {
-            con = jdbcUtils.getConnection();
-            pstmt = con.prepareStatement(GET_ALL_STMT);
-
-            rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                extraBillVO = new ExtraBillVO();
-
-                extraBillVO.setExtraBillId(rs.getInt("EXTRA_BILL_ID"));
-                extraBillVO.setOrderListId(rs.getInt("ORDER_LIST_ID"));
-                extraBillVO.setExtraPrice(rs.getInt("EXTRA_PRICE"));
-                extraBillVO.setAmount(rs.getInt("AMOUNT"));
-                extraBillVO.setServiceItem(rs.getString("SERVICE_ITEM"));
-                extraBillVO.setConsumptionDate(rs.getTimestamp("CONSUMPTION_DATE"));
-                extraBillVOList.add(extraBillVO);
-            }
-
-
-        } catch (SQLException se) {
-            throw new RuntimeException("發生錯誤:" + se.getMessage());
-        } finally {
-            jdbcUtils.close(rs,pstmt, con);
-        }
-        return extraBillVOList;
-    }
 }

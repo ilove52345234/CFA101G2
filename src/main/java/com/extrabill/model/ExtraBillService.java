@@ -4,58 +4,41 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public class ExtraBillService {
-        private ExtraBillDAO extraBillDAO;
+    private ExtraBillDAO extraBillDAO;
 
     public ExtraBillService() {
        extraBillDAO = new ExtraBillDAOImpl();
     }
 
-    public ExtraBillVO addExtraBill(Integer orderListId, Integer extraPrice, Integer amount, String serviceItem, Timestamp consumptionDate){
-        ExtraBillVO extraBillVO = new ExtraBillVO();
-
-        extraBillVO.setOrderListId(orderListId);
-        extraBillVO.setExtraPrice(extraPrice);
-        extraBillVO.setAmount(amount);
-        extraBillVO.setServiceItem(serviceItem);
-        extraBillVO.setConsumptionDate(consumptionDate);
-
-
-
-        extraBillDAO.insert(extraBillVO);
-        return extraBillVO;
+    public ExtraBillVO GetOne(Integer roomId){
+        return  extraBillDAO.getOneByRoomId(roomId);
     }
 
+    public ExtraBillVO CheckIn(Integer roomId, String informationPhone, Integer extraPrice, String serviceItem, Timestamp checkInDate, Timestamp checkOutDate) {
 
-
-    public ExtraBillVO updateExtraBill(Integer extraBillId,Integer orderListId, Integer extraPrice, Integer amount, String serviceItem, Timestamp consumptionDate){
         ExtraBillVO extraBillVO = new ExtraBillVO();
-
-        extraBillVO.setOrderListId(orderListId);
+        extraBillVO.setRoomId(roomId);
+        extraBillVO.setInformationPhone(informationPhone);
         extraBillVO.setExtraPrice(extraPrice);
-        extraBillVO.setAmount(amount);
         extraBillVO.setServiceItem(serviceItem);
-        extraBillVO.setConsumptionDate(consumptionDate);
-        extraBillVO.setExtraBillId(extraBillId);
+        extraBillVO.setCheckInDate(checkInDate);
+        extraBillVO.setCheckOutDate(checkOutDate);
 
+        extraBillDAO.insert(extraBillVO);
+
+        return extraBillVO;
+
+    }
+
+    public ExtraBillVO CheckOut(ExtraBillVO extraBillVO){
 
 
         extraBillDAO.update(extraBillVO);
         return extraBillVO;
     }
 
-
-
-    public void deleteExtraBill(Integer extraBillId) {
-        extraBillDAO.delete(extraBillId);
+    public void deleteExtraBill(Integer roomId) {
+        extraBillDAO.deleteByRoomId(roomId);
     }
 
-
-    public List<ExtraBillVO> getAll() {
-        return extraBillDAO.getAll();
-    }
-
-
-    public ExtraBillVO getOneExtraBill(Integer extraBillId) {
-        return extraBillDAO.findByPrimaryKey(extraBillId);
-    }
 }

@@ -210,6 +210,7 @@ public class EmpServlet extends BaseServlet {
         ObjectMapper mapper = new ObjectMapper();
 //        System.out.println(info);
         //設置回傳格式
+//        getServletContext().getMimeType(".json")+";charset=utf-8";
         response.setContentType("application/json;charset=utf-8");
         mapper.writeValue(response.getOutputStream(), info);
     }

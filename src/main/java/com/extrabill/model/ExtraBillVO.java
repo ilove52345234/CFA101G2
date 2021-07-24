@@ -4,35 +4,18 @@ import java.sql.Timestamp;
 
 public class ExtraBillVO implements java.io.Serializable{
     private Integer extraBillId;
-    private Integer orderListId;
+    private Integer roomId;
+    private String informationPhone;
     private Integer extraPrice;
-    private Integer amount;
     private String serviceItem;
-    private Timestamp consumptionDate;
+    private Timestamp checkInDate;
+    private Timestamp checkOutDate;
 
     public ExtraBillVO() {
     }
 
-    public ExtraBillVO(Integer extraBillId, Integer orderListId, Integer extraPrice, Integer amount, String serviceItem, Timestamp consumptionDate) {
-        this.extraBillId = extraBillId;
-        this.orderListId = orderListId;
-        this.extraPrice = extraPrice;
-        this.amount = amount;
-        this.serviceItem = serviceItem;
-        this.consumptionDate = consumptionDate;
-    }
 
-    @Override
-    public String toString() {
-        return "ExtraBillVO{" +
-                "extraBillId=" + extraBillId +
-                ", orderListId=" + orderListId +
-                ", extraPrice=" + extraPrice +
-                ", amount=" + amount +
-                ", serviceItem='" + serviceItem + '\'' +
-                ", consumptionDate=" + consumptionDate +
-                '}';
-    }
+
 
     public Integer getExtraBillId() {
         return extraBillId;
@@ -42,13 +25,16 @@ public class ExtraBillVO implements java.io.Serializable{
         this.extraBillId = extraBillId;
     }
 
-    public Integer getOrderListId() {
-        return orderListId;
+    public Integer getRoomId() {
+        return roomId;
     }
 
-    public void setOrderListId(Integer orderListId) {
-        this.orderListId = orderListId;
+    public void setRoomId(Integer roomId) {
+        this.roomId = roomId;
     }
+
+
+
 
     public Integer getExtraPrice() {
         return extraPrice;
@@ -56,14 +42,6 @@ public class ExtraBillVO implements java.io.Serializable{
 
     public void setExtraPrice(Integer extraPrice) {
         this.extraPrice = extraPrice;
-    }
-
-    public Integer getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Integer amount) {
-        this.amount = amount;
     }
 
     public String getServiceItem() {
@@ -74,11 +52,50 @@ public class ExtraBillVO implements java.io.Serializable{
         this.serviceItem = serviceItem;
     }
 
-    public Timestamp getConsumptionDate() {
-        return consumptionDate;
+    public Timestamp getCheckInDate() {
+        return checkInDate;
     }
 
-    public void setConsumptionDate(Timestamp consumptionDate) {
-        this.consumptionDate = consumptionDate;
+    public void setCheckInDate(Timestamp checkInDate) {
+        this.checkInDate = checkInDate;
+    }
+
+    public Timestamp getCheckOutDate() {
+        return checkOutDate;
+    }
+
+    public void setCheckOutDate(Timestamp checkOutDate) {
+        this.checkOutDate = checkOutDate;
+    }
+
+    @Override
+    public String toString() {
+        return "ExtraBillVO{" +
+                "extraBillId=" + extraBillId +
+                ", roomId=" + roomId +
+                ", informationPhone='" + informationPhone + '\'' +
+                ", extraPrice=" + extraPrice +
+                ", serviceItem='" + serviceItem + '\'' +
+                ", checkInDate=" + checkInDate +
+                ", checkOutDate=" + checkOutDate +
+                '}';
+    }
+
+    public String getInformationPhone() {
+        return informationPhone;
+    }
+
+    public void setInformationPhone(String informationPhone) {
+        this.informationPhone = informationPhone;
+    }
+
+    public ExtraBillVO(Integer extraBillId, Integer roomId, String informationPhone, Integer extraPrice, String serviceItem, Timestamp checkInDate, Timestamp checkOutDate) {
+        this.extraBillId = extraBillId;
+        this.roomId = roomId;
+        this.informationPhone = informationPhone;
+        this.extraPrice = extraPrice;
+        this.serviceItem = serviceItem;
+        this.checkInDate = checkInDate;
+        this.checkOutDate = checkOutDate;
     }
 }

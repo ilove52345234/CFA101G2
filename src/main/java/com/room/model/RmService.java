@@ -35,6 +35,11 @@ public class RmService {
 			dao.update(rmVO);
 			return rmVO;
 		}
+
+	public RmVO updateRmVO( RmVO rmVO){
+		dao.update(rmVO);
+		return rmVO;
+	}
 		
 		public void deleteRm(Integer roomId) {
 			dao.delete(roomId);
@@ -86,14 +91,11 @@ public class RmService {
 
 		return rmVOPageBean;
 	}
-		public PageBean<RmVO> getValidRoom(String _currentPage, String _rows ) {
+		public PageBean<RmVO> getValidRoom(String _currentPage, String _rows, Map<String, String> condition ) {
 		//1.創建一個空的PageBean物件
 		PageBean<RmVO> rmVOPageBean = new PageBean<RmVO>();
-		Map<String, String> condition = new HashMap<String, String>();
 
-		condition.put("ROOM_CHECK_STATUS","0");
-//		condition.put("ROOM_CATEGORY_ID",ROOM_CATEGORY_ID);
-//      String ROOM_CATEGORY_ID
+
 		int currentPage = Integer.parseInt(_currentPage);
 		int rows = Integer.parseInt(_rows);
 

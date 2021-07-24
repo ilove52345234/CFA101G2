@@ -12,7 +12,6 @@
     <script src="//unpkg.com/element-ui"></script>
     <script src="//unpkg.com/element-ui/lib/umd/locale/zh-TW.js"></script>
     <script type="text/javascript" src="https://cdn.bootcss.com/moment.js/2.21.0/moment.js"></script>
-
     <style>
         #div {
             width: 100%;
@@ -34,6 +33,7 @@
         }
     </style>
 </head>
+
 <body>
 
 <div id="div">
@@ -51,7 +51,6 @@
             </div>
             <button type="button" @click="send()" class="btn btn-default">查詢</button>
         </form>
-
     </div>
 
     <el-row type="flex" class="row-bg" justify="center">
@@ -59,7 +58,7 @@
             <div class="grid-content bg-purple"></div>
         </el-col>
         <el-col :span="18">
-            <el-table :data="tableData" style="width: 100%">
+            <el-table  :data="tableData" style="width: 100%">
                 <el-table-column
                         prop="roomOrderId"
                         label="訂單編號"
@@ -131,7 +130,7 @@
           :total: 總條數
     -->
 
-    <el-dialog title="訂單明細" :visible.sync="dialogTableVisible4list" @close="resetForm('addForm')">
+    <el-dialog title="訂單明細" :visible.sync="dialogTableVisible4list" >
         <el-table
                 :data="roomData"
                 style="width: 100%">
@@ -154,21 +153,21 @@
                         </el-form-item>
                         <el-form-item label="房間編號">
                             <template>
-                                <el-select v-model="options.roomId" placeholder="請選擇">
+                                <el-select v-model="options.roomId" placeholder="請選擇" >
                                     <el-option
                                             v-for="item in options"
+                                            v-if="item.roomCategoryId == props.row.roomCategoryId && item.roomSaleStatus == 0 "
                                             :key="item.roomId"
                                             :label="item.roomId"
                                             :value="item.roomId">
                                     </el-option>
                                 </el-select>
                             </template>
-                            <span>{{ props.row.roomId }}</span>
                         </el-form-item>
                         <el-form-item label="入住日期">
                             <span>{{props.row.checkInDate | dateString('YYYY-MM-DD')}}</span>
                         </el-form-item><el-form-item label="退房日期">
-                            <span>{{props.row.CheckOutDate | dateString('YYYY-MM-DD')}}</span>
+                            <span>{{props.row.checkOutDate | dateString('YYYY-MM-DD')}}</span>
                         </el-form-item>
                         <el-form-item label="金額">
                             <span>{{ props.row.roomTotalPrice }}</span>
@@ -186,11 +185,9 @@
                     label="入住日期">
                 <template slot-scope="scope">{{scope.row.checkInDate | dateString('YYYY-MM-DD')}}</template>
             </el-table-column>
-
             <el-table-column
                     label="退房日期">
-                <template slot-scope="scope">{{scope.row.CheckOutDate | dateString('YYYY-MM-DD')}}</template>
-
+                <template slot-scope="scope">{{scope.row.checkOutDate | dateString('YYYY-MM-DD')}}</template>
             </el-table-column>
 
             <el-table-column
@@ -199,6 +196,8 @@
             </el-table-column>
 
         </el-table>
+        <el-button type="primary" @click="addStu()">完成</el-button>
+        <el-button type="primary" @click="addStu()">取消</el-button>
     </el-dialog>
 
     <el-pagination
@@ -216,6 +215,7 @@
 </body>
 
 <script>
+
     ELEMENT.locale(ELEMENT.lang.zhTW)
 
     Vue.filter('dateString', function (value, format = 'YYYY-MM-DD HH:mm:ss') {
@@ -236,21 +236,18 @@
                 totalCount: 0,
             },
             ROOM_ORDER_ID: "",
-            MEM_ID: ""
+            MEM_ID: "",
         },
         methods: {
             selectByPage() {
                 axios.post("/CFA101G2/rmorder/romListServlet",
-                    `currentPage=${this.pagination.currentPage}&
-                    rows=${this.pagination.rows}&
-                    ROOM_ORDER_ID=${this.ROOM_ORDER_ID}&MEM_ID=${this.MEM_ID}`,
+                    `currentPage=${this.pagination.currentPage}&rows=${this.pagination.rows}&ROOM_ORDER_ID=${this.ROOM_ORDER_ID}&MEM_ID=${this.MEM_ID}`,
                 ).then(resp => {
                     this.tableData = resp.data.list;
                     this.pagination.currentPage = resp.data.currentPage;
                     this.pagination.totalCount = resp.data.totalCount;
                 })
-            },
-            //改變每頁條數時執行的函數
+            },//改變每頁條數時執行的函數
             handleSizeChange(rows) {
                 //修改分頁查詢的參數
                 this.pagination.rows = rows;
@@ -269,15 +266,17 @@
             showEditStu(roomOrderId) {
                 //1.彈出窗口
                 this.dialogTableVisible4list =true;
-                axios.post("/CFA101G2/rmorderlist/romOrderListServlet",
-                    `ROOM_ORDER_ID=${roomOrderId}`,
+                axios.post("/CFA101G2/rmorderlist/romOrderListServlet", `ROOM_ORDER_ID=${roomOrderId}`,
                 ).then(resp => {
-                    this.roomData = resp.data.rmolByPage.list;
-                    this.options = resp.data.validRoom.list;
+                    // resp['data']
+                    // var {data} = resp;
 
-                    this.pagination.currentPage = resp.data.rmolByPage.currentPage;
-                    this.pagination.totalCount = resp.data.rmolByPage.totalCount;
+                    this.roomData = resp.data.list;
+                    this.options = resp.data.all;
                 })
+            },
+            updateStu(){
+
             }
         },
         mounted() {
@@ -286,6 +285,5 @@
     });
 
 </script>
-
 
 </html>

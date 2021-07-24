@@ -12,8 +12,24 @@ public class RmolVO implements java.io.Serializable{
 	private String memName;
 	private Integer memNumber;
 	private Timestamp checkInDate;
-	private Timestamp CheckOutDate;
+	private Timestamp checkOutDate;
 	private Integer roomTotalPrice;
+
+	@Override
+	public String toString() {
+		return "RmolVO{" +
+				"orderListId=" + orderListId +
+				", roomOrderId=" + roomOrderId +
+				", roomCategoryId=" + roomCategoryId +
+				", roomPromotionId=" + roomPromotionId +
+				", roomId=" + roomId +
+				", memName='" + memName + '\'' +
+				", memNumber=" + memNumber +
+				", checkInDate=" + checkInDate +
+				", checkOutDate=" + checkOutDate +
+				", roomTotalPrice=" + roomTotalPrice +
+				'}';
+	}
 
 	public RmolVO() { }
 	public Integer getOrderListId() {
@@ -65,10 +81,10 @@ public class RmolVO implements java.io.Serializable{
 		this.checkInDate = checkInDate;
 	}
 	public Timestamp getCheckOutDate() {
-		return CheckOutDate;
+		return checkOutDate;
 	}
 	public void setCheckOutDate(Timestamp checkOutDate) {
-		CheckOutDate = checkOutDate;
+		this.checkOutDate = checkOutDate;
 	}
 	public Integer getRoomTotalPrice() {
 		return roomTotalPrice;
@@ -76,6 +92,6 @@ public class RmolVO implements java.io.Serializable{
 	public void setRoomTotalPrice(Integer roomTotalPrice) {
 		this.roomTotalPrice = roomTotalPrice;
 	}
-	
+
 
 }

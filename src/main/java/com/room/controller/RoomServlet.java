@@ -68,8 +68,6 @@ public class RoomServlet extends HttpServlet {
 
 		try {
 
-
-
 			//1.獲取參數
 			String currentPage = request.getParameter("currentPage"); //當前頁碼
 			String rows = request.getParameter("rows"); //每頁顯示的條數
@@ -89,9 +87,7 @@ public class RoomServlet extends HttpServlet {
 			String ROOM_INFORMATION = request.getParameter("ROOM_INFORMATION");
 			String ROOM_CHECK_STATUS = request.getParameter("ROOM_CHECK_STATUS");
 
-			System.out.println(ROOM_CHECK_STATUS);
-			System.out.println(ROOM_ID);
-			System.out.println(ROOM_INFORMATION);
+
 			condition.put("ROOM_ID",ROOM_ID);
 			condition.put("ROOM_INFORMATION",ROOM_INFORMATION);
 			condition.put("ROOM_CHECK_STATUS",ROOM_CHECK_STATUS);
@@ -107,15 +103,14 @@ public class RoomServlet extends HttpServlet {
 
 			List<RmVO> list = pb.getList();
 
-			for (RmVO rmVO : list) {
-				System.out.println(rmVO);
-			}
+
 
 
 			//3.將PageBean存入request
 			request.setAttribute("pb",pb);
 			request.setAttribute("rtVOS",rtVOS);
 			request.setAttribute("condition",condition);//將查詢條件也一起放入
+			response.setContentType("text/html;charset=utf-8");
 
 //        ("執行順利");
 			//4.轉交
