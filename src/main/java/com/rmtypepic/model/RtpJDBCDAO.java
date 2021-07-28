@@ -16,7 +16,7 @@
 	/*  16 */   String driver = "com.mysql.cj.jdbc.Driver";
 	/*  17 */   String url = "jdbc:mysql://35.221.136.103:3306/CFA101G2?serverTimezone=Asia/Taipei";
 	/*  18 */   String userid = "CFA101G2";
-	/*  19 */   String passwd = "123456";
+	/*  19 */   String passwd = "A123456";
 	/*     */
 	/*     */   private static final String INSERT_STMT = "INSERT INTO ROOM_TYPE_PIC (ROOM_CATEGORY_ID, ROOM_PHOTO) VALUES (?,?)";
 	/*     */

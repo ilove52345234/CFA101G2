@@ -24,7 +24,6 @@ public class RomOrderListServlet extends HttpServlet {
 
     private RmService  rmService = new RmService();
 
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         this.doPost(request, response);
@@ -57,16 +56,15 @@ public class RomOrderListServlet extends HttpServlet {
         String ROOM_ORDER_ID = request.getParameter("ROOM_ORDER_ID");
 
 //        System.out.println("參數:"+ROOM_ORDER_ID);
-//
 //        condition.put("ROOM_ORDER_ID", ROOM_ORDER_ID);
 
-
         List<RmolVO> list = this.rmolService.getAllByROOM_ORDER_ID(Integer.parseInt(ROOM_ORDER_ID));
-
         List<RmVO> all = this.rmService.getAll();
+
 
         rmorder.put("list", list);
         rmorder.put("all", all);
+
 
         System.out.println("開始轉交");
         mapper.writeValue(response.getOutputStream(), rmorder);

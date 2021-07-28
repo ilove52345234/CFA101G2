@@ -33,6 +33,7 @@ public class RmolService {
 		return rmolVO;
 		
 	}
+
 	public RmolVO updateRmolVO(Integer orderListId, Integer roomOrderId, Integer roomCategoryId, Integer roomPromotionId, Integer roomId, String memName, Integer memNumber, Timestamp checkInDate, Timestamp CheckOutDate, Integer roomTotalPrice) {
 		RmolVO rmolVO = new RmolVO();
 		rmolVO.setOrderListId(orderListId);
@@ -49,12 +50,21 @@ public class RmolService {
 		dao.update(rmolVO);
 		return rmolVO;
 	}
+
+
+
+	public void updateRmolVO(RmolVO rmolVO){
+		dao.update(rmolVO);
+	}
+
 	public void deleteRt(Integer orderListId) {
 		dao.delete(orderListId);
 	}
+
 	public RmolVO getOneRt(Integer orderListId) {
 		return dao.findByPrimaryKey(orderListId);
 	}
+
 	public List<RmolVO> getAll(){
 		return dao.getAll();
 	}

@@ -11,7 +11,6 @@ public class DateUtils {
     SimpleDateFormat dateformatAll = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//定義返回的日期格式
 
 
-
     //java.sql.Date.valueOf(String s)的s格式必須為YYYY-MM-DD格式
 
     //字串轉成sql.Date,格式化自行修改

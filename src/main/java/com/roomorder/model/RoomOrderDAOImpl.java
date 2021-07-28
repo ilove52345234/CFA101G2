@@ -9,7 +9,7 @@ public class RoomOrderDAOImpl implements RoomOrderDAO {
     String driver = "com.mysql.cj.jdbc.Driver";
     String url = "jdbc:mysql://35.221.136.103:3306/CFA101G2?serverTimezone=Asia/Taipei";
     String userid = "CFA101G2";
-    String passwd = "123456";
+    String passwd = "A123456";
 
 
     private static final String INSERT_STMT =
@@ -114,8 +114,6 @@ public class RoomOrderDAOImpl implements RoomOrderDAO {
 
             }
         }
-
-
     }
 
     @Override

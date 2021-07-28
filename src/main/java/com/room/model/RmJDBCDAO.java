@@ -23,7 +23,7 @@ public class RmJDBCDAO implements RmDAO_interface {
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://35.221.136.103:3306/CFA101G2?serverTimezone=Asia/Taipei";
 	String userid = "CFA101G2";
-	String passwd = "123456";
+	String passwd = "A123456";
 	
 	private static final String INSERT_STMT =
 "INSERT INTO ROOM (ROOM_CATEGORY_ID, ROOM_CHECK_STATUS, ROOM_SALE_STATUS, ROOM_INFORMATION) VALUES (?,?,?,?)";
@@ -313,7 +313,8 @@ public class RmJDBCDAO implements RmDAO_interface {
 			if (value != null && !"".equals(value)) {
 				//有值
 				sb.append(" and " + key + " like ? ");
-				params.add("%"+value+"%"); //加問號條件的值
+				params.add(value); //加問號條件的值
+//				params.add("%"+value+"%"); //加問號條件的值
 			}
 		}
 
@@ -361,7 +362,8 @@ public class RmJDBCDAO implements RmDAO_interface {
 			if (value != null && !"".equals(value)) {
 				//有值
 				sb.append(" and " + key + " like ? ");
-				params.add("%"+value+"%"); //加問號條件的值
+				params.add(value); //加問號條件的值
+//				params.add("%"+value+"%"); //加問號條件的值
 			}
 		}
 

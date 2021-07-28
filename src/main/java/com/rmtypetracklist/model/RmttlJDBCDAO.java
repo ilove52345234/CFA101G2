@@ -14,7 +14,7 @@ public class RmttlJDBCDAO implements RmttlDAO_interface{
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://35.221.136.103:3306/CFA101G2?serverTimezone=Asia/Taipei";
 	String userid = "CFA101G2";
-	String passwd = "123456";
+	String passwd = "A123456";
 	
 	private static final String INSERT_STMT = "INSERT INTO ROOM_TYPE_TRACK_LIST (ROOM_CATEGORY_ID, MEM_ID) VALUES (?,?)";
 	private static final String GET_ALL_STMT = "SELECT ROOM_CATEGORY_ID, MEM_ID FROM ROOM_TYPE_TRACK_LIST order by ROOM_CATEGORY_ID";

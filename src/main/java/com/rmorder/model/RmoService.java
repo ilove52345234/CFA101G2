@@ -1,6 +1,5 @@
 package com.rmorder.model;
 
-import com.emp.model.EmpVO;
 import com.utils.PageBean;
 
 import java.sql.Timestamp;
@@ -39,8 +38,13 @@ public class RmoService {
 
 		
 	}
-	
-	public void deleteRmo(Integer roomOrderId) {
+
+	public void updateRmoVO(RmoVO rmoVO) {
+		dao.update(rmoVO);
+	}
+
+
+		public void deleteRmo(Integer roomOrderId) {
 		dao.delete(roomOrderId);
 	}
 	

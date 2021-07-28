@@ -21,7 +21,7 @@ public class RmolJDBCDAO implements RmolDAO_interface{
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://35.221.136.103:3306/CFA101G2?serverTimezone=Asia/Taipei";
 	String userid = "CFA101G2";
-	String passwd = "123456";
+	String passwd = "A123456";
 	JDBCUtils jdbcUtils = new JDBCUtils();
 
 	private static final String INSERT_STMT = "INSERT INTO ROOM_ORDER_LIST (ROOM_ORDER_ID, ROOM_CATEGORY_ID, ROOM_PROMOTION_ID, ROOM_ID,MEM_NAME, MEM_NUMBER, CHECK_IN_DATE, CHECK_OUT_DATE, ROOM_TOTAL_PRICE) VALUES (?,?,?,?,?,?,?,?,?)";
@@ -107,6 +107,7 @@ public class RmolJDBCDAO implements RmolDAO_interface{
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 
 		} catch (SQLException se) {
+			se.printStackTrace();
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
 			if (pstmt != null) {

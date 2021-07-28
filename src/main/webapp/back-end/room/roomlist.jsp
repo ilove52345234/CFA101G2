@@ -16,8 +16,7 @@
     initial-scale: 初始的縮放比，為1:1 -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3個meta標籤*必須*放在最前面，任何其他內容都*必須*跟隨其後！ -->
-    <title>後台管理系統</title>
-
+    <title>房間系統</title>
     <%--    <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>--%>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
     <script src="//code.jquery.com/jquery-1.9.1.js"></script>
@@ -26,8 +25,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js"
             type="text/javascript"></script>
-
-
     <!-- 引入 layui.css -->
     <link rel="stylesheet" href="//unpkg.com/layui@2.6.8/dist/css/layui.css">
 
@@ -44,7 +41,6 @@
         td, th {
             text-align: center;
         }
-
         /*body { font-size: 62.5%; }*/
         /*label, input { display:block; }*/
         input.text {
@@ -92,12 +88,20 @@
         }
 
         .swal2-container {
-
-            z-index: 19891016;
-        }
-
-
-
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            padding: 10px;
+            background-color: transparent;
+            z-index: 19891016; }
 
     </style>
 
@@ -143,17 +147,17 @@
             <div class="form-group">
                 <label for="exampleInputEmail2">房間使用情況</label>
                 <select name="ROOM_CHECK_STATUS" class="form-control" id="exampleInputEmail3">
-                    <c:if test="${  empty condition.ROOM_CHECK_STATUS }">
-                        <option value="" selected>查全部</option>
-                        <option value=0>未使用</option>
-                        <option value=1>待入住</option>
-                        <option value=2>已入住</option>
-                        <option value=3>已退房</option>
-                    </c:if>
+<%--                    <c:if test="${  empty condition.ROOM_CHECK_STATUS }">--%>
+<%--                        <option value="" selected>查全部</option>--%>
+<%--                        <option value=0>未使用</option>--%>
+<%--                        <option value=1>待入住</option>--%>
+<%--                        <option value=2>已入住</option>--%>
+<%--                        <option value=3>已退房</option>--%>
+<%--                    </c:if>--%>
 
-                    <c:if test="${ condition.ROOM_CHECK_STATUS == 0}">
-                        <option value="">查全部</option>
-                        <option value=0 selected>未使用</option>
+                    <c:if test="${ condition.ROOM_CHECK_STATUS == 0 || empty condition.ROOM_CHECK_STATUS}">
+                        <option value="" selected>查全部</option>
+                        <option value=0 >未使用</option>
                         <option value=1>待入住</option>
                         <option value=2>已入住</option>
                         <option value=3>已退房</option>
@@ -183,26 +187,42 @@
                 </select>
             </div>
             <button type="submit" class="btn btn-default">查詢</button>
+
         </form>
 
     </div>
+
+
 
     <div style="float: right;margin: 5px;">
 
         <%--${pageContext.request.contextPath}同樣可用--%>
 
-        <a class="btn btn-primary" href="<%=request.getContextPath()%>/back-end/add.jsp">新增管理員</a>
 
-        <a class="btn btn-primary" href="javascript:void(0);" id="delSelected"> 刪除選中</a>
+            <a class="btn btn-primary" href="javascript:calendar();" id="delSelected" >數量查詢</a>
 
     </div>
+    <div style="float: right;margin: 5px;">
+
+        <%--${pageContext.request.contextPath}同樣可用--%>
+
+
+            <select name="RoomCategoryId"  class="form-control" id="RoomCategoryId">
+                <c:forEach items="${rtVOS}" var="rms" varStatus="s">
+
+                    <option value=${rms.roomCategoryId} >${rms.roomName}</option>
+                </c:forEach>
+            </select>
+
+    </div>
+
 
 
     <%--  用表單將整個table包起來,用來提交所有的勾選--%>
     <%--    <%=request.getContextPath()%>/emp/delSelectedServlet?currentPage=${pb.currentPage}&rows=5--%>
     <form id="empForm" action="" method="post">
         <table border="1" class="table table-bordered table-hover">
-            <tr class="success">
+            <tr class="info">
                 <th>列表編號</th>
                 <th>房間號碼</th>
                 <th>房型類別</th>
@@ -370,6 +390,27 @@
             shadeClose: true,
             maxmin: true,
             area: ['500px', '400px'],
+
+
+        });
+
+    }
+
+    function calendar() {
+        <%--document.open("<%=request.getContextPath()%>/back-end/room/addRoom.jsp?roomId=" + roomId, "", "height=250,width=850,left=65,top=157,resizable=yes,scrollbars=yes");--%>
+        var RoomCategoryId = $('#RoomCategoryId').val();
+
+        var url = "<%=request.getContextPath()%>/FullCalendarTest.html?RoomCategoryId=" + RoomCategoryId;
+
+
+        layer.open({
+            title: '房型編號:'+RoomCategoryId,
+            type: 2,
+            content: url,
+            shade: 0.2,
+            shadeClose: true,
+            maxmin: true,
+            area: ['800px', '600px'],
 
 
         });

@@ -6,7 +6,7 @@ public class RmoVO implements java.io.Serializable{
 	private Integer roomOrderId;
 	private Integer memId;
 	private Timestamp orderDate;
-	private Integer roomOrderStatus;
+	private Integer roomOrderStatus; //0:未確認 , 1:已確認 , 2:已取消 ,3:已經完成
 	private Integer totalPrice;
 	
 	public RmoVO() {

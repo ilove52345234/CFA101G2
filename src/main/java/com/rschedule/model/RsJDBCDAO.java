@@ -16,7 +16,7 @@ public class RsJDBCDAO implements RsDAO_interface {
     String driver = "com.mysql.cj.jdbc.Driver";
     String url = "jdbc:mysql://35.221.136.103:3306/CFA101G2?serverTimezone=Asia/Taipei";
     String userid = "CFA101G2";
-    String passwd = "123456";
+    String passwd = "A123456";
 
     JDBCUtils jdbcUtils = new JDBCUtils();
 
@@ -26,6 +26,7 @@ public class RsJDBCDAO implements RsDAO_interface {
     private static final String DELETE = "DELETE FROM ROOM_SCHEDULE where ROOM_SCHEDULE_ID = ?";
     private static final String UPDATE = "UPDATE ROOM_SCHEDULE set ROOM_CATEGORY_ID=?, ROOM_SCHEDULE_DATE=?, ROOM_AMOUNT=?, ROOM_RSV_BOOKED=?, ROOM_CHECK_OUT =?,ROOM_CHECK_IN =? where ROOM_SCHEDULE_ID = ?";
     private static final String UPDATE_BY_RMOL = "select * from ROOM_SCHEDULE where ROOM_CATEGORY_ID=? and ROOM_SCHEDULE_DATE between ? and ? order by ROOM_SCHEDULE_DATE";
+    private static final String GET_ONE_BY_RMOL = "select * from ROOM_SCHEDULE where  ROOM_CATEGORY_ID=? order by ROOM_SCHEDULE_DATE";
 
     @Override
     public void insert(RsVO rsVO) {
@@ -209,6 +210,7 @@ public class RsJDBCDAO implements RsDAO_interface {
         return rsVO;
     }
 
+    //取得全部
     @Override
     public List<RsVO> getAll() {
         List<RsVO> list = new ArrayList<RsVO>();
@@ -269,12 +271,72 @@ public class RsJDBCDAO implements RsDAO_interface {
         return list;
     }
 
+    //取得房型的
+    public List<RsVO> getAllByRoomCategoryId(Integer RoomCategoryId) {
+        List<RsVO> list = new ArrayList<RsVO>();
+        RsVO rsVO = null;
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+
+            Class.forName(driver);
+            con = DriverManager.getConnection(url, userid, passwd);
+            pstmt = con.prepareStatement(GET_ONE_BY_RMOL);
+
+            pstmt.setInt(1,RoomCategoryId);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+
+                rsVO = new RsVO();
+                rsVO.setRoomScheduleId(rs.getInt("ROOM_SCHEDULE_ID"));
+                rsVO.setRoomCategoryId(rs.getInt("ROOM_CATEGORY_ID"));
+                rsVO.setRoomScheduleDate(rs.getDate("ROOM_SCHEDULE_DATE"));
+                rsVO.setRoomAmount(rs.getInt("ROOM_AMOUNT"));
+                rsVO.setRoomRsvBooked(rs.getInt("ROOM_RSV_BOOKED"));
+                rsVO.setRoomCheckOut(rs.getInt("ROOM_CHECK_OUT"));
+                rsVO.setRoomCheckIn(rs.getInt("ROOM_CHECK_IN"));
+
+                list.add(rsVO);
+            }
+
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+
+        } catch (SQLException se) {
+            throw new RuntimeException("A database error occured. " + se.getMessage());
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException se) {
+                    se.printStackTrace(System.err);
+                }
+            }
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException se) {
+                    se.printStackTrace(System.err);
+                }
+            }
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (Exception e) {
+                    e.printStackTrace(System.err);
+                }
+            }
+        }
+        return list;
+    }
+
 
     //取得區段日期的方法
     @Override
     public List<RsVO> getInterval(RmolVO rmolVO) {
-
-
         ArrayList<RsVO> rsVOS = new ArrayList<RsVO>();
 
         RsVO rsVO = null;
@@ -289,6 +351,48 @@ public class RsJDBCDAO implements RsDAO_interface {
 
             pstmt.setDate(2, new Date(rmolVO.getCheckInDate().getTime()));
             pstmt.setDate(3, new Date(rmolVO.getCheckOutDate().getTime()));
+
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                rsVO = new RsVO();
+                rsVO.setRoomScheduleId(rs.getInt("ROOM_SCHEDULE_ID"));
+                rsVO.setRoomCategoryId(rs.getInt("ROOM_CATEGORY_ID"));
+                rsVO.setRoomScheduleDate(rs.getDate("ROOM_SCHEDULE_DATE"));
+                rsVO.setRoomAmount(rs.getInt("ROOM_AMOUNT"));
+                rsVO.setRoomRsvBooked(rs.getInt("ROOM_RSV_BOOKED"));
+                rsVO.setRoomCheckOut(rs.getInt("ROOM_CHECK_OUT"));
+                rsVO.setRoomCheckIn(rs.getInt("ROOM_CHECK_IN"));
+                rsVOS.add(rsVO);
+            }
+
+
+        } catch (SQLException se) {
+            throw new RuntimeException("發生錯誤:" + se.getMessage());
+        } finally {
+            jdbcUtils.close(rs, pstmt, con);
+        }
+        return rsVOS;
+    }
+
+
+    //取得房型+區間
+    @Override
+    public List<RsVO> getOneInterval( Integer RoomCategoryId,Date CheckInDate,Date CheckOutDate) {
+
+        ArrayList<RsVO> rsVOS = new ArrayList<RsVO>();
+
+        RsVO rsVO = null;
+        ResultSet rs = null;
+        Connection con = null;
+        PreparedStatement pstmt = null;
+        try {
+            con = jdbcUtils.getConnection();
+            pstmt = con.prepareStatement(UPDATE_BY_RMOL);
+
+            pstmt.setInt(1,RoomCategoryId);
+            pstmt.setDate(2, CheckInDate);
+            pstmt.setDate(3, CheckOutDate);
 
             rs = pstmt.executeQuery();
 

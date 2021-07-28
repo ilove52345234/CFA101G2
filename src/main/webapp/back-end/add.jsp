@@ -9,7 +9,10 @@
     FuncService FuncSvc = new FuncService();
     List<FuncVO> list = FuncSvc.getAll();
     pageContext.setAttribute("list", list);
+
 %>
+
+
 
 
 <!-- HTML5文檔-->

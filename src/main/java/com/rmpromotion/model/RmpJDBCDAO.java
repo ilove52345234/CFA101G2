@@ -14,7 +14,7 @@ public class RmpJDBCDAO implements RmpDAO_interface{
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://35.221.136.103:3306/CFA101G2?serverTimezone=Asia/Taipei";
 	String userid = "CFA101G2";
-	String passwd = "123456";
+	String passwd = "A123456";
 
 	private static final String INSERT_STMT = "INSERT INTO ROOM_PROMOTION (ROOM_CATEGORY_ID, PROMOTION_PRICE, PROMOTION_START_DATE, PROMOTION_END_DATE,PROMOTION_TEXT) VALUES (?,?,?,?,?)";
 	private static final String GET_ALL_STMT = "SELECT ROOM_PROMOTION_ID, ROOM_CATEGORY_ID, PROMOTION_PRICE, PROMOTION_START_DATE, PROMOTION_END_DATE, PROMOTION_TEXT FROM ROOM_PROMOTION order by ROOM_PROMOTION_ID";

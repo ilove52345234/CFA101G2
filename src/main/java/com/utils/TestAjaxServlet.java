@@ -18,11 +18,11 @@ public class TestAjaxServlet extends HttpServlet {
 
         System.out.println("Ajax請求");
 
-        String str = "XXX";
 
+        String room_order_id = request.getParameter("ROOM_ORDER_ID");
+
+        System.out.println(room_order_id);
         PrintWriter writer = response.getWriter();
-
-        writer.write(str);
 
 
     }

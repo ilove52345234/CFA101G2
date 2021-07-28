@@ -9,22 +9,13 @@ public class RsVO implements java.io.Serializable{
 	private Date roomScheduleDate;	//日期
 	private Integer roomAmount; //房間原始數量
 	private Integer roomRsvBooked; //未離店房間數量
-	private Integer roomCheckOut;	//房間當天入住數量
-	private Integer roomCheckIn; 	//房間退房數量
-
+	private Integer roomCheckOut; //房間當天入住數量
+	private Integer roomCheckIn; //房間退房數量
+	private Integer roomValidAmount;  //房間有效數量
 
 	public RsVO() {
 	}
 
-	public RsVO(Integer roomScheduleId, Integer roomCategoryId, Date roomScheduleDate, Integer roomAmount, Integer roomRsvBooked, Integer roomCheckOut, Integer roomCheckIn) {
-		this.roomScheduleId = roomScheduleId;
-		this.roomCategoryId = roomCategoryId;
-		this.roomScheduleDate = roomScheduleDate;
-		this.roomAmount = roomAmount;
-		this.roomRsvBooked = roomRsvBooked;
-		this.roomCheckOut = roomCheckOut;
-		this.roomCheckIn = roomCheckIn;
-	}
 
 	@Override
 	public String toString() {
@@ -36,7 +27,27 @@ public class RsVO implements java.io.Serializable{
 				", roomRsvBooked=" + roomRsvBooked +
 				", roomCheckOut=" + roomCheckOut +
 				", roomCheckIn=" + roomCheckIn +
+				", roomValidAmount=" + roomValidAmount +
 				'}';
+	}
+
+	public Integer getRoomValidAmount() {
+		return roomValidAmount;
+	}
+
+	public void setRoomValidAmount(Integer roomValidAmount) {
+		this.roomValidAmount = roomValidAmount;
+	}
+
+	public RsVO(Integer roomScheduleId, Integer roomCategoryId, Date roomScheduleDate, Integer roomAmount, Integer roomRsvBooked, Integer roomCheckOut, Integer roomCheckIn, Integer roomValidAmount) {
+		this.roomScheduleId = roomScheduleId;
+		this.roomCategoryId = roomCategoryId;
+		this.roomScheduleDate = roomScheduleDate;
+		this.roomAmount = roomAmount;
+		this.roomRsvBooked = roomRsvBooked;
+		this.roomCheckOut = roomCheckOut;
+		this.roomCheckIn = roomCheckIn;
+		this.roomValidAmount = roomValidAmount;
 	}
 
 	public Integer getRoomScheduleId() {

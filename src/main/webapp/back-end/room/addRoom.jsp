@@ -218,6 +218,7 @@
             success: function (data) {
                 if (data.flag) {
                     swal("完成!", "2秒後回到列表", "success",);
+
                     setTimeout(function () {
                         window.parent.location.reload(); //刷新父頁面
                         var index = parent.layer.getFrameIndex(window.name); //獲取窗口索引

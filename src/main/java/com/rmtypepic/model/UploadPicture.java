@@ -25,7 +25,7 @@ public class UploadPicture {
 	private static final String driver = "com.mysql.cj.jdbc.Driver";
 	private static final String url = "jdbc:mysql://35.221.136.103:3306/CFA101G2?serverTimezone=Asia/Taipei";
 	private static final String userid = "CFA101G2";
-	private static final String passwd = "123456";
+	private static final String passwd = "A123456";
 	
 	private static final String UPDATE = "UPDATE ROOM_TYPE_PIC set ROOM_PHOTO=?" + "WHERE ROOM_PHOTO_ID = ?";
 

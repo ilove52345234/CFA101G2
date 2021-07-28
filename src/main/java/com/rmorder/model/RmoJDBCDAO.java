@@ -21,7 +21,7 @@ public class RmoJDBCDAO implements RmoDAO_interface{
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://35.221.136.103:3306/CFA101G2?serverTimezone=Asia/Taipei";
 	String userid = "CFA101G2";
-	String passwd = "123456";
+	String passwd = "A123456";
 
 	JDBCUtils jdbcUtils = new JDBCUtils();
 
@@ -88,11 +88,12 @@ public class RmoJDBCDAO implements RmoDAO_interface{
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(UPDATE);
 
-			pstmt.setInt(1, rmoVO.getRoomOrderId());
-			pstmt.setInt(2, rmoVO.getMemId());
-			pstmt.setTimestamp(3, rmoVO.getOrderDate());
-			pstmt.setInt(4, rmoVO.getRoomOrderStatus());
-			pstmt.setInt(5, rmoVO.getTotalPrice());
+			pstmt.setInt(1, rmoVO.getMemId());
+			pstmt.setTimestamp(2, rmoVO.getOrderDate());
+			pstmt.setInt(3, rmoVO.getRoomOrderStatus());
+			pstmt.setInt(4, rmoVO.getTotalPrice());
+			pstmt.setInt(5, rmoVO.getRoomOrderId());
+
 
 			pstmt.executeUpdate();
 
