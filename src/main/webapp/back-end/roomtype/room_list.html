@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>島旅-房型列表</title>
+    <link rel="stylesheet" type="text/css" href="../css/common.css">
+    <link rel="stylesheet" href="../css/search.css">
+    <script src="../js/jquery-3.3.1.js"></script>
+    <script src="../js/getParameter.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        img {
+            max-width: 100%;
+        }
+    </style>
+    <script>
+        $(function () {
+            // var id = getParameter("id");
+            // if (id === "end"){
+            //     load(1,id);
+            // }else {
+            //
+            // }
+            load();
+        })
+
+
+        function load(currentPage , end) {
+            // var id = end;
+            var ROOM_NAME = $('#ROOM_NAME').val();
+            var ROOM_PRICE = $('#ROOM_PRICE').val();
+            $.ajax({
+                url: '/CFA101G2/rmtype/selectRoomTypeServlet',
+                type: 'post',
+                data: {
+                    'currentPage': currentPage,
+                    'ROOM_NAME': ROOM_NAME,
+                    'ROOM_PRICE': ROOM_PRICE
+                },
+                dataType: 'json',
+                //processData: false, 用FormData傳fd時需有這兩項
+                //contentType: false,
+                success: function (pb) {
+                   // if (id === "end"){
+                   //     load(pb.totalPage);
+                   //     return;
+                   // }
+                    //1.分頁處理
+                    $('#totalPage').html(pb.totalPage);
+                    $('#totalCount').html(pb.totalCount);
+                    var lis = "";
+
+                    var firstPage = `<li onclick="javascript:load()"><a href="javascript:void()">首頁</a></li>`;
+
+                    //上一頁的處理
+                    var beforeNum = pb.currentPage - 1;
+                    if (beforeNum <= 0) {
+                        beforeNum = 1;
+                    }
+
+                    var beforePage = `<li onclick="javascript:load(${beforeNum})" class="threeword"><a href="javascript:void()">上一頁</a></li>`
+                    lis += firstPage;
+                    lis += beforePage;
+
+
+                    //1.2 展示分頁頁碼
+                    /*
+                        1.一共展示10個頁碼，能夠達到前5後4的效果
+                        2.如果前邊不夠5個，後邊補齊10個
+                        3.如果後邊不足4個，前邊補齊10個
+                    */
+
+                    //定義開始位置和結束位置
+                    var begin; //開始位置
+                    var end; //結束位置
+
+                    //1.要顯示10個頁碼
+                    if (pb.totalPage < 10) {
+                        //總頁碼不夠10頁的處理
+                        begin = 1;
+                        end = pb.totalPage;
+                    } else {
+                        //總頁碼超過10頁的處理
+                        begin = pb.currentPage - 5;
+                        end = pb.currentPage + 4;
+
+                        //如果前邊不夠5個，後邊補齊10個
+                        if (begin < 1) {
+                            begin = 1;
+                            end = begin +9;
+                        }
+
+                        //如果後邊不足4個，前邊補齊10個
+                        if (end > pb.totalPage ){
+                            end = pb.totalPage;
+                            begin = end - 9;
+                        }
+                    }
+
+                    for (var i = begin; i <= end; i++) {
+
+                        var li;
+                        //判斷當前頁碼是不是==i
+
+
+                        if (pb.currentPage === i) {
+                            //創建當前頁碼的li
+                            li = `<li class="curPage" onclick="javascript:load(${i})"><a href="javascript:void()">${i}</a></li>`;
+                        } else {
+                            //創建頁碼的li
+                            li = `<li onclick="javascript:load(${i})"><a href="javascript:void()">${i}</a></li>`;
+                        }
+                        //拼接
+                        lis += li;
+                    }
+
+
+                    //迭代頁碼
+                    // for (var i = 1; i <= pb.totalPage; i++) {
+                    //     var li;
+                    //     //判斷當前頁碼是不是==i
+                    //
+                    //     if (pb.currentPage===i){
+                    //         //創建當前頁碼的li
+                    //         li = `<li class="curPage" onclick="javascript:load(${i})"><a href="javascript:void()">${i}</a></li>`;
+                    //
+                    //     }else {
+                    //         //創建頁碼的li
+                    //         li = `<li onclick="javascript:load(${i})"><a href="javascript:void()">${i}</a></li>`;
+                    //     }
+                    //     //拼接
+                    //     lis += li;
+                    // }
+                    var lastPage = `<li onclick="javascript:load(${pb.totalPage})" class="threeword" id="end"><a href="javascript:void()">末頁</a></li>`;
+
+                    //上一頁的處理
+                    var nextNum = pb.currentPage + 1;
+                    if (nextNum >= pb.totalPage) {
+                        nextNum = pb.totalPage;
+                    }
+
+                    var nextPage = ` <li onclick="javascript:load(${nextNum})" class="threeword"><a href="javascript:void()">下一頁</a></li>`;
+                    lis += nextPage;
+                    lis += lastPage;
+                    $('#pageNum').html(lis);
+
+                    //2.數據設置
+                    var roomType_lis = "";
+
+                    for (var i = 0; i < pb.list.length; i++) {
+                        //獲取vo物件
+                        var rtvo = pb.list[i];
+                        var li =
+                            `<li>
+                        <div class="img"><img src="${rtvo.roomOnePhoto}" alt=""></div>
+                        <div class="text1">
+                            <p> ${rtvo.roomName} </p>
+                            <br/>
+                            <p>${rtvo.roomSaleStatus === 1 ? "上架中" : "下架中"} </p>
+                            <p>房間上限數量:${rtvo.roomTypeAmount} </p>
+                        </div>
+                        <div class="price">
+                            <p class="price_num">
+                                <span>TWD</span>
+                                <span>${rtvo.roomPrice}</span>
+                                <span>起</span>
+                            </p>
+                            <p><a href="javascript:void()">查看詳情</a></p>
+                             <p> <a class="btn btn-default btn-sm"
+                           href="/CFA101G2/back-end/roomtype/upRoom.html?roomCategoryId=${rtvo.roomCategoryId}">修改</a></p>
+                        </div>
+                    </li>`
+                        roomType_lis += li;
+                    }
+                    $("#roomType").html(roomType_lis);
+                }
+            });
+
+        }
+
+
+    </script>
+</head>
+<body>
+
+
+<div class="page_one">
+
+    <div class="contant">
+        <div class="crumbs">
+            <span>房型列表</span></p>
+        </div>
+        <div style="float: left;">
+
+            <form class="form-inline" action="" method="post">
+                <div class="form-group">
+                    <label for="ROOM_NAME">房型名稱</label>
+                    <input type="text" name="ROOM_NAME" value="" class="form-control"
+                           id="ROOM_NAME">
+                </div>
+
+                <div class="form-group">
+                    <label for="ROOM_PRICE">價格</label>
+                    <input type="text" name="ROOM_PRICE" value="" class="form-control"
+                           id="ROOM_PRICE">
+                </div>
+
+                <button type="button" onclick="javascript:load()" class="btn btn-default">查詢</button>
+            </form>
+
+        </div>
+        <div style="float: right;margin: 5px;">
+            <a class="btn btn-primary" href="/CFA101G2/back-end/roomtype/addRoom.html">新增房型</a>
+        </div>
+        <div class="xinxi clearfix">
+            <div class="left">
+                <div class="header">
+                    <span>房型訊息</span>
+                    <span class="jg">價格</span>
+                </div>
+                <ul id="roomType">
+
+                </ul>
+                <div class="page_num_inf">
+                    <i></i> 共
+                    <span id="totalPage">0</span>頁<span id="totalCount">0</span>筆
+                </div>
+                <div class="pageNum">
+                    <ul id="pageNum">
+                        <li><a href="">首頁</a></li>
+                        <li class="threeword"><a href="javascript:;">上一頁</a></li>
+                        <li class="curPage"><a href="javascript:;">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li><a href="#">6</a></li>
+                        <li><a href="#">7</a></li>
+                        <li><a href="#">8</a></li>
+                        <li><a href="#">9</a></li>
+                        <li><a href="#">10</a></li>
+                        <li class="threeword"><a href="javascript:;">下一頁</a></li>
+                        <li class="threeword"><a href="javascript:;">末頁</a></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+</body>
+
+</html>

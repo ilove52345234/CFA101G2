@@ -5,6 +5,8 @@ import java.util.List;
 public interface ChatroomDAO {
     public void insert(ChatroomVO chatroomVO);
 
+
+
     public void update(ChatroomVO chatroomVO);
 
     public void delete(Integer chatPlaceId);

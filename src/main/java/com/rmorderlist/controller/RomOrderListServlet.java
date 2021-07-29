@@ -20,9 +20,9 @@ import java.util.Map;
 @WebServlet("/rmorderlist/romOrderListServlet")
 public class RomOrderListServlet extends HttpServlet {
 
-    private RmolService rmolService  = new RmolService();
+    private RmolService rmolService = new RmolService();
 
-    private RmService  rmService = new RmService();
+    private RmService rmService = new RmService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

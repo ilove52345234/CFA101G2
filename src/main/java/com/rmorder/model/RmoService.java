@@ -44,7 +44,7 @@ public class RmoService {
 	}
 
 
-		public void deleteRmo(Integer roomOrderId) {
+	public void deleteRmo(Integer roomOrderId) {
 		dao.delete(roomOrderId);
 	}
 	

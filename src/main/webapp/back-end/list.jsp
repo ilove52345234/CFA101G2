@@ -29,11 +29,14 @@
             text-align: center;
         }
     </style>
+    <script src="js/include2.js"></script>
 
 
 </head>
 <body>
-<div class="container">
+
+<div id="header"></div>
+<div class="container" style="margin-top: 100px">
     <h3 style="text-align: center">管理員列表</h3>
 
     <%-- 錯誤表列 --%>
