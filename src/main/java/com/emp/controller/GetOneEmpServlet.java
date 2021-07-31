@@ -46,14 +46,14 @@ public class GetOneEmpServlet extends HttpServlet {
 
 //            ("準備轉交");
             //4.轉交
-            RequestDispatcher successView = request.getRequestDispatcher("/back-end/update.jsp");
+            RequestDispatcher successView = request.getRequestDispatcher("/back-end/emp/update.jsp");
             successView.forward(request, response);
 
 
         }catch (Exception e) {
             errorMsgs.add(e.getMessage());
             RequestDispatcher failureView = request
-                    .getRequestDispatcher(request.getContextPath()+"/back-end/list.jsp");
+                    .getRequestDispatcher(request.getContextPath()+"/back-end/emp/list.jsp");
             failureView.forward(request, response);
         }
 

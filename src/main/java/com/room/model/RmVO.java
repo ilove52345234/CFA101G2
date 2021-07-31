@@ -3,7 +3,7 @@ package com.room.model;
 public class RmVO implements java.io.Serializable{
 	private Integer roomId;
 	private Integer roomCategoryId;
-	private Byte roomCheckStatus; //0:未使用, 1:待入住, 2:已入住, 3:已退房
+	private Byte roomCheckStatus; //0:未使用, 1:待入住, 2:已入住, 3:已退房, 4:待退房
 	private Byte roomSaleStatus; //0:可用 , 1:不可用
 	private String roomInformation;
 

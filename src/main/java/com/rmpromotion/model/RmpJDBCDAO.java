@@ -1,5 +1,7 @@
 package com.rmpromotion.model;
 
+import com.utils.JDBCUtils;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,10 +13,13 @@ import java.util.List;
 
 
 public class RmpJDBCDAO implements RmpDAO_interface{
-	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://35.221.136.103:3306/CFA101G2?serverTimezone=Asia/Taipei";
-	String userid = "CFA101G2";
-	String passwd = "A123456";
+//	String driver = "com.mysql.cj.jdbc.Driver";
+//	String url = "jdbc:mysql://35.221.136.103:3306/CFA101G2?serverTimezone=Asia/Taipei";
+//	String userid = "CFA101G2";
+//	String passwd = "A123456";
+
+	JDBCUtils jdbcUtils = new JDBCUtils();
+
 
 	private static final String INSERT_STMT = "INSERT INTO ROOM_PROMOTION (ROOM_CATEGORY_ID, PROMOTION_PRICE, PROMOTION_START_DATE, PROMOTION_END_DATE,PROMOTION_TEXT) VALUES (?,?,?,?,?)";
 	private static final String GET_ALL_STMT = "SELECT ROOM_PROMOTION_ID, ROOM_CATEGORY_ID, PROMOTION_PRICE, PROMOTION_START_DATE, PROMOTION_END_DATE, PROMOTION_TEXT FROM ROOM_PROMOTION order by ROOM_PROMOTION_ID";
@@ -31,8 +36,11 @@ public class RmpJDBCDAO implements RmpDAO_interface{
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
+
+
+			con = jdbcUtils.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setInt(1, rmpVO.getRoomCategoryId());
@@ -42,9 +50,6 @@ public class RmpJDBCDAO implements RmpDAO_interface{
 			pstmt.setString(5, rmpVO.getPromotionText());
 
 			pstmt.executeUpdate();
-
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -75,8 +80,10 @@ public class RmpJDBCDAO implements RmpDAO_interface{
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
+
+			con = jdbcUtils.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setInt(1, rmpVO.getRoomCategoryId());
@@ -87,9 +94,6 @@ public class RmpJDBCDAO implements RmpDAO_interface{
 			pstmt.setInt(6, rmpVO.getRoomPromotionId());
 
 			pstmt.executeUpdate();
-
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -119,19 +123,21 @@ public class RmpJDBCDAO implements RmpDAO_interface{
 		PreparedStatement pstmt = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
+
+			con = jdbcUtils.getConnection();
 			pstmt = con.prepareStatement(DELETE);
 
 			pstmt.setInt(1, roomPromotionId);
 
 			pstmt.executeUpdate();
 
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-		} finally {
+		}
+
+		 catch (SQLException se) {
+			 throw new RuntimeException("A database error occured. " + se.getMessage());
+		 } finally {
 			if (pstmt != null) {
 				try {
 					pstmt.close();
@@ -160,8 +166,8 @@ public class RmpJDBCDAO implements RmpDAO_interface{
 		ResultSet rs = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
 			pstmt.setInt(1, roomPromotionId);
@@ -178,10 +184,7 @@ public class RmpJDBCDAO implements RmpDAO_interface{
 				rmpVO.setPromotionText(rs.getString("PROMOTION_TEXT"));
 
 			}
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-
-		} catch (SQLException se) {
+		}   catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
 			if (rs != null) {
@@ -219,8 +222,10 @@ public class RmpJDBCDAO implements RmpDAO_interface{
 		ResultSet rs = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
+
+			con = jdbcUtils.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
@@ -236,10 +241,7 @@ public class RmpJDBCDAO implements RmpDAO_interface{
 				list.add(rmpVO);
 
 			}
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-
-		} catch (SQLException se) {
+		}   catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
 			if (rs != null) {

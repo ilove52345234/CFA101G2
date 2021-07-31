@@ -14,13 +14,13 @@ public class ExtraBillService {
         return  extraBillDAO.getOneByRoomId(roomId);
     }
 
-    public ExtraBillVO CheckIn(Integer roomId, String informationPhone, Integer extraPrice, String serviceItem, Timestamp checkInDate, Timestamp checkOutDate) {
+    public ExtraBillVO CheckIn(Integer roomId, String informationPhone, Integer extraPrice, Timestamp expectedCheckOutDate, Timestamp checkInDate, Timestamp checkOutDate) {
 
         ExtraBillVO extraBillVO = new ExtraBillVO();
         extraBillVO.setRoomId(roomId);
         extraBillVO.setInformationPhone(informationPhone);
         extraBillVO.setExtraPrice(extraPrice);
-        extraBillVO.setServiceItem(serviceItem);
+        extraBillVO.setExpectedCheckOutDate(expectedCheckOutDate);
         extraBillVO.setCheckInDate(checkInDate);
         extraBillVO.setCheckOutDate(checkOutDate);
 

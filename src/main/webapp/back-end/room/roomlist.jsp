@@ -32,15 +32,20 @@
     <script src="//unpkg.com/layui@2.6.8/dist/layui.js"></script>
 
     <!-- 1. 導入CSS的全局樣式 -->
-    <link href="<%=request.getContextPath()%>/back-end/css/bootstrap.min.css" rel="stylesheet">
+<%--    <link href="<%=request.getContextPath()%>/back-end/css/bootstrap.min.css" rel="stylesheet">--%>
     <!-- 2. jQuery導入，建議使用1.9以上的版本 -->
     <%--    <script src="<%=request.getContextPath()%>/back-end/js/jquery-2.1.0.min.js"></script>--%>
     <!-- 3. 導入bootstrap的js文件 -->
-    <script src="<%=request.getContextPath()%>/back-end/js/bootstrap.min.js"></script>
+<%--    <script src="<%=request.getContextPath()%>/back-end/js/bootstrap.min.js"></script>--%>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="<%=request.getContextPath()%>/back-end/js/include.js"></script>
     <style type="text/css">
         td, th {
             text-align: center;
         }
+
         /*body { font-size: 62.5%; }*/
         /*label, input { display:block; }*/
         input.text {
@@ -101,13 +106,17 @@
             right: 0;
             padding: 10px;
             background-color: transparent;
-            z-index: 19891016; }
+            z-index: 19891016;
+        }
 
     </style>
 
 
 </head>
 <body>
+<div id="header"></div>
+
+
 <div class="container">
     <h3 style="text-align: center">房間列表</h3>
 
@@ -147,20 +156,21 @@
             <div class="form-group">
                 <label for="exampleInputEmail2">房間使用情況</label>
                 <select name="ROOM_CHECK_STATUS" class="form-control" id="exampleInputEmail3">
-<%--                    <c:if test="${  empty condition.ROOM_CHECK_STATUS }">--%>
-<%--                        <option value="" selected>查全部</option>--%>
-<%--                        <option value=0>未使用</option>--%>
-<%--                        <option value=1>待入住</option>--%>
-<%--                        <option value=2>已入住</option>--%>
-<%--                        <option value=3>已退房</option>--%>
-<%--                    </c:if>--%>
+                    <%--                    <c:if test="${  empty condition.ROOM_CHECK_STATUS }">--%>
+                    <%--                        <option value="" selected>查全部</option>--%>
+                    <%--                        <option value=0>未使用</option>--%>
+                    <%--                        <option value=1>待入住</option>--%>
+                    <%--                        <option value=2>已入住</option>--%>
+                    <%--                        <option value=3>已退房</option>--%>
+                    <%--                    </c:if>--%>
 
                     <c:if test="${ condition.ROOM_CHECK_STATUS == 0 || empty condition.ROOM_CHECK_STATUS}">
                         <option value="" selected>查全部</option>
-                        <option value=0 >未使用</option>
+                        <option value=0>未使用</option>
                         <option value=1>待入住</option>
                         <option value=2>已入住</option>
                         <option value=3>已退房</option>
+                        <option value=4 >待退房</option>
                     </c:if>
                     <c:if test="${condition.ROOM_CHECK_STATUS == 1}">
                         <option value="">查全部</option>
@@ -168,6 +178,7 @@
                         <option value=1 selected>待入住</option>
                         <option value=2>已入住</option>
                         <option value=3>已退房</option>
+                        <option value=4 >待退房</option>
                     </c:if>
                     <c:if test="${condition.ROOM_CHECK_STATUS == 2}">
                         <option value="">查全部</option>
@@ -175,6 +186,7 @@
                         <option value=1>待入住</option>
                         <option value=2 selected>已入住</option>
                         <option value=3>已退房</option>
+                        <option value=4 >待退房</option>
                     </c:if>
                     <c:if test="${condition.ROOM_CHECK_STATUS == 3}">
                         <option value="">查全部</option>
@@ -182,6 +194,15 @@
                         <option value=1>待入住</option>
                         <option value=2>已入住</option>
                         <option value=3 selected>已退房</option>
+                        <option value=4 >待退房</option>
+                    </c:if>
+                    <c:if test="${condition.ROOM_CHECK_STATUS == 4}">
+                        <option value="">查全部</option>
+                        <option value=0>未使用</option>
+                        <option value=1>待入住</option>
+                        <option value=2>已入住</option>
+                        <option value=3 >已退房</option>
+                        <option value=4 selected>待退房</option>
                     </c:if>
 
                 </select>
@@ -193,13 +214,12 @@
     </div>
 
 
-
     <div style="float: right;margin: 5px;">
 
         <%--${pageContext.request.contextPath}同樣可用--%>
 
 
-            <a class="btn btn-primary" href="javascript:calendar();" id="delSelected" >數量查詢</a>
+        <a class="btn btn-primary" href="javascript:calendar();" id="delSelected">數量查詢</a>
 
     </div>
     <div style="float: right;margin: 5px;">
@@ -207,15 +227,14 @@
         <%--${pageContext.request.contextPath}同樣可用--%>
 
 
-            <select name="RoomCategoryId"  class="form-control" id="RoomCategoryId">
-                <c:forEach items="${rtVOS}" var="rms" varStatus="s">
+        <select name="RoomCategoryId" class="form-control" id="RoomCategoryId">
+            <c:forEach items="${rtVOS}" var="rms" varStatus="s">
 
-                    <option value=${rms.roomCategoryId} >${rms.roomName}</option>
-                </c:forEach>
-            </select>
+                <option value=${rms.roomCategoryId}>${rms.roomName}</option>
+            </c:forEach>
+        </select>
 
     </div>
-
 
 
     <%--  用表單將整個table包起來,用來提交所有的勾選--%>
@@ -241,21 +260,24 @@
                         <c:forEach items="${rtVOS}" var="rtVO">
                             <c:if test="${rtVO.roomCategoryId eq rms.roomCategoryId}">${rtVO.roomName}</c:if>
                         </c:forEach></td>
-                    <td>
-                        <c:if test="${rms.roomCheckStatus == 0 }">
-                            未使用
-                        </c:if>
-                        <c:if test="${rms.roomCheckStatus == 1 }">
-                            待入住
-                        </c:if>
-                        <c:if test="${rms.roomCheckStatus == 2 }">
-                            已入住
-                        </c:if>
-                        <c:if test="${rms.roomCheckStatus == 3 }">
-                            已退房
-                        </c:if>
 
-                    </td>
+                    <c:if test="${rms.roomCheckStatus == 0 }">
+                        <td> 未使用</td>
+                    </c:if>
+                    <c:if test="${rms.roomCheckStatus == 1 }">
+                        <td> 待入住</td>
+                    </c:if>
+                    <c:if test="${rms.roomCheckStatus == 2 }">
+                        <td> 已入住</td>
+                    </c:if>
+                    <c:if test="${rms.roomCheckStatus == 3 }">
+                        <td> 已退房</td>
+                    </c:if>
+                    <c:if test="${rms.roomCheckStatus == 4 }">
+                        <td style="color: red"> 待退房</td>
+                    </c:if>
+
+
                     <td>
                         <c:if test="${rms.roomSaleStatus==0}">
                             <span class="label label-success">可用</span>
@@ -289,15 +311,15 @@
 
                         </c:if>
 
-                        <c:if test="${rms.roomCheckStatus == 2 }">
+                        <c:if test="${rms.roomCheckStatus == 2 ||rms.roomCheckStatus == 4 }">
                             <a class="btn btn-info btn-sm"
                                href="javascript:checkOut('${rms.roomId}','${rms.roomInformation}')">退房</a>
                         </c:if>
 
-                                <c:if test="${rms.roomCheckStatus == 3 }">
-                                    <a class="btn btn-primary btn-sm"
-                                       href="javascript:done(${rms.roomId})">確認完成</a>
-                                </c:if>
+                        <c:if test="${rms.roomCheckStatus == 3 }">
+                            <a class="btn btn-primary btn-sm"
+                               href="javascript:done(${rms.roomId})">確認完成</a>
+                        </c:if>
 
 
                     </td>
@@ -400,11 +422,11 @@
         <%--document.open("<%=request.getContextPath()%>/back-end/room/addRoom.jsp?roomId=" + roomId, "", "height=250,width=850,left=65,top=157,resizable=yes,scrollbars=yes");--%>
         var RoomCategoryId = $('#RoomCategoryId').val();
 
-        var url = "<%=request.getContextPath()%>/FullCalendarTest.html?RoomCategoryId=" + RoomCategoryId;
+        var url = "<%=request.getContextPath()%>/back-end/room/FullCalendar.html?RoomCategoryId=" + RoomCategoryId;
 
 
         layer.open({
-            title: '房型編號:'+RoomCategoryId,
+            title: '房型編號:' + RoomCategoryId,
             type: 2,
             content: url,
             shade: 0.2,
@@ -419,7 +441,7 @@
 
     function openif(roomId, roomInformation) {
 
-        var url = "<%=request.getContextPath()%>/back-end/information.jsp?roomId=" + roomId + "&name=" + roomInformation;
+        var url = "<%=request.getContextPath()%>/back-end/room/information.jsp?roomId=" + roomId + "&name=" + roomInformation;
 
         console.log(url)
         layer.open({
@@ -438,11 +460,11 @@
 
     function checkOut(roomId, roomInformation) {
 
-        var url = "<%=request.getContextPath()%>/back-end/information.jsp?roomId=" + roomId + "&name=" + roomInformation;
+        var url = "<%=request.getContextPath()%>/back-end/room/information.jsp?roomId=" + roomId + "&name=" + roomInformation;
 
 
         layer.open({
-            title: ['請確認退房資訊與房卡','color: red'],
+            title: ['請確認退房資訊與房卡', 'color: red'],
             type: 2,
             content: url,
             shade: 0.2,
@@ -488,14 +510,14 @@
 
     function done(roomId) {
 
-        var url = "<%=request.getContextPath()%>/back-end/information.jsp?roomId=" + roomId ;
+        var url = "<%=request.getContextPath()%>/back-end/room/information.jsp?roomId=" + roomId;
 
 
         swal({
             title: '確認房間清潔完成',
             input: 'checkbox',
             inputPlaceholder: '房況確認完畢'
-        }).then(function(result) {
+        }).then(function (result) {
             if (result === 1) {
                 $.ajax({
                     type: "post",
@@ -532,10 +554,8 @@
         });
 
 
-
-
-
     }
+
     <%--function deleteEmp(empId) {--%>
     <%--    //給安全提示--%>
     <%--    if (confirm("確定要刪除嗎?")) {--%>

@@ -32,7 +32,7 @@ public class EmpFuncServlet extends HttpServlet {
             request.setAttribute("funcByEmpId", funcByEmpId);
             request.setAttribute("empName", empName);
             RequestDispatcher successView = request
-                    .getRequestDispatcher("/back-end/listOneEmpFunc.jsp");
+                    .getRequestDispatcher("/back-end/emp/listOneEmpFunc.jsp");
 
             successView.forward(request, response);
         } catch (Exception e) {

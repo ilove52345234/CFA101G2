@@ -3,9 +3,9 @@
     <default-config>
         <!-- 連線參數 -->
         <property name="driverClass">com.mysql.cj.jdbc.Driver</property>
-        <property name="jdbcUrl">jdbc:mysql://35.221.136.103:3306/CFA101G2?serverTimezone=Asia/Taipei</property>
-        <property name="user">CFA101G2</property>
-        <property name="password">A123456</property>
+        <property name="jdbcUrl">jdbc:mysql://localhost:3306/CFA101G2?serverTimezone=Asia/Taipei</property>
+        <property name="user">root</property>
+        <property name="password">123456</property>
 
         <!-- 連線池參數 -->
         <property name="initialPoolSize">5</property>
@@ -13,18 +13,31 @@
         <property name="checkoutTimeout">3000</property>
     </default-config>
 
+<!--    <default-config>-->
+<!--        &lt;!&ndash; 連線參數 &ndash;&gt;-->
+<!--        <property name="driverClass">com.mysql.cj.jdbc.Driver</property>-->
+<!--        <property name="jdbcUrl">jdbc:mysql://35.221.136.103:3306/CFA101G2?serverTimezone=Asia/Taipei</property>-->
+<!--        <property name="user">CFA101G2</property>-->
+<!--        <property name="password">A123456</property>-->
+
+<!--        &lt;!&ndash; 連線池參數 &ndash;&gt;-->
+<!--        <property name="initialPoolSize">5</property>-->
+<!--        <property name="maxPoolSize">10</property>-->
+<!--        <property name="checkoutTimeout">3000</property>-->
+<!--    </default-config>-->
+
 
     <!-- 使用自定義的配置讀取連線池物件,如果要使用named-config裡面配置初始化資料來源，則只要使用一個帶參數的ComboPooledDataSource建構子就可以了 -->
-    <named-config name="otherc3p0">
-        <!-- 連線參數 -->
-        <property name="driverClass">com.mysql.jdbc.Driver</property>
-        <property name="jdbcUrl">jdbc:mysql://localhost:3306/db15</property>
-        <property name="user">root</property>
-        <property name="password">itheima</property>
+<!--    <named-config name="otherc3p0">-->
+<!--        &lt;!&ndash; 連線參數 &ndash;&gt;-->
+<!--        <property name="driverClass">com.mysql.jdbc.Driver</property>-->
+<!--        <property name="jdbcUrl">jdbc:mysql://localhost:3306/db15</property>-->
+<!--        <property name="user">root</property>-->
+<!--        <property name="password">itheima</property>-->
 
-        <!-- 連線池參數 -->
-        <property name="initialPoolSize">5</property>
-        <property name="maxPoolSize">8</property>
-        <property name="checkoutTimeout">1000</property>
-    </named-config>
+<!--        &lt;!&ndash; 連線池參數 &ndash;&gt;-->
+<!--        <property name="initialPoolSize">5</property>-->
+<!--        <property name="maxPoolSize">8</property>-->
+<!--        <property name="checkoutTimeout">1000</property>-->
+<!--    </named-config>-->
 </c3p0-config>

@@ -23,6 +23,7 @@ public class DateUtils {
         Date timeDate = null;//util類型
         try {
             timeDate = dateformatAll.parse(dateString);
+            System.out.println(timeDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -61,7 +62,7 @@ public class DateUtils {
     }
 
     //獲取當前時間字串類型,其他類型請直接用System.currentTimeMillis()
-    public  String getCurrentTimestamp() {
+    public String getCurrentTimestamp() {
         Date nowTime = new Date(System.currentTimeMillis());
         SimpleDateFormat sdFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:dd");
         String retStrFormatNowDate = sdFormatter.format(nowTime);
@@ -69,13 +70,29 @@ public class DateUtils {
     }
 
     public java.sql.Date getSqlCurrentTime() {
-       return new java.sql.Date(new Date().getTime());
+        return new java.sql.Date(new Date().getTime());
     }
 
+    public Date getUtilDate(String dateString) {
+        Date timeDate = null;//util類型
+        try {
+            timeDate = dateformatAll.parse(dateString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
+        return timeDate;
+    }
 
-
-
+    public  Date addAndSubtractDaysByGetTime(Date dateTime/*待處理的日期*/, int n/*加減天數*/) {
+//日期格式
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        System.out.println(dd.format(new Date(dateTime.getTime() + n * 24 * 60 * 60 * 1000L)));
+//System.out.println(dd.format(new Date(dateTime.getTime()   n * 24 * 60 * 60 * 1000L)));
+//注意這裡一定要轉換成Long型別，要不n超過25時會出現範圍溢位，從而得不到想要的日期值
+        return new Date(dateTime.getTime() + n * 24 * 60 * 60 * 1000L);
+    }
 
 
 }

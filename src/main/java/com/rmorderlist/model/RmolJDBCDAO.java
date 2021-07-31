@@ -18,10 +18,10 @@ import java.util.Set;
 
 
 public class RmolJDBCDAO implements RmolDAO_interface{
-	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://35.221.136.103:3306/CFA101G2?serverTimezone=Asia/Taipei";
-	String userid = "CFA101G2";
-	String passwd = "A123456";
+//	String driver = "com.mysql.cj.jdbc.Driver";
+//	String url = "jdbc:mysql://35.221.136.103:3306/CFA101G2?serverTimezone=Asia/Taipei";
+//	String userid = "CFA101G2";
+//	String passwd = "A123456";
 	JDBCUtils jdbcUtils = new JDBCUtils();
 
 	private static final String INSERT_STMT = "INSERT INTO ROOM_ORDER_LIST (ROOM_ORDER_ID, ROOM_CATEGORY_ID, ROOM_PROMOTION_ID, ROOM_ID,MEM_NAME, MEM_NUMBER, CHECK_IN_DATE, CHECK_OUT_DATE, ROOM_TOTAL_PRICE) VALUES (?,?,?,?,?,?,?,?,?)";
@@ -39,8 +39,9 @@ public class RmolJDBCDAO implements RmolDAO_interface{
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
+			con = jdbcUtils.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setInt(1, rmolVO.getRoomOrderId());
@@ -54,9 +55,6 @@ public class RmolJDBCDAO implements RmolDAO_interface{
 			pstmt.setInt(9, rmolVO.getRoomTotalPrice());
 
 			pstmt.executeUpdate();
-
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
@@ -86,8 +84,9 @@ public class RmolJDBCDAO implements RmolDAO_interface{
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
+			con = jdbcUtils.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setInt(1, rmolVO.getRoomOrderId());
@@ -102,9 +101,6 @@ public class RmolJDBCDAO implements RmolDAO_interface{
 			pstmt.setInt(10, rmolVO.getOrderListId());
 
 			pstmt.executeUpdate();
-
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 
 		} catch (SQLException se) {
 			se.printStackTrace();
@@ -134,16 +130,15 @@ public class RmolJDBCDAO implements RmolDAO_interface{
 		PreparedStatement pstmt = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
+			con = jdbcUtils.getConnection();
 			pstmt = con.prepareStatement(DELETE);
 
 			pstmt.setInt(1, orderListId);
 
 			pstmt.executeUpdate();
 
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
@@ -173,8 +168,10 @@ public class RmolJDBCDAO implements RmolDAO_interface{
 		ResultSet rs = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
+
+			con = jdbcUtils.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
 			pstmt.setInt(1, orderListId);
@@ -195,9 +192,6 @@ public class RmolJDBCDAO implements RmolDAO_interface{
 				rmolVO.setRoomTotalPrice(rs.getInt("ROOM_TOTAL_PRICE"));
 				
 			}
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
@@ -236,8 +230,10 @@ public class RmolJDBCDAO implements RmolDAO_interface{
 		ResultSet rs = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
+
+			con = jdbcUtils.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
@@ -257,9 +253,6 @@ public class RmolJDBCDAO implements RmolDAO_interface{
 				list.add(rmolVO);
 
 			}
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
@@ -406,8 +399,10 @@ public class RmolJDBCDAO implements RmolDAO_interface{
 			ResultSet rs = null;
 
 			try {
-				Class.forName(driver);
-				con = DriverManager.getConnection(url, userid, passwd);
+//				Class.forName(driver);
+//				con = DriverManager.getConnection(url, userid, passwd);
+
+				con = jdbcUtils.getConnection();
 				pstmt = con.prepareStatement(GET_ONE_ORDER_ID_STMT);
 
 				pstmt.setInt(1,RoomOrderId);
@@ -429,9 +424,6 @@ public class RmolJDBCDAO implements RmolDAO_interface{
 					list.add(rmolVO);
 
 				}
-			} catch (ClassNotFoundException e) {
-				throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-
 			} catch (SQLException se) {
 				throw new RuntimeException("A database error occured. " + se.getMessage());
 			} finally {

@@ -17,18 +17,18 @@ public class ExtraBillDAOImpl implements ExtraBillDAO {
 
 
     private static final String INSERT_STMT =
-            "insert into EXTRA_BILL (ROOM_ID, EXTRA_PRICE, INFORMATION_PHONE, SERVICE_ITEM, CHECK_IN_DATE, CHECK_OUT_DATE) value (?,?,?,?,?,?)";
+            "insert into EXTRA_BILL (ROOM_ID, EXTRA_PRICE, INFORMATION_PHONE, EXPECTED_CHECK_OUT_DATE, CHECK_IN_DATE, CHECK_OUT_DATE) value (?,?,?,?,?,?)";
     private static final String GET_ONE_STMT =
             "select * from EXTRA_BILL where ROOM_ID=?";
     private static final String GET_ALL_STMT =
-            "select EXTRA_BILL_ID, ORDER_LIST_ID, EXTRA_PRICE, AMOUNT, SERVICE_ITEM, CONSUMPTION_DATE from EXTRA_BILL order by EXTRA_BILL_ID";
+            "select EXTRA_BILL_ID, ORDER_LIST_ID, EXTRA_PRICE, AMOUNT, EXPECTED_CHECK_OUT_DATE, CONSUMPTION_DATE from EXTRA_BILL order by EXTRA_BILL_ID";
     private static final String DELETE =
             "delete from EXTRA_BILL where EXTRA_BILL_ID=?";
 
     private static final String DELETE_ROOM =
             "delete from EXTRA_BILL where ROOM_ID=?";
     private static final String UPDATE =
-            "update EXTRA_BILL set ROOM_ID=?,EXTRA_PRICE=?, INFORMATION_PHONE=? ,SERVICE_ITEM=? ,CHECK_IN_DATE=? ,CHECK_OUT_DATE=? where EXTRA_BILL_ID=?";
+            "update EXTRA_BILL set ROOM_ID=?,EXTRA_PRICE=?, INFORMATION_PHONE=? ,EXPECTED_CHECK_OUT_DATE=? ,CHECK_IN_DATE=? ,CHECK_OUT_DATE=? where EXTRA_BILL_ID=?";
 
     @Override
     public void insert(ExtraBillVO extraBillVO) {
@@ -41,7 +41,7 @@ public class ExtraBillDAOImpl implements ExtraBillDAO {
             pstmt.setInt(1, extraBillVO.getRoomId());
             pstmt.setInt(2, extraBillVO.getExtraPrice());
             pstmt.setString(3, extraBillVO.getInformationPhone());
-            pstmt.setString(4, extraBillVO.getServiceItem());
+            pstmt.setTimestamp(4, extraBillVO.getExpectedCheckOutDate());
             pstmt.setTimestamp(5, extraBillVO.getCheckInDate());
             pstmt.setTimestamp(6, extraBillVO.getCheckOutDate());
 
@@ -68,7 +68,7 @@ public class ExtraBillDAOImpl implements ExtraBillDAO {
             pstmt.setInt(1, extraBillVO.getRoomId());
             pstmt.setInt(2, extraBillVO.getExtraPrice());
             pstmt.setString(3, extraBillVO.getInformationPhone());
-            pstmt.setString(4, extraBillVO.getServiceItem());
+            pstmt.setTimestamp(4, extraBillVO.getExpectedCheckOutDate());
             pstmt.setTimestamp(5, extraBillVO.getCheckInDate());
             pstmt.setTimestamp(6, extraBillVO.getCheckOutDate());
             pstmt.setInt(7, extraBillVO.getExtraBillId());
@@ -106,7 +106,7 @@ public class ExtraBillDAOImpl implements ExtraBillDAO {
                 extraBillVO.setRoomId(rs.getInt("ROOM_ID"));
                 extraBillVO.setExtraPrice(rs.getInt("EXTRA_PRICE"));
                 extraBillVO.setInformationPhone(rs.getString("INFORMATION_PHONE"));
-                extraBillVO.setServiceItem(rs.getString("SERVICE_ITEM"));
+                extraBillVO.setExpectedCheckOutDate(rs.getTimestamp("EXPECTED_CHECK_OUT_DATE"));
                 extraBillVO.setCheckInDate(rs.getTimestamp("CHECK_IN_DATE"));
                 extraBillVO.setCheckOutDate(rs.getTimestamp("CHECK_OUT_DATE"));
 

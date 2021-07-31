@@ -65,7 +65,6 @@ public class RomOrderListServlet extends HttpServlet {
         rmorder.put("list", list);
         rmorder.put("all", all);
 
-
         System.out.println("開始轉交");
         mapper.writeValue(response.getOutputStream(), rmorder);
     }

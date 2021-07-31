@@ -5,6 +5,7 @@ import com.extrabill.model.ExtraBillVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.room.model.RmService;
 import com.room.model.RmVO;
+import com.utils.DateUtils;
 import com.utils.ResultInfo;
 
 import javax.servlet.*;
@@ -12,8 +13,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @WebServlet("/room/CheckInServlet")
 public class CheckInServlet extends HttpServlet {
@@ -35,13 +35,15 @@ public class CheckInServlet extends HttpServlet {
 
         try {
 
-
             //取得參數
-            String roomId = request.getParameter("roomId");
+        String roomId = request.getParameter("roomId");
         String roomInformation = request.getParameter("roomInformation");
         String informationPhone = request.getParameter("informationPhone");
+        String stayDays = request.getParameter("stayDays");
 
-
+        System.out.println("入住天數:"+stayDays);
+//        String dateStr="2021-8-01 00:00:00";
+//        String dateStr="2021-7-31 ";
 
 
         //修改房間資料
@@ -51,9 +53,30 @@ public class CheckInServlet extends HttpServlet {
         oneRm.setRoomSaleStatus((byte) 1);//修改為不可用
         RmVO rmVO = rmService.updateRmVO(oneRm);
 
-        //新增詳細列表
 
-        ExtraBillVO extraBillVO = extraBillService.CheckIn(rmVO.getRoomId(), informationPhone, 0, "", new Timestamp(System.currentTimeMillis()), null);
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            Date date = new Date(timestamp.getTime());
+            Date expected = new DateUtils().addAndSubtractDaysByGetTime(date, Integer.parseInt(stayDays));
+
+
+            //新增詳細列表
+        ExtraBillVO extraBillVO = extraBillService.CheckIn(rmVO.getRoomId(), informationPhone, 0,new Timestamp(expected.getTime()) , timestamp, null);
+
+            Timer timer ;
+            timer = new Timer();
+            System.out.println("排程器設定");
+            TimerTask task = new TimerTask(){
+                @Override
+                public void run() {
+                    System.out.println("開始修改為待退房");
+                    oneRm.setRoomCheckStatus((byte) 4);
+                    RmVO rmVO = rmService.updateRmVO(oneRm);
+                    System.out.println("修改完畢:"+rmVO);
+                    timer.cancel();
+                }
+            };
+            timer.schedule(task,expected);
+//            timer.schedule(task,new DateUtils().getUtilDate(dateStr));
 
         info.setFlag(true);
         }catch (Exception e){

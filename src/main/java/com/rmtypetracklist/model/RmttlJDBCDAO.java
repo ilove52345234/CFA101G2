@@ -1,5 +1,7 @@
 package com.rmtypetracklist.model;
 
+import com.utils.JDBCUtils;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,11 +13,13 @@ import java.util.List;
 //會員還沒有資料
 
 public class RmttlJDBCDAO implements RmttlDAO_interface{
-	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://35.221.136.103:3306/CFA101G2?serverTimezone=Asia/Taipei";
-	String userid = "CFA101G2";
-	String passwd = "A123456";
-	
+//	String driver = "com.mysql.cj.jdbc.Driver";
+//	String url = "jdbc:mysql://35.221.136.103:3306/CFA101G2?serverTimezone=Asia/Taipei";
+//	String userid = "CFA101G2";
+//	String passwd = "A123456";
+JDBCUtils jdbcUtils = new JDBCUtils();
+
+
 	private static final String INSERT_STMT = "INSERT INTO ROOM_TYPE_TRACK_LIST (ROOM_CATEGORY_ID, MEM_ID) VALUES (?,?)";
 	private static final String GET_ALL_STMT = "SELECT ROOM_CATEGORY_ID, MEM_ID FROM ROOM_TYPE_TRACK_LIST order by ROOM_CATEGORY_ID";
 	private static final String GET_ONE_STMT = "SELECT ROOM_CATEGORY_ID, MEM_ID FROM ROOM_TYPE_TRACK_LIST where ROOM_CATEGORY_ID = ? and MEM_ID = ?";
@@ -30,8 +34,9 @@ public class RmttlJDBCDAO implements RmttlDAO_interface{
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
+			con = jdbcUtils.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
 			pstmt.setInt(1, rmttlVO.getRoomCategoryId());
@@ -40,10 +45,7 @@ public class RmttlJDBCDAO implements RmttlDAO_interface{
 
 			pstmt.executeUpdate();
 
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-
-		} catch (SQLException se) {
+		}  catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
 			if (pstmt != null) {
@@ -71,8 +73,9 @@ public class RmttlJDBCDAO implements RmttlDAO_interface{
 		PreparedStatement pstmt = null;
 		
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
+			con = jdbcUtils.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setInt(1, rmttlVO.getRoomCategoryId());
@@ -82,10 +85,7 @@ public class RmttlJDBCDAO implements RmttlDAO_interface{
 
 			pstmt.executeUpdate();
 
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-
-		} catch (SQLException se) {
+		}  catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
 			if (pstmt != null) {
@@ -112,8 +112,9 @@ public class RmttlJDBCDAO implements RmttlDAO_interface{
 		PreparedStatement pstmt = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
+			con = jdbcUtils.getConnection();
 			pstmt = con.prepareStatement(DELETE);
 			
 			pstmt.setInt(1, roomCategoryId);
@@ -121,9 +122,7 @@ public class RmttlJDBCDAO implements RmttlDAO_interface{
 
 			pstmt.executeUpdate();
 
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-		} catch (SQLException se) {
+		}  catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
 			if (pstmt != null) {
@@ -154,8 +153,9 @@ public class RmttlJDBCDAO implements RmttlDAO_interface{
 
 		try {
 			
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
+			con = jdbcUtils.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
 			pstmt.setInt(1, roomCategoryId);
@@ -169,9 +169,6 @@ public class RmttlJDBCDAO implements RmttlDAO_interface{
 				rmttlVO.setMemId(rs.getInt("MEM_ID"));
 				
 			}
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
@@ -211,8 +208,9 @@ public class RmttlJDBCDAO implements RmttlDAO_interface{
 		
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
+			con = jdbcUtils.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
@@ -224,9 +222,6 @@ public class RmttlJDBCDAO implements RmttlDAO_interface{
 				
 				list.add(rmttlVO1);
 			}
-
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());

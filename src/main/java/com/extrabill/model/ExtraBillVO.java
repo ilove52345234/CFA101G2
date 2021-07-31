@@ -7,7 +7,7 @@ public class ExtraBillVO implements java.io.Serializable{
     private Integer roomId;
     private String informationPhone;
     private Integer extraPrice;
-    private String serviceItem;
+    private Timestamp expectedCheckOutDate;
     private Timestamp checkInDate;
     private Timestamp checkOutDate;
 
@@ -15,7 +15,18 @@ public class ExtraBillVO implements java.io.Serializable{
     }
 
 
-
+    @Override
+    public String toString() {
+        return "ExtraBillVO{" +
+                "extraBillId=" + extraBillId +
+                ", roomId=" + roomId +
+                ", informationPhone='" + informationPhone + '\'' +
+                ", extraPrice=" + extraPrice +
+                ", expectedCheckOutDate=" + expectedCheckOutDate +
+                ", checkInDate=" + checkInDate +
+                ", checkOutDate=" + checkOutDate +
+                '}';
+    }
 
     public Integer getExtraBillId() {
         return extraBillId;
@@ -33,8 +44,23 @@ public class ExtraBillVO implements java.io.Serializable{
         this.roomId = roomId;
     }
 
+    public Timestamp getExpectedCheckOutDate() {
+        return expectedCheckOutDate;
+    }
 
+    public void setExpectedCheckOutDate(Timestamp expectedCheckOutDate) {
+        this.expectedCheckOutDate = expectedCheckOutDate;
+    }
 
+    public ExtraBillVO(Integer extraBillId, Integer roomId, String informationPhone, Integer extraPrice, Timestamp expectedCheckOutDate, Timestamp checkInDate, Timestamp checkOutDate) {
+        this.extraBillId = extraBillId;
+        this.roomId = roomId;
+        this.informationPhone = informationPhone;
+        this.extraPrice = extraPrice;
+        this.expectedCheckOutDate = expectedCheckOutDate;
+        this.checkInDate = checkInDate;
+        this.checkOutDate = checkOutDate;
+    }
 
     public Integer getExtraPrice() {
         return extraPrice;
@@ -44,13 +70,7 @@ public class ExtraBillVO implements java.io.Serializable{
         this.extraPrice = extraPrice;
     }
 
-    public String getServiceItem() {
-        return serviceItem;
-    }
 
-    public void setServiceItem(String serviceItem) {
-        this.serviceItem = serviceItem;
-    }
 
     public Timestamp getCheckInDate() {
         return checkInDate;
@@ -68,18 +88,6 @@ public class ExtraBillVO implements java.io.Serializable{
         this.checkOutDate = checkOutDate;
     }
 
-    @Override
-    public String toString() {
-        return "ExtraBillVO{" +
-                "extraBillId=" + extraBillId +
-                ", roomId=" + roomId +
-                ", informationPhone='" + informationPhone + '\'' +
-                ", extraPrice=" + extraPrice +
-                ", serviceItem='" + serviceItem + '\'' +
-                ", checkInDate=" + checkInDate +
-                ", checkOutDate=" + checkOutDate +
-                '}';
-    }
 
     public String getInformationPhone() {
         return informationPhone;
@@ -89,13 +97,4 @@ public class ExtraBillVO implements java.io.Serializable{
         this.informationPhone = informationPhone;
     }
 
-    public ExtraBillVO(Integer extraBillId, Integer roomId, String informationPhone, Integer extraPrice, String serviceItem, Timestamp checkInDate, Timestamp checkOutDate) {
-        this.extraBillId = extraBillId;
-        this.roomId = roomId;
-        this.informationPhone = informationPhone;
-        this.extraPrice = extraPrice;
-        this.serviceItem = serviceItem;
-        this.checkInDate = checkInDate;
-        this.checkOutDate = checkOutDate;
-    }
 }

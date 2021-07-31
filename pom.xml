@@ -199,21 +199,26 @@
                 <type>pom</type>
             </dependency>
 
-
-
-
+            <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>1.15</version>
+            </dependency>
 
 
         </dependencies>
 
         <build>
 
+<!--            includes:指定包含檔案的patterns,符合樣式並且在directory目錄下的檔案將會包含進project的資原始檔。-->
+<!--            excludes:指定不包含在內的patterns,如果inclues與excludes有衝突，那麼excludes勝利，那些符合衝突的樣式的檔案是不會包含進來的-->
             <resources>
                 <resource>
                     <directory>src</directory>
-                    <excludes>
-                        <exclude>**/*.java</exclude>
-                    </excludes>
+                    <includes>
+                        <include>**/*.java</include>
+                    </includes>
                 </resource>
             </resources>
 

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta http-equiv="X-UA-Compatible" content="id=edge">
+    <title>新增房型</title>
+    <style type="text/css">
+        .float{
+            float:left;
+            width : 200px;
+            height: 200px;
+            overflow: hidden;
+            border: 1px solid #CCCCCC;
+            border-radius: 10px;
+            padding: 5px;
+            margin: 5px;
+        }
+        img{
+            position: relative;
+        }
+        .result{
+            width: 200px;
+            height: 200px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+
+        #file_input{
+            display: none;
+        }
+
+
+        .delete{
+            width: 200px;
+            height:200px;
+            position: absolute;
+            text-align: center;
+            line-height: 200px;
+            z-index: 10;
+            font-size: 30px;
+            background-color: rgba(255,255,255,0.8);
+            color: #777;
+            opacity: 0;
+            transition-duration: 0.7s;
+            -webkit-transition-duration: 0.7s;
+        }
+
+
+        .delete:hover{
+            cursor: pointer;
+            opacity: 1;
+        }
+
+    </style>
+
+
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script type="text/javascript">
+
+
+        window.onload = function(){
+            var input = document.getElementById("file_input");
+            var result;
+            var dataArr = []; // 儲存所選圖片的結果(文件名和base64數據)
+            var fd; //FormData方式發送請求
+            var oSelect = document.getElementById("select");
+            var oAdd = document.getElementById("add");
+            var oSubmit = document.getElementById("submit");
+            var oInput = document.getElementById("file_input");
+
+            if(typeof FileReader==='undefined'){
+                alert("抱歉，你的瀏覽器不支持 FileReader");
+                input.setAttribute('disabled','disabled');
+            }else{
+                input.addEventListener('change',readFile,false);
+            }　　　　　//handler
+
+
+            function readFile(){
+                fd = new FormData();
+                var iLen = this.files.length;
+                for(var i=0;i<iLen;i++){
+                    // alert(this.files[i].name)
+                    // input['value']
+                    if (!this.files[i].name.match(/.jpg|.gif|.png|.jpeg|.bmp/i)){　　//判斷上傳文件格式
+                        return alert("上傳的圖片格式不正確，請重新選擇");
+                    }
+                    var reader = new FileReader();
+                    fd.append(i,this.files[i]);
+                    reader.readAsDataURL(this.files[i]); //轉成base64
+                    reader.fileName = this.files[i].name;
+
+                    reader.onload = function(e){
+                        var imgMsg = {
+                            name : this.fileName,//獲取文件名
+                            base64 : this.result //reader.readAsDataURL方法執行完後，base64數據儲存在reader.result裡
+                        }
+                        dataArr.push(imgMsg);
+                        result = '<div class="delete">delete</div><div class="result"><img class="subPic" src="'+this.result+'" alt="'+this.fileName+' "/></div>';
+                        var div = document.createElement('div');
+                        div.innerHTML = result;
+                        div['className'] = 'float';
+                        document.getElementsByTagName('body')[0].appendChild(div); 　　//插入dom樹
+                        var img = div.getElementsByTagName('img')[0];
+                        img.onload = function(){
+                            var nowHeight = ReSizePic(this); //設置圖片大小
+                            this.parentNode.style.display = 'block';
+                            var oParent = this.parentNode;
+                            if(nowHeight){
+                                oParent.style.paddingTop = (oParent.offsetHeight - nowHeight)/2 + 'px';
+                            }
+                        }
+                        div.onclick = function(){
+                            $(this).remove(); // 在頁面中刪除該圖片元素
+                        }
+                    }
+                }
+            }
+
+
+            function send(){
+
+                var data1Arr ={
+                        empAccount: $('#empAccount').val(),
+                         empPassword: $('#empPassword').val()
+                };
+
+                var submitArr = [];
+                $('.subPic').each(function () {
+                        submitArr.push({
+                            name: $(this).attr('alt'),
+                            base64: $(this).attr('src')
+                        });
+                    }
+                );
+
+                $.ajax({
+                    url : '/CFA101G2/test1Servlet',
+                    type : 'post',
+                    data : {
+                    'date':JSON.stringify(data1Arr),
+                        'submitArr':JSON.stringify(submitArr)
+                    },
+                    dataType: 'json',
+                    //processData: false, 用FormData傳fd時需有這兩項
+                    //contentType: false,
+                    success : function(data){
+                        console.log('返回的數據：'+JSON.stringify(data))
+                    }
+                })
+            }
+
+
+            oSelect.onclick=function(){
+                oInput.value = ""; // 先將oInput值清空，否則選擇圖片與上次相同時change事件不會觸發
+                //清空已選圖片
+                $('.float').remove();
+                oInput.click();
+            }
+
+
+            oAdd.onclick=function(){
+                oInput.value = ""; // 先將oInput值清空，否則選擇圖片與上次相同時change事件不會觸發
+                oInput.click();
+            }
+
+
+            oSubmit.onclick=function(){
+                if(!dataArr.length){
+                    return alert('請先選擇圖片');
+                }
+                send();
+            }
+        }
+        /*
+         用ajax發送fd參數時要告訴jQuery不要去處理發送的數據，
+         不要去設置Content-Type請求頭才可以發送成功，否則會報“Illegal invocation”的錯誤，
+         也就是非法調用，所以要加上“processData: false,contentType: false,”
+         * */
+
+
+        function ReSizePic(ThisPic) {
+            var RePicWidth = 200; //這裡修改為您想顯示的寬度值
+            var TrueWidth = ThisPic.width; //圖片實際寬度
+            var TrueHeight = ThisPic.height; //圖片實際高度
+
+            if(TrueWidth>TrueHeight){
+                //寬大於高
+                var reWidth = RePicWidth;
+                ThisPic.width = reWidth;
+                //垂直居中
+                var nowHeight = TrueHeight * (reWidth/TrueWidth);
+
+                return nowHeight; //將圖片修改後的高度返回，供垂直居中用
+            }else{
+                //寬小於高
+                var reHeight = RePicWidth;
+                ThisPic.height = reHeight;
+            }
+        }
+
+
+
+    </script>
+</head>
+<body>
+
+<form id="Form2" class="login">
+    <h1>管理員登入</h1>
+    <i class="fa fa-user-circle-o"></i>
+    <h2>帳號</h2>
+    <input type="text" placeholder="請輸入帳號" name="empAccount" id="empAccount">
+    <h2>密碼</h2>
+    <input type="password" placeholder="請輸入密碼" name="empPassword" id="empPassword">
+</form>
+
+
+<div class="container">
+    <label>請選擇圖片：</label>
+    <button id="select">選擇圖片</button>
+    <button id="add">增加圖片</button>
+    <input type="file" id="file_input" multiple/> <!--用input標籤並選擇type=file，記得帶上multiple，不然就只能單選圖片了-->
+    <button id="submit">上傳</button>
+</div>
+
+</body>
+
+</html>
+

@@ -1,15 +1,19 @@
 package com.roomorder.model;
 
 
+import com.utils.JDBCUtils;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RoomOrderDAOImpl implements RoomOrderDAO {
-    String driver = "com.mysql.cj.jdbc.Driver";
-    String url = "jdbc:mysql://35.221.136.103:3306/CFA101G2?serverTimezone=Asia/Taipei";
-    String userid = "CFA101G2";
-    String passwd = "A123456";
+//    String driver = "com.mysql.cj.jdbc.Driver";
+//    String url = "jdbc:mysql://35.221.136.103:3306/CFA101G2?serverTimezone=Asia/Taipei";
+//    String userid = "CFA101G2";
+//    String passwd = "A123456";
+JDBCUtils jdbcUtils = new JDBCUtils();
+
 
 
     private static final String INSERT_STMT =
@@ -30,9 +34,9 @@ public class RoomOrderDAOImpl implements RoomOrderDAO {
         PreparedStatement pstmt = null;
         try {
 
-            Class.forName(driver);
-            con = DriverManager.getConnection(url, userid, passwd);
-
+//            Class.forName(driver);
+//            con = DriverManager.getConnection(url, userid, passwd);
+            con = jdbcUtils.getConnection();
             pstmt = con.prepareStatement(INSERT_STMT);
 
             pstmt.setInt(1, roomOrderVO.getMemId());
@@ -47,9 +51,6 @@ public class RoomOrderDAOImpl implements RoomOrderDAO {
 
         } catch (SQLException se) {
             throw new RuntimeException("發生錯誤:" + se.getMessage());
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException("驅動載入錯誤 "
-                    + e.getMessage());
         } finally {
             if (pstmt != null) {
                 try {
@@ -77,9 +78,9 @@ public class RoomOrderDAOImpl implements RoomOrderDAO {
         PreparedStatement pstmt = null;
         try {
 
-            Class.forName(driver);
-            con = DriverManager.getConnection(url, userid, passwd);
-
+//            Class.forName(driver);
+//            con = DriverManager.getConnection(url, userid, passwd);
+            con = jdbcUtils.getConnection();
             pstmt = con.prepareStatement(UPDATE);
             pstmt.setInt(1, roomOrderVO.getMemId());
             pstmt.setTimestamp(2, roomOrderVO.getOrderDate());
@@ -94,10 +95,7 @@ public class RoomOrderDAOImpl implements RoomOrderDAO {
 
         } catch (SQLException se) {
             throw new RuntimeException("發生錯誤:" + se.getMessage());
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException("驅動載入錯誤 "
-                    + e.getMessage());
-        } finally {
+        }  finally {
             if (pstmt != null) {
                 try {
                     pstmt.close();
@@ -124,9 +122,9 @@ public class RoomOrderDAOImpl implements RoomOrderDAO {
         PreparedStatement pstmt = null;
         try {
 
-            Class.forName(driver);
-            con = DriverManager.getConnection(url, userid, passwd);
-
+//            Class.forName(driver);
+//            con = DriverManager.getConnection(url, userid, passwd);
+            con = jdbcUtils.getConnection();
             pstmt = con.prepareStatement(DELETE);
 
             pstmt.setInt(1, roomOrderId);
@@ -138,9 +136,6 @@ public class RoomOrderDAOImpl implements RoomOrderDAO {
 
         } catch (SQLException se) {
             throw new RuntimeException("發生錯誤:" + se.getMessage());
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException("驅動載入錯誤 "
-                    + e.getMessage());
         } finally {
             if (pstmt != null) {
                 try {
@@ -170,8 +165,9 @@ public class RoomOrderDAOImpl implements RoomOrderDAO {
 
         try {
 
-            Class.forName(driver);
-            con = DriverManager.getConnection(url, userid, passwd);
+//            Class.forName(driver);
+//            con = DriverManager.getConnection(url, userid, passwd);
+            con = jdbcUtils.getConnection();
             pstmt = con.prepareStatement(GET_ONE_STMT);
 
             pstmt.setInt(1, roomOrderId);
@@ -192,10 +188,9 @@ public class RoomOrderDAOImpl implements RoomOrderDAO {
 
         } catch (SQLException se) {
             throw new RuntimeException("發生錯誤:" + se.getMessage());
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException("驅動載入錯誤 "
-                    + e.getMessage());
-        } finally {
+        }
+
+         finally {
 
             if (rs != null) {
                 try {
@@ -234,8 +229,9 @@ public class RoomOrderDAOImpl implements RoomOrderDAO {
 
         try {
 
-            Class.forName(driver);
-            con = DriverManager.getConnection(url, userid, passwd);
+//            Class.forName(driver);
+//            con = DriverManager.getConnection(url, userid, passwd);
+            con = jdbcUtils.getConnection();
             pstmt = con.prepareStatement(GET_ALL_STMT);
             rs = pstmt.executeQuery();
 
@@ -254,10 +250,8 @@ public class RoomOrderDAOImpl implements RoomOrderDAO {
 
         } catch (SQLException se) {
             throw new RuntimeException("發生錯誤:" + se.getMessage());
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException("驅動載入錯誤 "
-                    + e.getMessage());
-        } finally {
+        }
+           finally {
             if (rs != null) {
                 try {
                     rs.close();

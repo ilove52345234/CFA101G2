@@ -1,0 +1,49 @@
+<!-- 頭部 start -->
+
+<script src="../back-end/js/getParameter.js"></script>
+<script>
+    $(function () {
+        //查詢用戶信息
+        $.get("user/findOne",{},function (data) {
+            var msg = "歡迎回來，"+data.name;
+            $("#span_username").html(msg);
+
+        });
+
+    });
+
+</script>
+
+<header id="header">
+    <div class="top_banner">
+        <img src="images/top_banner.jpg" alt="">
+    </div>
+    <div class="shortcut">
+        <!-- 未登錄狀態 -->
+        <div class="login_out">
+            <a href="login.html">登錄</a>
+            <a href="register.html">註冊</a>
+        </div>
+        <!-- 登錄狀態 -->
+        <div class="login">
+
+            <span id="span_username"></span>
+            <a href="javascript:location.href='Demo.exitServlet';">退出</a>
+        </div>
+    </div>
+    <div class="header_wrap">
+        <div class="topbar">
+            <div class="logo">
+                <a href="/"><img src="images/logo.jpg" alt=""></a>
+            </div>
+
+        </div>
+    </div>
+</header>
+<!-- 頭部 end -->
+<!-- 首頁導航 -->
+<div class="navitem">
+    <ul id="category" class="nav">
+
+    </ul>
+</div>

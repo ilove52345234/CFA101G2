@@ -1,14 +1,18 @@
 package com.recentnews.model;
 
+import com.utils.JDBCUtils;
+
 import java.sql.*;
 import java.util.*;
 
 public class RecentNewsJDBCDAO implements RecentNewsJDBCDAO_interface{
-	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3306/GROUP2?serverTimezone=Asia/Taipei"; //35.221.136.103
-	String userid = "root"; //CFA101G2
-	String passwd = "sao124154"; //123456
-	
+//	String driver = "com.mysql.cj.jdbc.Driver";
+//	String url = "jdbc:mysql://localhost:3306/GROUP2?serverTimezone=Asia/Taipei"; //35.221.136.103
+//	String userid = "root"; //CFA101G2
+//	String passwd = "sao124154"; //123456
+
+	JDBCUtils jdbcUtils = new JDBCUtils();
+
 	private static final String INSERT_STMT = 
 		"INSERT INTO RECENT_NEWS (NEWS_CONTENT, NEWS_TIME, NEWS_STATUS) values(?,?,?)"; 
 	private static final String GET_ALL_STMT = 
@@ -28,19 +32,16 @@ public class RecentNewsJDBCDAO implements RecentNewsJDBCDAO_interface{
 		
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
+			con = jdbcUtils.getConnection();
 			pstmt = con.prepareStatement(DELETE);
 
 			pstmt.setInt(1, newsId);
 
 			pstmt.executeUpdate();
 
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-
-		} catch (SQLException se) {
+		}  catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
 
@@ -71,8 +72,9 @@ public class RecentNewsJDBCDAO implements RecentNewsJDBCDAO_interface{
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
+			con = jdbcUtils.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 			
 			pstmt.setString(1, recentNewsVO.getNewsContent());
@@ -81,11 +83,7 @@ public class RecentNewsJDBCDAO implements RecentNewsJDBCDAO_interface{
 			
 			pstmt.executeUpdate();
 
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-
-		} catch (SQLException se) {
+		}  catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
 
@@ -119,8 +117,9 @@ public class RecentNewsJDBCDAO implements RecentNewsJDBCDAO_interface{
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
+			con = jdbcUtils.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_STMT);
 			rs = pstmt.executeQuery();
 
@@ -134,11 +133,7 @@ public class RecentNewsJDBCDAO implements RecentNewsJDBCDAO_interface{
 				list.add(recentNewsVO);
 			}
 
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-
-		} catch (SQLException se) {
+		}catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
 
@@ -178,8 +173,9 @@ public class RecentNewsJDBCDAO implements RecentNewsJDBCDAO_interface{
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
+			con = jdbcUtils.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
 			pstmt.setInt(1, newsId);
@@ -193,10 +189,6 @@ public class RecentNewsJDBCDAO implements RecentNewsJDBCDAO_interface{
 				recentNewsVO.setNewsTime(rs.getTimestamp("NEWS_TIME"));
 				recentNewsVO.setNewsStatus(rs.getInt("NEWS_STATUS"));
 			}
-
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
 
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
@@ -236,8 +228,9 @@ public class RecentNewsJDBCDAO implements RecentNewsJDBCDAO_interface{
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
+			con = jdbcUtils.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
 			pstmt.setString(1, recentNewsVO.getNewsContent());
@@ -246,11 +239,7 @@ public class RecentNewsJDBCDAO implements RecentNewsJDBCDAO_interface{
 			
 			pstmt.executeUpdate();
 
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-
-		} catch (SQLException se) {
+		}  catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
 

@@ -117,6 +117,8 @@
         th, td {
             padding: 1px;
         }
+
+
     </style>
 
 </head>
@@ -155,7 +157,22 @@
                 <td><input type="TEXT" name="informationPhone" id="informationPhone" size="45"
                 /></td>
             </tr>
-
+            <tr>
+                <td>入住天數:</td>
+                <td style="text-align: left ; padding-left: 20px" ><select name="stayDays" id="stayDays" >
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                    <option>6</option>
+                    <option>7</option>
+                    <option>8</option>
+                    <option>9</option>
+                    <option>10</option>
+                </select> 天
+                </td>
+            </tr>
 
         </table>
         <br>
@@ -174,6 +191,7 @@
         $('#message').html("")
         var sno = $('#informationPhone').val();
         var sname = $('#roomInformation').val();
+        var stayDays = $('#stayDays').val();
         // alert(sno)
 
         if (($.trim(sno) == "" || sno == null) || ($.trim(sname) == "" || sname == null)) {

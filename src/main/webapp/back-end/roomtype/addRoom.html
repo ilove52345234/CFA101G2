@@ -300,7 +300,6 @@
                             $("#submit").removeAttr("disabled");
                             $("#select").removeAttr("disabled");
                             $("#add").removeAttr("disabled");
-
                             if (data.flag) {
                                 alert("新增成功")
                                 // 成功，跳轉成功頁面
@@ -308,7 +307,6 @@
                             } else {
                                 //失敗,給errorMsg添加提示信息
                                 $("#errorMsg").html(data.errorMsg);
-
                             }
                         }
                     })
@@ -488,6 +486,8 @@
                 <input type="file" id="file_input" multiple/> <!--用input標籤並選擇type=file，記得帶上multiple，不然就只能單選圖片了-->
                 <!--                <button id="submit">上傳</button>-->
             </div>
+            <button id="" type="button" onclick="history.back()" class="btn btn-dark">返回</button>
+
         </div>
     </div>
 </div>

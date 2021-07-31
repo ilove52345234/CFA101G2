@@ -1,5 +1,5 @@
 $(function () {
-    $.get("header.html",function (data) {
+    $.get("/CFA101G2/back-end/header.jsp",function (data) {
         $("#header").html(data);
     });
     $.get("footer.html",function (data) {

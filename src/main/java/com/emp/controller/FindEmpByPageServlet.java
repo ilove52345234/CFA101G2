@@ -83,12 +83,12 @@ public class FindEmpByPageServlet extends HttpServlet {
 
 //        ("執行順利");
         //4.轉交
-        request.getRequestDispatcher("/back-end/list.jsp").forward(request, response);
+        request.getRequestDispatcher("/back-end/emp/list.jsp").forward(request, response);
 
         } catch (Exception e) {
         errorMsgs.add(e.getMessage());
         RequestDispatcher failureView = request
-                .getRequestDispatcher("/back-end/list.jsp");
+                .getRequestDispatcher("/back-end/emp/list.jsp");
         failureView.forward(request, response);
     }
 
