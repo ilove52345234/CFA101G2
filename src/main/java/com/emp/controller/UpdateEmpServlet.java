@@ -132,13 +132,14 @@ public class UpdateEmpServlet extends HttpServlet {
 
             mpFuncService.deleteAllMpFunc(empId);
 
+            String[] funs  = null;
+             funs = request.getParameterValues("funs");
 
-            String[] funs = request.getParameterValues("funs");
-
-            for (String fun : funs) {
-                mpFuncService.addMpFunc(empId, Integer.parseInt(fun));
+            if(funs != null) {
+                for (String fun : funs) {
+                    mpFuncService.addMpFunc(empId, Integer.parseInt(fun));
+                }
             }
-
             Msgs.add("管理員:"+empAccount+"修改成功");
 
 

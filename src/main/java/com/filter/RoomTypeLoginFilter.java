@@ -1,17 +1,19 @@
 package com.filter;
 
+import com.emp.model.EmpService;
 import com.emp.model.EmpVO;
+import com.func.model.FuncVO;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Set;
 
 /**
- * 登入驗證的過濾器
+ * 住房管理
  */
 
-public class EmpLoginFilter implements Filter {
+public class RoomTypeLoginFilter implements Filter {
     private FilterConfig config;
 
     public void init(FilterConfig config) throws ServletException {
@@ -25,10 +27,9 @@ public class EmpLoginFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
         //0.強制轉型,因為方法在http裡面
-        System.out.println("我被執行了");
+        System.out.println("RoomTypeLoginFilter被執行了");
         HttpServletRequest req = (HttpServletRequest) request;
-//        HttpSession session = req.getSession();
-
+        boolean flag = false;
         //1.獲取資源請求路徑
         String requestURI = req.getRequestURI();
 
@@ -57,16 +58,24 @@ public class EmpLoginFilter implements Filter {
 
             //3.從session獲取用戶資訊
             EmpVO emp = (EmpVO)req.getSession().getAttribute("Emp");
-//            (emp);
 
-            if (emp != null) {
+
+            Set<FuncVO> funcByEmpId = new EmpService().getFuncByEmpId(emp.getEmpId());
+
+            for (FuncVO funcVO : funcByEmpId) {
+               if(funcVO.getFuncId() == 18){
+                   flag = true;
+               }
+            }
+
+            if (flag) {
                 //代表登入過了,放行
-                System.out.println("登入過了,放行");
+                System.out.println("權限足夠,放行");
                 chain.doFilter(request, response);
             } else {
-                System.out.println("不包含emp,登入");
+                System.out.println("權限不足");
                 //空的,沒登入過,叫他去登入
-                req.getRequestDispatcher("/back-end/login.html").forward(request, response);
+                req.getRequestDispatcher("/back-end/AuthorityError.html").forward(request, response);
             }
         }
 //                chain.doFilter(request, response);

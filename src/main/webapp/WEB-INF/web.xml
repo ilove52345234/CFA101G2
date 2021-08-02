@@ -42,6 +42,135 @@
 <!--        <dispatcher>ASYNC</dispatcher>-->
 <!--    </filter-mapping>-->
 
+    <!--管理員登入驗證-->
+    <filter>
+        <filter-name>EmpLoginFilter</filter-name>
+        <filter-class>com.filter.EmpLoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>EmpLoginFilter</filter-name>
+        <url-pattern>/back-end/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+        <dispatcher>ASYNC</dispatcher>
+    </filter-mapping>
+
+    <!--房型管理-->
+    <filter>
+        <filter-name>RoomTypeLoginFilter</filter-name>
+        <filter-class>com.filter.RoomTypeLoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>RoomTypeLoginFilter</filter-name>
+        <url-pattern>/back-end/roomtype/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+        <dispatcher>ASYNC</dispatcher>
+    </filter-mapping>
+
+
+    <!--房間管理-->
+    <filter>
+        <filter-name>RoomLoginFilter</filter-name>
+        <filter-class>com.filter.RoomLoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>RoomLoginFilter</filter-name>
+        <url-pattern>/back-end/room/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+        <dispatcher>ASYNC</dispatcher>
+    </filter-mapping>
+
+    <!--住房管理-->
+    <filter>
+        <filter-name>RoomOrderLoginFilter</filter-name>
+        <filter-class>com.filter.RoomOrderLoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>RoomOrderLoginFilter</filter-name>
+        <url-pattern>/back-end/roomsorder/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+        <dispatcher>ASYNC</dispatcher>
+    </filter-mapping>
+
+
+    <!--會員管理-->
+    <filter>
+        <filter-name>MemTypeLoginFilter</filter-name>
+        <filter-class>com.filter.MemTypeLoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>MemTypeLoginFilter</filter-name>
+        <url-pattern>/back-end/mem/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+        <dispatcher>ASYNC</dispatcher>
+    </filter-mapping>
+
+    <!--後台管理員管理-->
+    <filter>
+        <filter-name>EmpFilter</filter-name>
+        <filter-class>com.filter.EmpFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>EmpFilter</filter-name>
+        <url-pattern>/back-end/emp/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+        <dispatcher>ASYNC</dispatcher>
+    </filter-mapping>
+
+
+
+    <!--商品資料管理-->
+    <filter>
+        <filter-name>ShopLoginFilter</filter-name>
+        <filter-class>com.filter.ShopLoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ShopLoginFilter</filter-name>
+        <url-pattern>/back-end/shop/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+        <dispatcher>ASYNC</dispatcher>
+    </filter-mapping>
+
+
+    <!--商品訂單管理-->
+    <filter>
+        <filter-name>ShopOrderLoginFilter</filter-name>
+        <filter-class>com.filter.ShopOrderLoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ShopOrderLoginFilter</filter-name>
+        <url-pattern>/back-end/shoporder/*</url-pattern>
+        <url-pattern>/back-end/shoporderdetail/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+        <dispatcher>ASYNC</dispatcher>
+    </filter-mapping>
+
+
+
+
     <!-- 個人名片 -->
     <servlet>
         <servlet-name>CarteServlet</servlet-name>

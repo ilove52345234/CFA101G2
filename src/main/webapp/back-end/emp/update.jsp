@@ -97,7 +97,8 @@
         <label for="empStatus">設定權限：</label>
         <table border="1" class="table table-bordered table-hover">
             <tr class="success">
-                <th>權限名稱</th>
+
+                <th><input type="checkbox" id="firstCB">權限名稱</th>
                 <th>權限說明</th>
             </tr>
             <c:forEach items="${list}" var="list" varStatus="s">
@@ -124,5 +125,21 @@
 
     </form>
 </div>
+
+<script>
+    window.onload = function () {
+        //獲取第一個checkbox
+        document.getElementById("firstCB").onclick = function () {
+            //獲取下方的所有的checkbox
+            let elementsByName = document.getElementsByName("funs");
+
+            for (let i = 0; i < elementsByName.length; i++) {
+                //設置這些checkbox的狀態=firstCB的狀態
+                elementsByName[i].checked = this.checked;
+            }
+        }
+    }
+
+</script>
 </body>
 </html>
