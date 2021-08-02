@@ -1,5 +1,5 @@
 <%@ page import="com.emp.model.EmpVO" %>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%
@@ -109,7 +109,7 @@
                 class="icon-bar"></span>
             </button>
             <!-- 點擊商標跳轉至首頁 #要放首頁網址 -->
-            <a class="navbar-header" href="#"> <img src="https://i.imgur.com/2j6Zzxv.png" height="40"
+            <a class="navbar-header" href="/CFA101G2/back-end/index.html"> <img src="https://i.imgur.com/2j6Zzxv.png" height="40"
                                                     title="島旅 Island Brigade" alt="島旅 Island Brigade"></a>
         </div>
         <!-- class="collapse navbar-collapse" 這兩個是關鍵字 幫助我們在正常視窗的情況下 可以看到原本的導覽列 -->
@@ -132,82 +132,34 @@
                 </li>
                 <li><a href="#">活動管理<span class="caret"></span></a>
                     <ul>
-                        <li class="dropdown-submenu"><a class="test" tabindex="-1"
-                                                        href="#">活動管理<span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a tabindex="-1" href="#">活動開始舉辦</a></li>
-                                <li><a tabindex="-1" href="#">活動取消舉辦</a></li>
-                                <li><a tabindex="-1" href="#">參加人員管理</a></li>
-                                <li><a tabindex="-1" href="#">發送評價邀請</a></li>
-                                <li><a tabindex="-1" href="#">活動行事曆</a></li>
-                            </ul>
+                        <li ><a class="test" tabindex="-1"
+                                                        href="#">活動管理</a>
                         </li>
-                        <li class="dropdown-submenu"><a class="test" tabindex="-1"
-                                                        href="#">活動類別管理<span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a tabindex="-1" href="#">新增/修改活動</a></li>
-                                <li><a tabindex="-1" href="#">上/下架活動</a></li>
-                                <li><a tabindex="-1" href="#">前台推播</a></li>
-                            </ul>
+                        <li ><a class="test" tabindex="-1"
+                                                        href="#">活動類別管理</a>
                         </li>
-                        <li class="dropdown-submenu"><a class="test" tabindex="-1"
-                                                        href="#">活動促銷管理<span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a tabindex="-1" href="#">建立活動優惠方案</a></li>
-                            </ul>
+                        <li><a class="test" tabindex="-1" href="#">活動促銷管理</a>
                         </li>
                     </ul>
                 </li>
                 <li><a href="#">商城管理<span class="caret"></span></a>
                     <ul>
-                        <li class="dropdown-submenu"><a class="test" tabindex="-1"
-                                                        href="#">商品管理<span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a tabindex="-1" href="searchCommodity.jsp">商品資料管理</a></li>
-                                <li><a tabindex="-1" href="addCommodityContent.jsp">商品建檔</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown-submenu"><a class="test" tabindex="-1"
-                                                        href="#">訂單管理<span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a tabindex="-1" href="#">訂單明細管理</a></li>
-                                <li><a tabindex="-1" href="#">更改訂單狀態</a></li>
-                                <li><a tabindex="-1" href="#">關鍵字查詢訂單</a></li>
-                                <li><a tabindex="-1" href="#">出貨排程</a></li>
-                                <li><a tabindex="-1" href="#">退貨審核</a></li>
-                            </ul>
-                        </li>
+                        <li ><a class="test" tabindex="-1" href="/CFA101G2/back-end/shop/searchCommodity.jsp">商品資料管理</a></li>
+                        <li ><a class="test" tabindex="-1" href="/CFA101G2/back-end/shop/addCommodityContent.jsp">商品建檔</a></li>
+                        <li><a class="test" tabindex="-1" href="/CFA101G2/back-end/shoporder/searchOrder.jsp">訂單管理</a></li>
                     </ul>
                 </li>
                 <li><a href="#">會員管理<span class="caret"></span></a>
                     <ul>
-                        <li class="dropdown-submenu"><a class="test" tabindex="-1"
-                                                        href="#">會員帳號管理<span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a tabindex="-1" href="#">查閱會員註冊資料</a></li>
-                                <li><a tabindex="-1" href="#">會員停權管理</a></li>
-                            </ul>
+                        <li ><a href="/CFA101G2/back-end/mem/select_page.jsp">會員帳號管理</a>
+
                         </li>
-                        <li class="dropdown-submenu"><a class="test" tabindex="-1"
-                                                        href="#">文章管理<span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a tabindex="-1" href="#">處理檢舉文章</a></li>
-                            </ul>
-                        </li>
-                        <li class="dropdown-submenu"><a class="test" tabindex="-1"
-                                                        href="#">聊天室管理<span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li><a tabindex="-1" href="#">建立聊天室</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">線上客服</a></li>
                     </ul>
                 </li>
                 <li><a href="#">員工管理<span class="caret"></span></a>
                     <ul>
                         <li><a href="/CFA101G2/emp/findEmpByPageServlet">後台帳號管理</a>
                         </li>
-                        <li><a href="#">聊天室管理</a></li>
                     </ul>
                 </li>
             </ul>
@@ -221,10 +173,11 @@
                 </c:if>
                 <c:if test="${emp!=null}">
                     <li><a href="#"><span class="glyphicon glyphicon-bullhorn"></span>
-                        早安 , ${emp.empName}</a></li>
+                        你好 , ${emp.empName}</a></li>
                     <li><a href="javascript:location.href='/CFA101G2/emp/empServlet/exitServlet'"><span class="glyphicon glyphicon-user"></span>
                         登出</a></li>
                 </c:if>
+
             </ul>
         </div>
     </div>

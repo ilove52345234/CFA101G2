@@ -32,7 +32,6 @@
     <script src="<%=request.getContextPath()%>/back-end/js/include.js"></script>
     <script src="<%=request.getContextPath()%>/back-end/js/Base64.js"></script>
 
-
 </head>
 <body>
 

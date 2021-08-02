@@ -14,25 +14,24 @@
 <html>
 <head>
 <title>查看所有會員資料 </title>
-
 <style>
   	table{
 		border: 1px solid #66c;
 		width: 90%;
 		margin: 50px auto;
 		border-collapse: collapse;
-		background-color: #CCCCFF;
+		background-color: #CCCCFF !important;
 	}
-	table td,table th{ 
+	table td,table th{
 		border: 1px solid black;
-		
+
 	}
 	table th{
 		color: white;
 		background-color: orange;
 	}
 	body {
-		background-image: url('images/backGround.png');
+		background-image: url('/CFA101G2/back-end/mem/images/backGround.png');
 		background-repeat: no-repeat;
 		background-attachment: fixed;
 		background-size: 100% 100%;
@@ -44,14 +43,16 @@
 		font-family: DFKai-sb;
 	}
 </style>
-
+	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	<script src="/CFA101G2/back-end/js/include.js"></script>
 </head>
 <body bgcolor='lightcyan'>
 
-<table id="table-1">
+<div id="header"></div>
+<table id="table-1" style="margin-top: 0px">
 	<tr><td>
 		 <h3 style="text-align:center;">查看所有會員資料</h3>
-		 <h4 style="text-align:center;"><a href="select_page.jsp">回首頁</a></h4>
+		 <h4 style="text-align:center;"><a href="/CFA101G2/back-end/mem/select_page.jsp">回首頁</a></h4>
 	</td></tr>
 </table>
 

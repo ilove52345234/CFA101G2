@@ -80,7 +80,7 @@ function updateItemStatus(itemStatus){
 <input type="hidden" name="itemOrderDate" value="<%=shopOrderVO.getItemOrderDate()%>">
 <input type="hidden" name="itemAmounts" value="<%=shopOrderVO.getItemAmounts()%>">
 <input type="submit" value="送出修改"></FORM>
-<h4><a href="/back-end/shop/backEndPage.jsp">回首頁</a></h4>
+<h4><a href="/CFA101G2/back-end/shoporder/searchOrder.jsp">回首頁</a></h4>
 
 </body>
 </html>

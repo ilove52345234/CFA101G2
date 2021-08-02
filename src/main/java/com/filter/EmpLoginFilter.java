@@ -1,18 +1,17 @@
-package com.emp.filter;
+package com.filter;
 
 import javax.servlet.*;
-import javax.servlet.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-
 
 /**
  * 登入驗證的過濾器
  */
 
-public class LoginFilter implements Filter {
+public class EmpLoginFilter implements Filter {
     private FilterConfig config;
+
     public void init(FilterConfig config) throws ServletException {
         this.config = config;
     }

@@ -12,19 +12,20 @@
 <head>
 <title>會員資料</title>
 
-
+	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	<script src="/CFA101G2/back-end/js/include.js"></script>
 
 </head>
 <style>
 		body {
-			background-image: url('images/backGround.png');
+			background-image: url('/CFA101G2/back-end/mem/images/backGround.png');
 			background-repeat: no-repeat;
 			background-attachment: fixed;
 			background-size: 100% 100%;
-			/* opacity: 0.5; */
+			 /*opacity: 0.5;*/
 			}
 			
-		div {
+		#mem {
 			width: 500px;
 			height: 450px;
 			color: darkblue;
@@ -56,7 +57,10 @@
 </style>
 <body bgcolor='white'>
 
-<div>
+<div id="header"></div>
+
+
+<div id="mem" STYLE="margin-bottom: 500px">
 
 <table>
 <h3 style="text-align:center;">會員資料</h3>
@@ -111,7 +115,7 @@
 
 
 </table>
-<h4 style="text-align:center;"><a href="select_page.jsp">回首頁</a></h4>
+<h4 style="text-align:center;"><a href="/CFA101G2/back-end/mem/select_page.jsp">回首頁</a></h4>
 </div>
 
 </body>

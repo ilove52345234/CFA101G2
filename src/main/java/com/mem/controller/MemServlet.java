@@ -1,12 +1,7 @@
 package com.mem.controller;
 
-import java.io.IOException;
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import com.mem.model.MemService;
+import com.mem.model.MemVO;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,9 +9,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import com.mem.model.MemService;
-import com.mem.model.MemVO;
+import java.io.IOException;
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 
 public class MemServlet extends HttpServlet {
@@ -143,7 +142,7 @@ public class MemServlet extends HttpServlet {
 				MemVO memVO = memSvc.getOneMem(memId);
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("memVO", memVO);
-				String url = "/mem/update_mem_input.jsp";
+				String url = "/back-end/mem/update_mem_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_mem_input.jsp
 				successView.forward(req, res);
 
@@ -279,7 +278,7 @@ public class MemServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("memVO", memVO);
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/mem/update_mem_input.jsp");
+							.getRequestDispatcher("/back-end/mem/update_mem_input.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -290,7 +289,7 @@ public class MemServlet extends HttpServlet {
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("memVO", memVO);
-				String url = "/mem/HomePage.jsp";
+				String url = "/back-end/mem/listAllMem.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交HomePage.jsp
 				successView.forward(req, res);
 
@@ -299,7 +298,7 @@ public class MemServlet extends HttpServlet {
 				e.printStackTrace();
 				errorMsgs.add("修改資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/mem/HomePage.jsp");
+						.getRequestDispatcher("/back-end/mem/listAllMem.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -355,7 +354,7 @@ public class MemServlet extends HttpServlet {
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("memVO", memVO);
-				String url = "/mem/listOneMem.jsp";
+				String url = "/back-end/mem/listOneMem.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
 

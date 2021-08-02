@@ -87,7 +87,7 @@
         }
 
         table#table-1 {
-            background-color: rgba(204, 204, 255, 0.18);
+            background-color: rgba(54, 47, 47, 0.18);
             border: 2px solid black;
             text-align: center;
         }

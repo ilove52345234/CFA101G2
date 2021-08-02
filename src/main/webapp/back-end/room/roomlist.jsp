@@ -42,8 +42,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="<%=request.getContextPath()%>/back-end/js/include.js"></script>
     <style type="text/css">
-        td, th {
-            text-align: center;
+        td, th , .th {
+            text-align: center; !important;
         }
 
         /*body { font-size: 62.5%; }*/
@@ -242,13 +242,13 @@
     <form id="empForm" action="" method="post">
         <table border="1" class="table table-bordered table-hover">
             <tr class="info">
-                <th>列表編號</th>
-                <th>房間號碼</th>
-                <th>房型類別</th>
-                <th>房間使用情況</th>
-                <th>房間狀態</th>
-                <th>住客姓名與資訊</th>
-                <th>操作</th>
+                <th class="th">列表編號</th>
+                <th class="th">房間號碼</th>
+                <th class="th">房型類別</th>
+                <th class="th">房間使用情況</th>
+                <th class="th">房間狀態</th>
+                <th class="th">住客姓名與資訊</th>
+                <th class="th">操作</th>
             </tr>
             <%--        按選中送出時提交value出去--%>
             <c:forEach items="${pb.list}" var="rms" varStatus="s">

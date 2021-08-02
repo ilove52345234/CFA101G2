@@ -31,7 +31,7 @@
             <span>自動登入</span>
         </div>
     </div>
-    <button id="idForm" type="button" class="button" style="vertical-align:middle"><span>登入 &#8594;</span></button>
+    <button id="idForm" type="button" class="button" style="vertical-align:middle"><span>登入 </span></button>
     <div class="form-inline">
 <!--        <label for="vcode">驗證碼：</label>-->
         <input type="text" name="verifycode" class="form-control" id="verifycode" placeholder="請輸入驗證碼" style="width: 120px; margin-top: -10px"/>
@@ -51,12 +51,8 @@
     $(function () {
             $.post("/CFA101G2/emp/empServlet/autoLogin?time="+new Date().getTime(),{},function (info) {
                 if(info.flag){
-
                     // location.assign("back-end/list.html");
-
-                        location.assign("../index.html");
-
-
+                        location.assign("/CFA101G2/back-end/index.html");
                 }else{
                     $("#errorMsg").text(data.errorMsg);
                 }
@@ -76,10 +72,11 @@
                         // location.href = "/CFA101G2/front-end/list.html";
                         // location.assign("back-end/list.html");
 
-                        location.assign("/CFA101G2/back-end/header.jsp");
+                        location.assign("/CFA101G2/back-end/index.html");
 
                     } else {
                         // alert("錯誤");
+
                         refreshCode();
                         $("#errorMsg").text(data.errorMsg);
                     }

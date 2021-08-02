@@ -64,7 +64,7 @@ th, td {
 			<th>運送方式</th>
 			<th>訂單狀態</th>
 			<th>修改</th>
-			<th>刪除</th>
+
 		</tr>
 		<%
 			System.out.println(shopOrderVOList.size());
@@ -103,7 +103,7 @@ th, td {
 <!-- 	</ul> -->
 
 	<h4>
-		<a href="selectOrderPage.jsp">回首頁</a>
+		<a href="/CFA101G2/back-end/shoporder/searchOrder.jsp">回首頁</a>
 	</h4>
 
 </body>

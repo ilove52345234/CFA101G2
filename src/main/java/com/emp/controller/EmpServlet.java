@@ -258,7 +258,7 @@ public class EmpServlet extends BaseServlet {
 
 //        (request.getContextPath());
         //跳轉回登入
-        response.sendRedirect("/CFA101G2/back-end/header.jsp");
+        response.sendRedirect("/CFA101G2/back-end/index.html");
     }
 
 

@@ -80,7 +80,7 @@
 </table>
 
 <%@ include file="page2.file" %>
- <h4><a href="#">回首頁</a></h4>
+ <h4><a href="/CFA101G2/back-end/shoporder/searchOrder.jsp">回首頁</a></h4>
 
 </body>
 </html>

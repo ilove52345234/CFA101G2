@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+
+    <title>Title</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.js"></script>
+    <script src="//unpkg.com/element-ui"></script>
+    <script src="//unpkg.com/element-ui/lib/umd/locale/zh-TW.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/moment.js/2.21.0/moment.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+    <!-- 引入 layui.css -->
+    <link rel="stylesheet" href="//unpkg.com/layui@2.6.8/dist/css/layui.css">
+    <!-- 引入 layui.js -->
+    <script src="//unpkg.com/layui@2.6.8/dist/layui.js"></script>
+    <script src="../js/jquery-3.3.1.js"></script>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+
+    <script src="js/include.js"></script>
+    <style>
+
+        body {
+            background-image: url('/CFA101G2/back-end/mem/images/backGround.png');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: 100% 100%;
+            /* opacity: 0.5; */
+        }
+
+        .el-carousel__item h3 {
+            color: #475669;
+            font-size: 14px;
+            opacity: 0.75;
+            line-height: 200px;
+            margin: 0;
+        }
+
+        .el-carousel__item:nth-child(2n) {
+            background-color: #99a9bf;
+        }
+
+        .el-carousel__item:nth-child(2n+1) {
+            background-color: #d3dce6;
+        }
+
+        .image {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+
+<div id="header"></div>
+<div id="div" style="margin-top: 0px">
+    <template>
+        <div class="index">
+            <div>
+                <el-carousel trigger="click" height="37vw" :interval="5000" arrow="hover" type="card" loop="true"
+                             interval="5000">
+                    <el-carousel-item v-for="item in imgList" :key="item.id">
+                        <!--              <img :src="item.idView" class="image">-->
+                        <!--              <figure>-->
+                        <!--                <img :src="item.idView" style="width:100%;height: auto;" class="image"/>-->
+                        <!--              </figure>-->
+                        <el-image :src="item.idView" style="width:100%;height:100%" :preview-src-list="srcList">
+                            <div slot="placeholder" class="image-slot">
+                                加载中
+                                <span class="dot">...</span>
+                            </div>
+                        </el-image>
+
+                    </el-carousel-item>
+                </el-carousel>
+            </div>
+        </div>
+    </template>
+
+</div>
+
+
+<script>
+    ELEMENT.locale(ELEMENT.lang.zhTW)
+    var vm = new Vue({
+        el: "#div",
+        data: {
+            imgList: [
+                {id: 0, idView: 'https://i.imgur.com/iWQa1Yd.jpg'},
+                {id: 1, idView: 'https://i.imgur.com/pNSYoYS.jpg'},
+                {id: 2, idView: 'https://i.imgur.com/IMdKwXi.png'},
+                {id: 3, idView: 'https://i.imgur.com/9FvclBz.jpg'},
+                {id: 4, idView: 'https://i.imgur.com/fsslT0i.png'},
+                {id: 5, idView: 'https://i.imgur.com/K77Rzgp.jpg'}
+            ],
+            srcList: [
+                'https://i.imgur.com/iWQa1Yd.jpg',
+                'https://i.imgur.com/pNSYoYS.jpg',
+                'https://i.imgur.com/IMdKwXi.png',
+                'https://i.imgur.com/9FvclBz.jpg',
+                'https://i.imgur.com/fsslT0i.png',
+                'https://i.imgur.com/K77Rzgp.jpg'
+
+
+            ]
+        }
+    })
+
+</script>
+</body>
+</html>

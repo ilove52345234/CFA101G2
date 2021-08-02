@@ -13,18 +13,18 @@
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>後台會員資料修改</title>
+<title>後台會員資料修改</title>`
 
 <style>
 		body {
-			background-image: url('images/backGround.png');
+			background-image: url('/CFA101G2/back-end/mem/images/backGround.png');
 			background-repeat: no-repeat;
 			background-attachment: fixed;
 			background-size: 100% 100%;
 			/* opacity: 0.5; */
 			}
 			
-		div {
+		#mem {
 			width: 500px;
 			height: auto;
 			color: darkblue;
@@ -50,7 +50,7 @@
 			border-left-style:none;
 			border-right-style:none;
 			font-family: DFKai-sb;
-			font-size: 16;
+			font-size: 16px;
 			background-color: lightcyan;
 		}
 		td {
@@ -58,21 +58,18 @@
 			font-family:DFKai-sb;
 		}
 </style>
-
+	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	<script src="/CFA101G2/back-end/js/include.js"></script>
 
 </head>
 <body bgcolor='white'>
 
-<div>
+<div id="header"></div>
 
 
-
+<div id="mem">
 <h3 style="text-align:center;">後台會員資料修改</h3>
-<h4 style="text-align:center;"><a href="select_page.jsp">回首頁</a></h4>
-
-
-
-
+<h4 style="text-align:center;"><a href="/CFA101G2/back-end/mem/select_page.jsp">回首頁</a></h4>
 <h3>資料修改:</h3>
 
 <%-- 錯誤表列 --%>

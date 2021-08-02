@@ -4,6 +4,8 @@
 <html>
 <title>後台管理</title>
 <head>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="../js/include.js"></script>
 <style>
 		body {
 			background-image: url('images/backGround.png');
@@ -13,7 +15,7 @@
 			/* opacity: 0.5; */
 			}
 			
-		div {
+		#mem {
 			width: 500px;
 			height: 450px;
 			color: darkblue;
@@ -37,15 +39,15 @@
 <body>
 
 
-
-<div>
+<div id="header"></div>
+<div id="mem" STYLE="margin-bottom: 500px">
 <h3 style="text-align:center;">全部會員資料查詢:</h3>
 <ul>
   <li><a href='listAllMem.jsp'>List</a> all Members.  <br><br></li>
   
   
   <li>
-    <FORM METHOD="post" ACTION="mem.do" >
+    <FORM METHOD="post" ACTION="/CFA101G2/mem/mem.do" >
         <b>輸入會員編號 (如1):</b>
         <input type="text" name="memId">
         <input type="hidden" name="action" value="getOne_For_Display">
@@ -56,7 +58,7 @@
   <jsp:useBean id="memSvc" scope="page" class="com.mem.model.MemService" />
    
   <li>
-     <FORM METHOD="post" ACTION="mem.do" >
+     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do" >
        <b>選擇會員編號:</b>
        <select size="1" name="memId">
          <c:forEach var="memVO" items="${memSvc.all}" > 
@@ -69,7 +71,7 @@
   </li>
   
   <li>
-     <FORM METHOD="post" ACTION="mem.do" >
+     <FORM METHOD="post" ACTION="/CFA101G2/mem/mem.do" >
        <b>選擇會員姓名:</b>
        <select size="1" name="memId">
          <c:forEach var="memVO" items="${memSvc.all}" > 

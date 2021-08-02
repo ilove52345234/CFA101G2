@@ -243,6 +243,7 @@ ul.navbar-nav ul a:hover {
 	<br>
 	<br>
 	<br>
+	
 	<script>
 		$(document).ready(function() {
 			$('.dropdown-submenu a.test').on("click", function(e) {
@@ -252,5 +253,6 @@ ul.navbar-nav ul a:hover {
 			});
 		});
 	</script>
+
 </body>
 </html>
