@@ -487,109 +487,59 @@ public class RtJDBCDAO implements RtDAO_interface {
 
 
     public RtVO findRoom(String roomName) {
-        /* 301 */
         RtVO rtVO = null;
-        /* 302 */
         Connection con = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
-
         try {
-            /* 307 */
-//            Class.forName(this.driver);
-//            /* 308 */
-//            con = DriverManager.getConnection(this.url, this.userid, this.passwd);
-
             con = jdbcUtils.getConnection();
+            pstmt = con.prepareStatement(FIND_ROOM);
 
-            /* 309 */
-            pstmt = con.prepareStatement("SELECT ROOM_CATEGORY_ID, ROOM_TYPE_AMOUNT, ROOM_TYPE_CONTENT, ROOM_SALE_STATUS, ROOM_TOTAL_PERSON, ROOM_TOTAL_SCORE,ROOM_NAME,ROOM_PRICE FROM ROOM_TYPE WHERE ROOM_NAME= ?");
-
-            /* 311 */
             pstmt.setString(1, roomName);
 
-            /* 313 */
             rs = pstmt.executeQuery();
 
-            /* 315 */
             while (rs.next()) {
-                /* 316 */
                 rtVO = new RtVO();
-                /* 317 */
-                rtVO.setRoomCategoryId(Integer.valueOf(rs.getInt("ROOM_CATEGORY_ID")));
-                /* 318 */
-                rtVO.setRoomTypeAmount(Integer.valueOf(rs.getInt("ROOM_TYPE_AMOUNT")));
-                /* 319 */
+                rtVO.setRoomCategoryId(rs.getInt("ROOM_CATEGORY_ID"));
+                rtVO.setRoomTypeAmount(rs.getInt("ROOM_TYPE_AMOUNT"));
                 rtVO.setRoomTypeContent(rs.getString("ROOM_TYPE_CONTENT"));
-                /* 320 */
-                rtVO.setRoomSaleStatus(Byte.valueOf(rs.getByte("ROOM_SALE_STATUS")));
-                /* 321 */
-                rtVO.setRoomTotalPerson(Integer.valueOf(rs.getInt("ROOM_TOTAL_PERSON")));
-                /* 322 */
-                rtVO.setRoomTotalScore(Integer.valueOf(rs.getInt("ROOM_TOTAL_SCORE")));
-                /* 323 */
+                rtVO.setRoomSaleStatus(rs.getByte("ROOM_SALE_STATUS"));
+                rtVO.setRoomTotalPerson(rs.getInt("ROOM_TOTAL_PERSON"));
+                rtVO.setRoomTotalScore(rs.getInt("ROOM_TOTAL_SCORE"));
                 rtVO.setRoomName(rs.getString("ROOM_NAME"));
-
+                rtVO.setRoomPrice(rs.getInt("ROOM_PRICE"));
             }
-            /* 325 */
 
-
-        }
-        /* 329 */ catch (SQLException se) {
-            /* 330 */
+        } catch (SQLException se) {
             throw new RuntimeException("A database error occured. " + se.getMessage());
-
         } finally {
-            /* 332 */
             if (rs != null) {
-
                 try {
-                    /* 334 */
                     rs.close();
-                    /* 335 */
                 } catch (SQLException se) {
-                    /* 336 */
                     se.printStackTrace(System.err);
-
                 }
-
             }
-            /* 339 */
             if (pstmt != null) {
-
                 try {
-                    /* 341 */
                     pstmt.close();
-                    /* 342 */
                 } catch (SQLException se) {
-                    /* 343 */
                     se.printStackTrace(System.err);
-
                 }
-
             }
-            /* 346 */
             if (con != null) {
-
                 try {
-                    /* 348 */
                     con.close();
-                    /* 349 */
                 } catch (Exception e) {
-                    /* 350 */
                     e.printStackTrace(System.err);
-
                 }
-
             }
-
         }
-        /* 354 */
         return rtVO;
 
     }
-
 
     public void insertWithRtAndPic(RtVO rtVO, List<Base64VO> list) {
         /* 361 */

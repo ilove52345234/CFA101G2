@@ -4,6 +4,11 @@ window.onload = function () {
       n = s.getElementsByTagName("label"),
       input = document.getElementById('startP'),
       content=new Array('特别差，给1分','很差，给2分','一般般，给3分','很好，给4分','非常好，给5分'); //保存所选值
+    
+ 
+    var today = new Date().toISOString().split('T')[0];
+    document.getElementById("myDate").setAttribute('min', today);
+    
 
     clearAll = function () {
       for (var i = 0; i < n.length; i++) {

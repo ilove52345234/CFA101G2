@@ -6,6 +6,7 @@ import com.func.model.FuncVO;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Set;
 
@@ -29,6 +30,7 @@ public class EmpFilter implements Filter {
         //0.強制轉型,因為方法在http裡面
         System.out.println("EmpFilter");
         HttpServletRequest req = (HttpServletRequest) request;
+        HttpServletResponse res = (HttpServletResponse) response;
         boolean flag = false;
         //1.獲取資源請求路徑
         String requestURI = req.getRequestURI();
@@ -72,6 +74,7 @@ public class EmpFilter implements Filter {
                 //代表登入過了,放行
                 System.out.println("權限足夠,放行");
                 chain.doFilter(request, response);
+
             } else {
                 System.out.println("權限不足");
                 //空的,沒登入過,叫他去登入

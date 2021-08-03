@@ -97,9 +97,6 @@ header{
     text-align: left;
   }
 
-  #room_date{
-    display: flex;
-  }
   
   .top-left:hover{
     font-size:330%;

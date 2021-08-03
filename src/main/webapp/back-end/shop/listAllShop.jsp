@@ -92,7 +92,7 @@
 </table>
 
 <%-- <%@ include file="page2.file" %> --%>
- <h4><a href="backEndPage.jsp">回首頁</a></h4>
+ <h4><a href="../Tset/backEndPage.jsp">回首頁</a></h4>
 
 </body>
 </html>

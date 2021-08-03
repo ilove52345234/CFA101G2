@@ -1,17 +1,17 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.rmtype.model.*"%>
-<%@ page import="com.rmtypepic.model.*"%>
+<%-- <%@ page import="com.rmtype.model.*"%>
+<%@ page import="com.rmtypepic.model.*"%>       使用大吳範例<%？？？%>的值才需要使用
+另外 目前這個網頁只用這個顯示功能 所以沒設action --%>
 <!DOCTYPE html>
 <%
 /*  	RtService rtSvc = new RtService();
 	List<RtVO> list = rtSvc.getAll();
 	pageContext.setAttribute("list", list); */
 	
-	List<RtVO> list = (List<RtVO>)request.getAttribute("list");
-	pageContext.setAttribute("list", list); 
+/* 		 List<RtVO> list = (List<RtVO>)request.getAttribute("list");
+	pageContext.setAttribute("list", list);  */ 
  	
 /*  	List<RtVO> list = (List<RtVO>)request.getAttribute("list");
 	pageContext.setAttribute("list", list);  
@@ -33,7 +33,7 @@
     
   上面的三行抓的資料是listallrmtype的頁面 -->
   
- <!--  開啟路徑 使用get方法 http://localhost:8081/CFA101G2/RmtypeServlet?action=getAllRoomType -->
+ <!--  開啟路徑 使用get方法 http://localhost:8081/CFA101G2/rmtype/RmtypeServlet?action=getAllRoomType -->
 
 <html>
 <head>
@@ -54,7 +54,7 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
 
-<script src="js/index.js"></script>
+<script src="/CFA101G2/front-end/js/index.js"></script>
 <script async defer crossorigin="anonymous"
 	src="https://connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v4.0"></script>
 </head>
@@ -77,8 +77,8 @@
 				<!-- 幻燈片主圖區 align圖片依靠方向-->
 				<div class="carousel-inner">
 					<div class="item">
-						<img src="<%=request.getContextPath()%>/front-end/images/2.jpg" align="right" alt="" class="img_item"> 
-						<img src="<%=request.getContextPath()%>/front-end/images/2.jpg" align="right" alt="" class="img_gray">
+						<img src="<%=request.getContextPath()%>/front-end/images/1.jpeg" align="right" alt="" class="img_item"> 
+						<img src="<%=request.getContextPath()%>/front-end/images/1.jpeg" align="right" alt="" class="img_gray">
 						<div class="top-left">
 							<a href="avt-item.html" class="link_activity"> 優惠方案<br>
 								108/10/26(六) 19:00<br> 雙人房優惠
@@ -87,8 +87,8 @@
 						<div class="top-right"></div>
 					</div>
 					<div class="item active">
-						<img src="<%=request.getContextPath()%>/front-end/images/1.jpg" align="right" alt="" class="img_gray">
-						<img src="<%=request.getContextPath()%>/front-end/images/1.jpg" align="right" alt="" class="img_item">
+						<img src="<%=request.getContextPath()%>/front-end/images/10.jpeg" align="right" alt="" class="img_gray">
+						<img src="<%=request.getContextPath()%>/front-end/images/10.jpeg" align="right" alt="" class="img_item">
 						<div class="top-left">
 						
 						</div>
@@ -124,7 +124,7 @@
       </div> -->
 			<!--  <div class="col-md-12 col-sm-12"> -->
 			<div class="row">
-					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/RmtypeServlet" class="form-horizontal">
+					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/rmtype/RmtypeServlet" class="form-horizontal">
 						<div class="search">
 <!-- 						<label class="control-label" for="keyWord"> 
 							<span class="glyphicon glyphicon-search"></span> 依關鍵字:&nbsp;</label>
@@ -142,6 +142,9 @@
 							</select> &nbsp;&nbsp; 					
 							<input type="hidden" name="action" value="find_roomname">
 						    <input type="submit" class="btn btn-success" value="送出">
+							
+							<a href="<%=request.getContextPath()%>/front-end/rmtype/roomCarts.jsp"
+							class="btn btn-default">查看購物車</a>
 							<br> 
 							<br>
 						</div>
@@ -155,22 +158,24 @@
 
 	<!-- 搜尋結果列表==========================================-->
 	<!-- 顯示房型第一列圖片 -->
-<%@ include file="page1.file" %> 
  	<div class="row">
-		<c:forEach var="rtVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>"> <!--  對應第10行 -->
+<%--  	<%@ include file="page1.file" %>  --%>
+		<c:forEach var="rtVO" items="${list}" > <!--  對應第10行 -->
 			<div class="col-md-3 col-sm-12 activity">
 				<div class="activity_card">
-					<img src="<%=request.getContextPath()%>/RtpServlet?roomCategoryId=${rtVO.roomCategoryId}" alt="Jane" style="width: 100%">  <!-- 參照p49 和RtpServlet-->
+					<img src="<%=request.getContextPath()%>/rmtypepic/RtpServlet?roomCategoryId=${rtVO.roomCategoryId}&action=show_pics" alt="Jane" style="width: 100%">  <!-- 參照p49 和RtpServlet-->
 					<div class="container">
 						<h3>${rtVO.roomName}</h3>
 						<p>一晚價格:${rtVO.roomPrice}元</p>
 						<p>
-						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/RmtypeServlet" style="margin-bottom: 0px;">
-						                    <!-- 對應controller的路徑 -->
+						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/rmtype/RmtypeServlet" style="margin-bottom: 0px;">
+						<%-- <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/rmtype/RmtypeServlet?action=getOneRoomType" style="margin-bottom: 0px;"> --%>
+						                    <!-- 對應controller的路徑 -->  <!--    若想要用同一個servlet可以整個頁面這樣設路徑避免都被濾器影響 -->
 							<input type="submit" class="activity_detail" value="詳細內容">
+																			<!-- 點進詳細內容進入RmtyprServlet 對應getOneRoomType 並進入2.開始查詢資料-->
 							<input type="hidden" name="roomCategoryId" value="${rtVO.roomCategoryId}"> 
 							                                    <!-- 把要查詢的房型id放到詳細內容做查詢 -->
-							<input type="hidden" name="action" value="getOneRoomType">
+							<input type="hidden" name="action" value="getRoomDetail">
 							                                      <!--  對應controller第38行  -->
 						</FORM>
 						</p>
@@ -179,10 +184,9 @@
 			</div>
 		</c:forEach>
 	</div>
- <%@ include file="page2.file" %> 
- 
+<%--  <%@ include file="page2.file" %> --%>
 <!--  測試用 -->
- <label>request.getContextPath():<%=request.getContextPath()%></label>
+<%--  <label>request.getContextPath():<%=request.getContextPath()%></label> --%>
 	<!-- ======================== -->
 <%-- 	<div class="row">
 		 <!-- 錯誤的方法 因為使用兩張table跑兩個迴圈(rtpVO和rtVO)會有資料結構上的問題

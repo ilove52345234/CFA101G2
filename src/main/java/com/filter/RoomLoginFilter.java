@@ -73,6 +73,8 @@ public class RoomLoginFilter implements Filter {
                 //代表登入過了,放行
                 System.out.println("權限足夠,放行");
                 chain.doFilter(request, response);
+
+
             } else {
                 System.out.println("權限不足");
                 //空的,沒登入過,叫他去登入

@@ -19,6 +19,8 @@ public interface RtpDAO_interface {
 	List<RtpVO> getAllByRcId(Integer paramInteger);
 
 	RtpVO findByRoomCategoryId(Integer paramInteger);
+	public List<RtpVO> findByRoomCategoryId2(Integer roomCategoryId);
+
 }
 
 

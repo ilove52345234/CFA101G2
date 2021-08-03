@@ -71,7 +71,7 @@
 
 <input type="hidden" name="action" value="insert">
 <input type="submit" value="送出新增"></FORM>
-<h4><a href="backEndPage.jsp">回首頁</a></h4>
+<h4><a href="../Tset/backEndPage.jsp">回首頁</a></h4>
 
 </body>
 </html>

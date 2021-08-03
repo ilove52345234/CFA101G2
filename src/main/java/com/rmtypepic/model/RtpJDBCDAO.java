@@ -28,8 +28,9 @@ import java.io.FileInputStream;
 
     
        private static final String INSERT_STMT = "INSERT INTO ROOM_TYPE_PIC (ROOM_CATEGORY_ID, ROOM_PHOTO) VALUES (?,?)";
-    
-       private static final String GET_ALL_STMT = "SELECT ROOM_PHOTO_ID, ROOM_CATEGORY_ID, ROOM_PHOTO FROM ROOM_TYPE_PIC order by ROOM_PHOTO_ID";
+             private static final String GET_ONE_RMCATEGORYID = "SELECT ROOM_PHOTO_ID, ROOM_CATEGORY_ID, ROOM_PHOTO FROM ROOM_TYPE_PIC where ROOM_CATEGORY_ID = ?";
+
+             private static final String GET_ALL_STMT = "SELECT ROOM_PHOTO_ID, ROOM_CATEGORY_ID, ROOM_PHOTO FROM ROOM_TYPE_PIC order by ROOM_PHOTO_ID";
     
        private static final String GET_ONE_STMT = "SELECT ROOM_PHOTO_ID, ROOM_CATEGORY_ID, ROOM_PHOTO FROM ROOM_TYPE_PIC where ROOM_PHOTO_ID = ?";
        private static final String DELETE = "DELETE FROM ROOM_TYPE_PIC where ROOM_PHOTO_ID = ?";
@@ -725,15 +726,68 @@ import java.io.FileInputStream;
         return rtpVO;
         
     }
-    
-    
-    
-    
-    
-    
-    
-    
-}
+
+
+             //一次顯示多張圖片
+             public List<RtpVO> findByRoomCategoryId2(Integer roomCategoryId) {
+                 List<RtpVO> list =new ArrayList<RtpVO> ();
+                 RtpVO rtpVO = null;
+
+                 Connection con =null;
+                 PreparedStatement pstmt = null;
+                 ResultSet rs = null;
+
+                 try {
+                     con = jdbcUtils.getConnection();
+                     pstmt = con.prepareStatement(GET_ONE_RMCATEGORYID);
+
+                     pstmt.setInt(1, roomCategoryId);
+
+                     rs = pstmt.executeQuery();
+
+                     while (rs.next()) {
+
+                         rtpVO = new RtpVO();
+                         rtpVO.setRoomPhotoId(rs.getInt("ROOM_PHOTO_ID"));
+                         rtpVO.setRoomCategoryId(rs.getInt("ROOM_CATEGORY_ID"));
+                         rtpVO.setRoomPhoto(rs.getBytes("ROOM_PHOTO"));
+                         list.add(rtpVO);
+                     }
+
+                 } catch (SQLException se) {
+                     throw new RuntimeException("A database error occured. " + se.getMessage());
+                 } finally {
+                     if (rs != null) {
+                         try {
+                             rs.close();
+                         } catch (SQLException se) {
+                             se.printStackTrace(System.err);
+                         }
+                     }
+                     if (pstmt != null) {
+                         try {
+                             pstmt.close();
+                         } catch (SQLException se) {
+                             se.printStackTrace(System.err);
+                         }
+                     }
+                     if (con != null) {
+                         try {
+                             con.close();
+                         } catch (Exception e) {
+                             e.printStackTrace(System.err);
+                         }
+                     }
+                 }
+                 return list;
+             }
+
+
+
+
+
+
+         }
 
 
 /* Location:              /Users/ilove52345234/eclipse_TestWorkspace/Test/src/main/ImportedClasses/com/rmtypepic/model/RtpJDBCDAO.class

@@ -68,12 +68,14 @@
 	
 	
 	/* 70 */   public List<RtpVO> getAllByCategoryId(Integer roomCategoryId) { return this.dao.getAllByRcId(roomCategoryId); }
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+			 public List<RtpVO> getRmCategoryId(Integer roomCategoryId) {
+				 return dao.findByRoomCategoryId2(roomCategoryId);
+			 }
 	
 	
 	/* 79 */   public RtpVO getOneByCategoryId(Integer roomCategoryId) { return this.dao.findByRoomCategoryId(roomCategoryId); }

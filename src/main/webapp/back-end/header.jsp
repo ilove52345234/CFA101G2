@@ -133,12 +133,12 @@
                 <li><a href="#">活動管理<span class="caret"></span></a>
                     <ul>
                         <li ><a class="test" tabindex="-1"
-                                                        href="#">活動管理</a>
+                                                        href="/CFA101G2/back-end/act/actBackendIndex.jsp">活動管理</a>
                         </li>
                         <li ><a class="test" tabindex="-1"
-                                                        href="#">活動類別管理</a>
+                                                        href="/CFA101G2/back-end/acttype/select_page.jsp">活動類別管理</a>
                         </li>
-                        <li><a class="test" tabindex="-1" href="#">活動促銷管理</a>
+                        <li><a class="test" tabindex="-1" href="/CFA101G2/back-end/actpromo/select_page.jsp">活動促銷管理</a>
                         </li>
                     </ul>
                 </li>
