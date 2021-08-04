@@ -9,124 +9,123 @@ import java.util.Map;
 
 public class RmService {
 
-		private RmDAO_interface dao;
-		
-		public RmService() {
-			dao = new RmJDBCDAO();
-		}
-		
-		public RmVO addRmVO(Integer roomCategoryId, Byte roomCheckStatus, Byte roomSaleStatus, String roomInformation) {
-			RmVO rmVO = new RmVO();
-			rmVO.setRoomCategoryId(roomCategoryId);
-			rmVO.setRoomCheckStatus(roomCheckStatus);
-			rmVO.setRoomSaleStatus(roomSaleStatus);
-			rmVO.setRoomInformation(roomInformation);
-			dao.insert(rmVO);
-			return rmVO;
-			
-		}
-		public RmVO updateRmVO(Integer roomId, Integer roomCategoryId, Byte roomCheckStatus, Byte roomSaleStatus, String roomInformation) {
-			RmVO rmVO = new RmVO();
-			rmVO.setRoomId(roomId);
-			rmVO.setRoomCategoryId(roomCategoryId);
-			rmVO.setRoomCheckStatus(roomCheckStatus);
-			rmVO.setRoomSaleStatus(roomSaleStatus);
-			rmVO.setRoomInformation(roomInformation);
-			dao.update(rmVO);
-			return rmVO;
-		}
+    private RmDAO_interface dao;
 
-	public RmVO updateRmVO( RmVO rmVO){
-		dao.update(rmVO);
-		return rmVO;
-	}
-		
-		public void deleteRm(Integer roomId) {
-			dao.delete(roomId);
-		}
-		
-		public RmVO getOneRm(Integer roomId) {
-			return dao.findByPrimaryKey(roomId);
-		}
-		
-		public List<RmVO> getAll(){
-			return dao.getAll();
-		}
+    public RmService() {
+        dao = new RmJDBCDAO();
+    }
 
+    public RmVO addRmVO(Integer roomCategoryId, Byte roomCheckStatus, Byte roomSaleStatus, String roomInformation) {
+        RmVO rmVO = new RmVO();
+        rmVO.setRoomCategoryId(roomCategoryId);
+        rmVO.setRoomCheckStatus(roomCheckStatus);
+        rmVO.setRoomSaleStatus(roomSaleStatus);
+        rmVO.setRoomInformation(roomInformation);
+        dao.insert(rmVO);
+        return rmVO;
 
-		public PageBean<RmVO> findrmByPage(String _currentPage, String _rows, Map<String, String> condition) {
-		//1.創建一個空的PageBean物件
-		PageBean<RmVO> rmVOPageBean = new PageBean<RmVO>();
+    }
 
-		int currentPage = Integer.parseInt(_currentPage);
-		int rows = Integer.parseInt(_rows);
+    public RmVO updateRmVO(Integer roomId, Integer roomCategoryId, Byte roomCheckStatus, Byte roomSaleStatus, String roomInformation) {
+        RmVO rmVO = new RmVO();
+        rmVO.setRoomId(roomId);
+        rmVO.setRoomCategoryId(roomCategoryId);
+        rmVO.setRoomCheckStatus(roomCheckStatus);
+        rmVO.setRoomSaleStatus(roomSaleStatus);
+        rmVO.setRoomInformation(roomInformation);
+        dao.update(rmVO);
+        return rmVO;
+    }
+
+    public RmVO updateRmVO(RmVO rmVO) {
+        dao.update(rmVO);
+        return rmVO;
+    }
+
+    public void deleteRm(Integer roomId) {
+        dao.delete(roomId);
+    }
+
+    public RmVO getOneRm(Integer roomId) {
+        return dao.findByPrimaryKey(roomId);
+    }
+
+    public List<RmVO> getAll() {
+        return dao.getAll();
+    }
 
 
+    public PageBean<RmVO> findrmByPage(String _currentPage, String _rows, Map<String, String> condition) {
+        //1.創建一個空的PageBean物件
+        PageBean<RmVO> rmVOPageBean = new PageBean<RmVO>();
 
-		//2.設置參數
-		rmVOPageBean.setCurrentPage(currentPage);
-		rmVOPageBean.setRows(rows);
-
-		//3.調用dao查詢總記錄數
-		int totalCount= dao.findTotalCount(condition);
-
-		rmVOPageBean.setTotalCount(totalCount);
-
-		//4.調用dao查詢List數據集合
-
-		//計算開始的索引值
-		int start = (currentPage - 1) * rows;
-
-		List list = dao.findByPage(start,rows,condition);
-
-		rmVOPageBean.setList(list);
-
-		//5.計算總頁碼
-
-		int totalPage = (totalCount % rows) == 0 ? (totalCount / rows) : (totalCount / rows) + 1;
-
-		rmVOPageBean.setTotalPage(totalPage);
+        int currentPage = Integer.parseInt(_currentPage);
+        int rows = Integer.parseInt(_rows);
 
 
+        //2.設置參數
+        rmVOPageBean.setCurrentPage(currentPage);
+        rmVOPageBean.setRows(rows);
 
-		return rmVOPageBean;
-	}
-		public PageBean<RmVO> getValidRoom(String _currentPage, String _rows, Map<String, String> condition ) {
-		//1.創建一個空的PageBean物件
-		PageBean<RmVO> rmVOPageBean = new PageBean<RmVO>();
+        //3.調用dao查詢總記錄數
+        int totalCount = dao.findTotalCount(condition);
+
+        rmVOPageBean.setTotalCount(totalCount);
+
+        //4.調用dao查詢List數據集合
+
+        //計算開始的索引值
+        int start = (currentPage - 1) * rows;
+
+        List list = dao.findByPage(start, rows, condition);
+
+        rmVOPageBean.setList(list);
+
+        //5.計算總頁碼
+
+        int totalPage = (totalCount % rows) == 0 ? (totalCount / rows) : (totalCount / rows) + 1;
+
+        rmVOPageBean.setTotalPage(totalPage);
 
 
-		int currentPage = Integer.parseInt(_currentPage);
-		int rows = Integer.parseInt(_rows);
+        return rmVOPageBean;
+    }
+
+    public PageBean<RmVO> getValidRoom(String _currentPage, String _rows, Map<String, String> condition) {
+        //1.創建一個空的PageBean物件
+        PageBean<RmVO> rmVOPageBean = new PageBean<RmVO>();
 
 
-		//2.設置參數
-		rmVOPageBean.setCurrentPage(currentPage);
-		rmVOPageBean.setRows(rows);
+        int currentPage = Integer.parseInt(_currentPage);
+        int rows = Integer.parseInt(_rows);
 
-		//3.調用dao查詢總記錄數
-		int totalCount= dao.findTotalCount(condition);
 
-		rmVOPageBean.setTotalCount(totalCount);
+        //2.設置參數
+        rmVOPageBean.setCurrentPage(currentPage);
+        rmVOPageBean.setRows(rows);
 
-		//4.調用dao查詢List數據集合
+        //3.調用dao查詢總記錄數
+        int totalCount = dao.findTotalCount(condition);
 
-		//計算開始的索引值
-		int start = (currentPage - 1) * rows;
+        rmVOPageBean.setTotalCount(totalCount);
 
-		List list = dao.findByPage(start,rows,condition);
+        //4.調用dao查詢List數據集合
 
-		rmVOPageBean.setList(list);
+        //計算開始的索引值
+        int start = (currentPage - 1) * rows;
 
-		//5.計算總頁碼
+        List list = dao.findByPage(start, rows, condition);
 
-		int totalPage = (totalCount % rows) == 0 ? (totalCount / rows) : (totalCount / rows) + 1;
+        rmVOPageBean.setList(list);
 
-		rmVOPageBean.setTotalPage(totalPage);
+        //5.計算總頁碼
 
-		return rmVOPageBean;
-	}
+        int totalPage = (totalCount % rows) == 0 ? (totalCount / rows) : (totalCount / rows) + 1;
 
+        rmVOPageBean.setTotalPage(totalPage);
+
+        return rmVOPageBean;
+    }
 
 
 }

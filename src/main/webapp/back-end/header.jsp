@@ -109,7 +109,7 @@
                 class="icon-bar"></span>
             </button>
             <!-- 點擊商標跳轉至首頁 #要放首頁網址 -->
-            <a class="navbar-header" href="/CFA101G2/back-end/index.html"> <img src="https://i.imgur.com/2j6Zzxv.png" height="40"
+            <a class="navbar-header" href="/CFA101G2/back-end/index.html"> <img src="https://i.imgur.com/INGDvWS.png" height="40"
                                                     title="島旅 Island Brigade" alt="島旅 Island Brigade"></a>
         </div>
         <!-- class="collapse navbar-collapse" 這兩個是關鍵字 幫助我們在正常視窗的情況下 可以看到原本的導覽列 -->

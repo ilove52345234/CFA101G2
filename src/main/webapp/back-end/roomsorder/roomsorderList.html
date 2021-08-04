@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>住房管理</title>
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
@@ -189,7 +189,15 @@
                             <span>{{ props.row.roomOrderId }}</span>
                         </el-form-item>
                         <el-form-item label="房型">
-                            <span>{{ props.row.roomCategoryId }}</span>
+<!--                            <span>{{ props.row.roomCategoryId }}</span>-->
+
+                            <template>
+                                <div v-for="item in allRoom">
+                                <span v-if="item.roomCategoryId == props.row.roomCategoryId">
+                                    {{ item.roomName }}
+                                </span>
+                            </div>
+                            </template>
                         </el-form-item>
                         <el-form-item label="會員姓名">
                             <span>{{ props.row.memName }}</span>
@@ -264,7 +272,14 @@
                             <span>{{ props.row.roomOrderId }}</span>
                         </el-form-item>
                         <el-form-item label="房型">
-                            <span>{{ props.row.roomCategoryId }}</span>
+<!--                            <span>{{ props.row.roomCategoryId }}</span>-->
+                            <template>
+                                <div v-for="item in allRoom">
+                                <span v-if="item.roomCategoryId == props.row.roomCategoryId">
+                                    {{ item.roomName }}
+                                </span>
+                                </div>
+                            </template>
                         </el-form-item>
                         <el-form-item label="會員姓名">
                             <span>{{ props.row.memName }}</span>
@@ -303,7 +318,7 @@
                         </el-form-item>
                         <el-form-item label="操作">
                             <span v-if="props.row.roomId == 0"><el-button type="primary" icon="el-icon-success"
-                                                                          @click="checkin(props.row.orderListId)">分配房間</el-button></span>
+                                                                          @click="checkin(props.row.orderListId,props.row.roomOrderId)">分配房間</el-button></span>
                         </el-form-item>
                     </el-form>
                 </template>
@@ -363,6 +378,7 @@
             roomData: [],
             roomEditDate: [],
             tableData: [],
+            allRoom:[],
             pagination: {
                 currentPage: 1,
                 rows: 5,
@@ -406,6 +422,7 @@
                     // var {data} = resp;
                     this.roomData = resp.data.list;
                     this.options = resp.data.all;
+                    this.allRoom = resp.data.allroomtype;
                 })
             }, //點查看時的函數
             updateStu(roomOrderId) {
@@ -454,6 +471,7 @@
 
             },   //點確認的函數
             show4Edit(roomOrderId) {
+                // alert(roomOrderId)
                 //1.彈出窗口
                 this.dialogTableVisible4Edit = true;
                 axios.post("/CFA101G2/rmorderlist/romOrderListServlet", `ROOM_ORDER_ID=${roomOrderId}`,
@@ -467,7 +485,6 @@
             room(roomId) {
                 // var url = "/CFA101G2/back-end/room/addRoom.jsp?roomId=" + this.options.roomId;
                 var url = "/CFA101G2/room/roomServlet?ROOM_ID=" + roomId;
-
                 layer.open({
                     title: '住客登記',
                     type: 2,
@@ -478,7 +495,7 @@
                     area: ['1000px', '500px'],
                 });
             },
-            checkin(orderListId) {
+            checkin(orderListId , roomodid) {
                 var url = "ROOM_ID=" + this.options.roomId + "&orderListId=" + orderListId;
                 axios.post("/CFA101G2/rmorderlist/roomUpdateServlet", url,
                 ).then(resp => {
@@ -486,6 +503,7 @@
                         swal.fire("完成!", "登記完成", "success",);
                         setTimeout(function () {
                             vm.send();
+                            vm.show4Edit(roomodid);
                         }, 2000);
                     } else {
                         swal.fire("失敗", "原因" + resp.data.errorMsg, "error");
@@ -495,7 +513,8 @@
                     }
                     ;
                 })
-
+            //     this.selectByPage();
+            // this.show4Edit(roomodid);
 
             },
             doneStu(roomOrderId) {
@@ -525,6 +544,20 @@
                     }
                 })
             }
+            // rest4Edit(roomOrderId) {
+            //     alert(roomOrderId)
+            //     //1.彈出窗口
+            //     this.dialogTableVisible4Edit = false;
+            //     axios.post("/CFA101G2/rmorderlist/romOrderListServlet", `ROOM_ORDER_ID=${roomOrderId}`,
+            //     ).then(resp => {
+            //         // resp['data']
+            //         // var {data} = resp;
+            //         this.roomEditDate = resp.data.list;
+            //         this.options = resp.data.all;
+            //     })
+            //     this.dialogTableVisible4Edit = true;
+            //
+            // },  //點管理的函數
         },
         mounted() {
             this.selectByPage();

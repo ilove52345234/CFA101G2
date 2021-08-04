@@ -81,8 +81,6 @@
     <!--導入jquery-->
     <script src="../js/jquery-2.1.0.min.js"></script>
     <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
-
-
     <script>
         /*
         表單校驗：
@@ -311,6 +309,11 @@
                         }
                     })
                 }
+                else {
+                    $("#submit").removeAttr("disabled");
+                    $("#select").removeAttr("disabled");
+                    $("#add").removeAttr("disabled");
+                }
 
                 return false;
                 //如果這個方法沒有返回值，或者返回為true，則表單提交，如果返回為false，則表單不提交
@@ -347,10 +350,11 @@
                 if (!submitArr.length) {
                     return alert('請先選擇圖片');
                 }
-                send(submitArr);
                 $("#submit").attr("disabled", true);
                 $("#select").attr("disabled", true);
                 $("#add").attr("disabled", true);
+                send(submitArr);
+
             }
 
 

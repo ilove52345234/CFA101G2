@@ -87,7 +87,7 @@ public class AddEmpServlet extends HttpServlet {
             if (!errorMsgs.isEmpty()) {
                 request.setAttribute("empVO", empVO); // 含有輸入格式錯誤的empVO物件,也存入req
                 RequestDispatcher failureView = request
-                        .getRequestDispatcher("/back-end/add.jsp");
+                        .getRequestDispatcher("/back-end/emp/add.jsp");
                 failureView.forward(request, response);
                 return;
             }
@@ -123,7 +123,7 @@ public class AddEmpServlet extends HttpServlet {
         } catch (Exception e) {
             errorMsgs.add(e.getMessage());
             RequestDispatcher failureView = request
-                    .getRequestDispatcher(request.getContextPath() +"/back-end/add.jsp");
+                    .getRequestDispatcher(request.getContextPath() +"/back-end/emp/add.jsp");
             failureView.forward(request, response);
         }
     }

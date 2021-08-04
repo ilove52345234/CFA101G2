@@ -1,6 +1,7 @@
 package com.rmorder.controller;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,6 +23,8 @@ import com.rmorder.model.RmoService;
 import com.rmorder.model.RoomTypeRemainVO;
 import com.rmtype.model.RtService;
 import com.rmtype.model.RtVO;
+import com.rschedule.model.RsService;
+import com.rschedule.model.RsVO;
 
 /**
  * servlet要做的事情很簡單 只要把使用者請求的資料給接受處理後 並返還給使用者
@@ -104,19 +107,26 @@ public class RmorderServlet extends HttpServlet {
 			bookRoomRequestVO = new BookRoomRequestVO(roomCategoryId, checkInDate, checkOutDate, memNumber, roomNumber,memberDataObj);
 
 //			// TODO 確認是否還有剩餘房間
-//			RmoService rmoSvc = new RmoService(); // 建立一個RmoService物件取得Service裡面的rtVO的值
-//			List<RoomTypeRemainVO> roomTypeRemainVOs = rmoSvc.getRemainRooms(bookRoomRequestVO);
-//			for (RoomTypeRemainVO roomTypeRemainVO : roomTypeRemainVOs) {
-//				if (bookRoomRequestVO.getRoomNumber() > roomTypeRemainVO.getRemainRoomNumber()) {
-//					errorMsgs.add("日期：" + roomTypeRemainVO.getLiveDate() + "，房型：" + roomTypeRemainVO.getRoomName()
-//							+ "，已無剩餘房間");
-//				}
-//			}
+
+			RsService rsService =  new RsService();
+
+			Date date = new Date(checkInDate.getTime());
 //
-//			if (errorMsgs.isEmpty() == false) {
-//				this.failAndForwardToOriginPage(req, res, roomCategoryId, errorMsgs);
-//				return;
-//			}
+			List<RsVO> oneValidAmount = rsService.getOneValidAmount(1,date,date);
+			for (RsVO rsVO : oneValidAmount) {
+				System.out.println("預定表:"+rsVO);
+				if (bookRoomRequestVO.getRoomNumber() > rsVO.getRoomValidAmount()) {
+					errorMsgs.add("日期：" + rsVO.getRoomScheduleDate() + "，房型：" + rsVO.getRoomCategoryId()
+							+ "，已無剩餘房間");
+				}
+			}
+//
+			if (errorMsgs.isEmpty() == false) {
+				String s = errorMsgs.toString();
+				System.out.println(s);
+				this.failAndForwardToOriginPage(req, res, roomCategoryId, errorMsgs);
+				return;
+			}
 
 			/*************************** 2.開始訂房 *****************************************/
 			

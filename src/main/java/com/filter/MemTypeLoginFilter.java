@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.Set;
 
 /**
- * 住房管理
+ * 會員帳號管理
  */
 
 public class MemTypeLoginFilter implements Filter {

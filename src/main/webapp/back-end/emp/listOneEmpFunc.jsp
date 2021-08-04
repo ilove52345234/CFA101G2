@@ -14,7 +14,7 @@
     initial-scale: 初始的縮放比，為1:1 -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- 上述3個meta標籤*必須*放在最前面，任何其他內容都*必須*跟隨其後！ -->
-	<title>後台管理系統</title>
+	<title>權限</title>
 
 	<!-- 1. 導入CSS的全局樣式 -->
 	<link href="<%=request.getContextPath()%>/back-end/css/bootstrap.min.css" rel="stylesheet">

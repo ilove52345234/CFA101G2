@@ -6,6 +6,7 @@ import com.rmtype.model.RtService;
 import com.rmtype.model.RtVO;
 import com.rschedule.model.RsDAO_interface;
 import com.rschedule.model.RsJDBCDAO;
+import com.rschedule.model.RsService;
 import com.utils.PageBean;
 
 import java.sql.Timestamp;
@@ -132,7 +133,13 @@ public class RmoService {
 //				diffDays, bookRoomRequestVO.getRoomCategoryId(), bookRoomRequestVO.getRoomNumber());
 
 		// (從DAO依據指令共新增兩張表)新增住房訂單和新增住房明細
+
 		Integer orderId = dao.bookPreOrder(rmoVO, rmolVOs);
+		RsService rsService = new RsService();
+
+		for (RmolVO rmolVO : rmolVOs) {
+			rsService.updateByRmOrderList(rmolVO);
+		}
 
 		// (從DAO依據指令)查詢該會員預定房型訂單相關資訊 join四張table的資料才能完全顯現  以前寫的方法
 //		BookRmoVO bookRmoVO = rmoDao.findByBookOrder(memVO.getMemId(), orderId);
@@ -140,7 +147,9 @@ public class RmoService {
 		// (從DAO依據指令)join三張表的資料
 		List<MemRoomOrderVO> memRoomOrderVOs = dao.roomOrder(memVO.getMemId());
 
+
 		return memRoomOrderVOs;
+
 	}
 
 	//取得會員訂房訂單明細的方法

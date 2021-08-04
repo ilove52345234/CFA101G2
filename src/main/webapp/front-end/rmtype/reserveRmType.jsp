@@ -3,6 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page import="java.util.*"%>
+<%@ page import="com.rschedule.model.RsService" %>
+
+
+
 <!DOCTYPE html>
 
 <html>
@@ -123,7 +127,8 @@
 						&nbsp;<label>房間費用 :</label>&nbsp;${rtVO.roomPrice}
 					</p>
 					<p style="color: red">
-						&nbsp;<label>房間剩餘總數 :</label>&nbsp;${rtVO.roomTypeAmount}&nbsp;間
+						&nbsp;<label>房間剩餘數量 :</label>&nbsp;${rtVO.roomTypeAmount}&nbsp;間
+
 					</p>
 					<br>
 					<p>

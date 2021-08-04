@@ -24,23 +24,28 @@
     </servlet-mapping>
 
     <!-- FILTER -->
-<!--    <filter>-->
-<!--        <filter-name>LoginFilter</filter-name>-->
-<!--        <filter-class>com.filter.LoginFilter</filter-class>-->
-<!--    </filter>-->
-<!--    <filter-mapping>-->
-<!--        <filter-name>LoginFilter</filter-name>-->
-<!--        <url-pattern>/mem/update_mem_input.jsp</url-pattern>-->
-<!--        <url-pattern>/mem/testLoginSuccess.jsp</url-pattern>-->
-<!--        <url-pattern>/carte/talkSection.jsp</url-pattern>-->
-<!--        <url-pattern>/carte/showCarte.jsp</url-pattern>-->
-<!--        <url-pattern>/carte/updateCarte.jsp</url-pattern>-->
-<!--        <dispatcher>REQUEST</dispatcher>-->
-<!--        <dispatcher>FORWARD</dispatcher>-->
-<!--        <dispatcher>INCLUDE</dispatcher>-->
-<!--        <dispatcher>ERROR</dispatcher>-->
-<!--        <dispatcher>ASYNC</dispatcher>-->
-<!--    </filter-mapping>-->
+    <filter>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>com.login.filter.LoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <!-- 		<url-pattern>/mem/update_mem_input.jsp</url-pattern> -->
+        <url-pattern>/front-end/mem/memData.jsp</url-pattern>
+        <!-- 		<url-pattern>/mem/testLoginSuccess.jsp</url-pattern> -->
+        <url-pattern>/front-end/carte/showCarte2.jsp</url-pattern>
+        <url-pattern>/front-end/carte/addCarte2.jsp</url-pattern>
+        <url-pattern>/front-end/carte/updateCarte.jsp</url-pattern>
+        <url-pattern>/rmorder/RmorderServlet</url-pattern>
+        <!--     這樣設濾器路徑可以防止進入網頁後 整個頁面都被濾器影響 -->
+        <url-pattern>/rmorder/RmorderFromCartServlet</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+        <dispatcher>ASYNC</dispatcher>
+    </filter-mapping>
+
 
     <!--管理員登入驗證-->
     <filter>
@@ -170,6 +175,52 @@
 
 
 
+    <!--活動管理-->
+    <filter>
+        <filter-name>ActLoginFilter</filter-name>
+        <filter-class>com.filter.ActLoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ActLoginFilter</filter-name>
+        <url-pattern>/back-end/act/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+        <dispatcher>ASYNC</dispatcher>
+    </filter-mapping>
+
+
+    <!--活動類別管理-->
+    <filter>
+        <filter-name>ActTypeLoginFilter</filter-name>
+        <filter-class>com.filter.ActTypeLoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ActTypeLoginFilter</filter-name>
+        <url-pattern>/back-end/acttype/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+        <dispatcher>ASYNC</dispatcher>
+    </filter-mapping>
+
+
+    <!--活動優惠管理-->
+    <filter>
+        <filter-name>ActPromoLoginFilter</filter-name>
+        <filter-class>com.filter.ActPromoLoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ActPromoLoginFilter</filter-name>
+        <url-pattern>/back-end/actpromo/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+        <dispatcher>ASYNC</dispatcher>
+    </filter-mapping>
 
     <!-- 個人名片 -->
     <servlet>

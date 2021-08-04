@@ -3,6 +3,8 @@ package com.rmorderlist.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rmorderlist.model.RmolService;
 import com.rmorderlist.model.RmolVO;
+import com.rmtype.model.RtService;
+import com.rmtype.model.RtVO;
 import com.room.model.RmService;
 import com.room.model.RmVO;
 import com.utils.PageBean;
@@ -23,6 +25,7 @@ public class RomOrderListServlet extends HttpServlet {
     private RmolService rmolService = new RmolService();
 
     private RmService rmService = new RmService();
+     private RtService rtService = new RtService();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -60,10 +63,11 @@ public class RomOrderListServlet extends HttpServlet {
 
         List<RmolVO> list = this.rmolService.getAllByROOM_ORDER_ID(Integer.parseInt(ROOM_ORDER_ID));
         List<RmVO> all = this.rmService.getAll();
-
+        List<RtVO> allroomtype = this.rtService.getAll();
 
         rmorder.put("list", list);
         rmorder.put("all", all);
+        rmorder.put("allroomtype", allroomtype);
 
         System.out.println("開始轉交");
         mapper.writeValue(response.getOutputStream(), rmorder);

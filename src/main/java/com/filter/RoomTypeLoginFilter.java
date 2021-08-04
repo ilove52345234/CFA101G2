@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.Set;
 
 /**
- * 住房管理
+ * 房型管理
  */
 
 public class RoomTypeLoginFilter implements Filter {

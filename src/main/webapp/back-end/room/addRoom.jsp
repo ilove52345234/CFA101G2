@@ -186,18 +186,57 @@
 
 
 <script>
+    // $("#btn1").on('click', function () {
+    //
+    //     $('#message').html("")
+    //     var sno = $('#informationPhone').val();
+    //     var sname = $('#roomInformation').val();
+    //     var stayDays = $('#stayDays').val();
+    //     // alert(sno)
+    //
+    //     if (($.trim(sno) == "" || sno == null) || ($.trim(sname) == "" || sname == null)) {
+    //
+    //         $('#message').html("請輸入姓名與電話")
+    //     } else {
+    //         swal({
+    //             title: "確定新增？",
+    //             html: "按下確定會新增住客資訊",
+    //             type: "question", // type can be "success", "error", "warning", "info", "question"
+    //             showCancelButton: true,
+    //             showCloseButton: true,
+    //         }).then(
+    //             function (result) {
+    //                 if (result) {
+    //                     save();
+    //                 }
+    //             }, function (dismiss) { // dismiss can be "cancel" | "overlay" | "esc" | "cancel" | "timer"
+    //                 swal("取消", "住客未被新增", "error");
+    //                 setTimeout(function () {
+    //                     window.parent.location.reload(); //刷新父頁面
+    //                     var index = parent.layer.getFrameIndex(window.name); //獲取窗口索引
+    //                     parent.layer.close(index); // 關閉圖層
+    //                 }, 1000);
+    //
+    //             }).catch(swal.noop);
+    //
+    //     }
+    //
+    // });
+
+
+
+
+
+
     $("#btn1").on('click', function () {
 
-        $('#message').html("")
-        var sno = $('#informationPhone').val();
-        var sname = $('#roomInformation').val();
-        var stayDays = $('#stayDays').val();
-        // alert(sno)
+        // $('#message').html("")
+        // var sno = $('#informationPhone').val();
+        // var sname = $('#roomInformation').val();
+        // var stayDays = $('#stayDays').val();
+        // // alert(sno)
 
-        if (($.trim(sno) == "" || sno == null) || ($.trim(sname) == "" || sname == null)) {
-
-            $('#message').html("請輸入姓名與電話")
-        } else {
+        if (checkName()&&checkTelephone()) {
             swal({
                 title: "確定新增？",
                 html: "按下確定會新增住客資訊",
@@ -218,9 +257,8 @@
                     }, 1000);
 
                 }).catch(swal.noop);
-
         }
-
+        return false;
     });
 
 
@@ -236,7 +274,6 @@
             success: function (data) {
                 if (data.flag) {
                     swal("完成!", "2秒後回到列表", "success",);
-
                     setTimeout(function () {
                         window.parent.location.reload(); //刷新父頁面
                         var index = parent.layer.getFrameIndex(window.name); //獲取窗口索引
@@ -247,6 +284,58 @@
                 }
             }
         });
+    }
+
+    //校驗姓名
+    // function checkName(){
+    //     //獲取姓名
+    //     var name = $("#roomInformation").val();
+    //
+    //     if(name !== ""){
+    //         $("#roomInformation").css("border","");
+    //         return true;
+    //     }else{
+    //         $("#roomInformation").css("border","1px solid red");
+    //         return false;
+    //     }
+    // }
+
+
+    //校驗手機號格式
+    function checkTelephone(){
+        //獲取手機號
+        var telephone = $("#informationPhone").val();
+        //11位手機號格式
+        var reg_telephone = /^09\d{2}-?\d{3}-?\d{3}$/;
+        var flag = reg_telephone.test(telephone);
+        if(flag){
+            $("#informationPhone").css("border","");
+        }else {
+            $("#informationPhone").css("border","1px solid red");
+        }
+        return flag;
+    }
+
+    //校驗用戶名
+    function checkName() {
+
+        //獲取用戶名
+        var username = $("#roomInformation").val();
+        //定義正則
+        var reg_username = /^[a-zA-Z\u4e00-\u9fa5]+$/;
+
+        //判斷,給出提示信息
+        var flag = reg_username.test(username);
+
+        if(flag){
+            //用戶名合法
+            $("#roomInformation").css("border","");
+        }else {
+            //用戶名非法
+            //獲取文本輸入框
+            $("#roomInformation").css("border","1px solid red");
+        }
+        return flag;
     }
 </script>
 

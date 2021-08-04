@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.Set;
 
 /**
- * 住房管理
+ * 商品資料管理
  */
 
 public class ShopLoginFilter implements Filter {

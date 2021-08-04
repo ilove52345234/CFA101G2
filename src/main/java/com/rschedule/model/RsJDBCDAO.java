@@ -353,9 +353,7 @@ public class RsJDBCDAO implements RsDAO_interface {
         try {
             con = jdbcUtils.getConnection();
             pstmt = con.prepareStatement(UPDATE_BY_RMOL);
-
             pstmt.setInt(1, rmolVO.getRoomCategoryId());
-
             pstmt.setDate(2, new Date(rmolVO.getCheckInDate().getTime()));
             pstmt.setDate(3, new Date(rmolVO.getCheckOutDate().getTime()));
 

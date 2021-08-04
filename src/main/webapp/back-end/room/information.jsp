@@ -21,7 +21,7 @@
 
 <html>
 <head>
-    <title>Title</title>
+    <title>住客登記表</title>
     <script src="../js/getParameter.js"></script>
     <!-- 1. 導入CSS的全局樣式 -->
     <link href="<%=request.getContextPath()%>/back-end/css/bootstrap.min.css" rel="stylesheet">
