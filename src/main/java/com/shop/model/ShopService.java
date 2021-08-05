@@ -38,7 +38,27 @@ public class ShopService {
 		return shopVO;
 		
 	}
-	
+
+
+	public ShopVO addShop2(Integer itemCategoryId, String itemDescribtion, Integer itemFee,
+						  String itemName, Integer itemQuantity, Byte itemStatus, Integer commentNumber, Integer commentTotalScore) {
+		ShopVO shopVO = new ShopVO();
+
+		shopVO.setItemCategoryId(itemCategoryId);
+		shopVO.setItemDescribtion(itemDescribtion);
+		shopVO.setItemFee(itemFee);
+		shopVO.setItemName(itemName);
+		shopVO.setItemQuantity(itemQuantity);
+		shopVO.setItemStatus(itemStatus);
+		shopVO.setCommentNumber(commentNumber);
+		shopVO.setCommentTotalScore(commentTotalScore);
+		dao.insert(shopVO);
+
+		return shopVO;
+	}
+
+
+
 	// 修改
 	public ShopVO updateShop(Integer itemId, Integer itemCategoryId, String itemDescribtion,
 			Integer itemFee, String itemName, Integer itemQuantity, Byte itemStatus, Integer commentNumber, Integer commentTotalScore,ShopPicVO shopPicVO) {
@@ -82,10 +102,33 @@ public class ShopService {
 	public List<ShopVO> getAll() {
 		return dao.getAll();
 	}
-	
+
+
+	public ShopVO updateShop2(Integer itemId, Integer itemCategoryId, String itemDescribtion, Integer itemFee,
+							 String itemName, Integer itemQuantity, Byte itemStatus, Integer commentNumber, Integer commentTotalScore) {
+		ShopVO shopVO = new ShopVO();
+
+		shopVO.setItemId(itemId);
+		shopVO.setItemCategoryId(itemCategoryId);
+		shopVO.setItemDescribtion(itemDescribtion);
+		shopVO.setItemFee(itemFee);
+		shopVO.setItemName(itemName);
+		shopVO.setItemQuantity(itemQuantity);
+		shopVO.setItemStatus(itemStatus);
+		shopVO.setCommentNumber(commentNumber);
+		shopVO.setCommentTotalScore(commentTotalScore);
+		dao.update(shopVO);
+
+		return shopVO;
+
+	}
+
+
 	// 關鍵字查詢
 	public List<ShopVO> getSearch(String itemName){
 		return dao.search(itemName);
-	}	
-	
+	}
+	public ShopVO getOneShop2(String itemName) {
+		return dao.findByitemName(itemName);
+	}//會員利用名稱查詢商品
 }	

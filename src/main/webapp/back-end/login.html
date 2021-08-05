@@ -8,10 +8,37 @@
     <link rel="stylesheet" href="/CFA101G2/back-end/css/login.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
     <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+<!--    <script src="../js/jquery-3.3.1.js"></script>-->
+
+
+    <style>
+
+        #vcode {
+            /*border: 1px solid black;*/
+            position: fixed; /*固定在螢幕上*/
+            /* top | right | bottom | left */
+            /*   top: 20px;  */
+            /*離上方20*/
+            right: 50px;
+            bottom: 30px;
+        }
+        #bt1 {
+            /*border: 1px solid black;*/
+            position: fixed; /*固定在螢幕上*/
+            /* top | right | bottom | left */
+            /*   top: 20px;  */
+            /*離上方20*/
+
+            bottom: 5px;
+            left: 45%;
+        }
+    </style>
 </head>
 
 
 <body>
+<div id="header"></div>
+
 <form id="loginForm" class="login">
     <h1>管理員登入</h1>
     <i class="fa fa-user-circle-o"></i>
@@ -31,8 +58,8 @@
     <button id="idForm" type="button" class="button" style="vertical-align:middle"><span>登入 </span></button>
     <div class="form-inline">
 <!--        <label for="vcode">驗證碼：</label>-->
-        <input type="text" name="verifycode" class="form-control" id="verifycode" placeholder="請輸入驗證碼" style="width: 120px; margin-top: -10px"/>
-
+        <input  type="text" name="verifycode" class="form-control" id="verifycode" placeholder="請輸入驗證碼" style="width: 120px; margin-top: -10px"/>
+        <button id="bt1" type="button" onclick="history.back()" class="btn btn-dark">返回</button>
 
 
     </div>

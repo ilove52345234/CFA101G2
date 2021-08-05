@@ -15,14 +15,16 @@ public class ShopOrderDetailJDBCDAO implements ShopOrderDetailDAO_interface {
 
 	JDBCUtils jdbcUtils = new JDBCUtils();
 
-
-	private static final String INSERT_STMT = "INSERT INTO SHOP_ORDER_DETAIL(ITEM_ORDER_ID, ITEM_ID, ITEM_QUANTITY, ITEM_PROMOTION_ID, ITEM_AMOUNTS, ITEM_FINAL_AMOUNT) VALUE(?,?,?,?,?,?)";
+	private static final String INSERT_STMT2 =
+			"INSERT INTO SHOP_ORDER_DETAIL(ITEM_ORDER_ID,ITEM_ID,ORDER_QUANTITY,ITEM_PROMOTION_ID,ITEM_AMOUNTS,ITEM_FINAL_AMOUNT) "
+					+ "VALUE(?,?,?,?,?,?)";
+	private static final String INSERT_STMT = "INSERT INTO SHOP_ORDER_DETAIL(ITEM_ORDER_ID, ITEM_ID, ORDER_QUANTITY, ITEM_PROMOTION_ID, ITEM_AMOUNTS, ITEM_FINAL_AMOUNT) VALUE(?,?,?,?,?,?)";
 	private static final String GET_ALL_STMT = "SELECT * FROM SHOP_ORDER_DETAIL ORDER BY ITEM_ORDER_ID";
 	private static final String GET_ONE_STMT = "SELECT * FROM SHOP_ORDER_DETAIL WHERE ITEM_ORDER_ID = ?";
 	private static final String DELETE = "DElETE FROM SHOP_ORDER_DETAIL WHERE ITEM_ORDER_ID = ?";
-	private static final String UPDATE = "UPDATE SHOP_ORDER_DETAIL SET ITEM_ID = ? ,ITEM_QUANTITY = ? ,ITEM_PROMOTION_ID = ? ,ITEM_AMOUNTS = ? ,ITEM_FINAL_AMOUNT =? WHERE ITEM_ORDER_ID = ?";
-	private static final String SHOP_JOIN_DETAIL = "SELECT SHOP_ORDER_DETAIL.ITEM_ORDER_ID, SHOP.ITEM_NAME, SHOP.ITEM_FEE, SHOP.ITEM_QUANTITY FROM SHOP_ORDER_DETAIL INNER JOIN SHOP ON SHOP_ORDER_DETAIL.ITEM_ID = SHOP.ITEM_ID WHERE SHOP.ITEM_ID = ?";
-	
+	private static final String UPDATE = "UPDATE SHOP_ORDER_DETAIL SET ITEM_ID = ? ,ORDER_QUANTITY = ? ,ITEM_PROMOTION_ID = ? ,ITEM_AMOUNTS = ? ,ITEM_FINAL_AMOUNT =? WHERE ITEM_ORDER_ID = ?";
+	private static final String SHOP_JOIN_DETAIL = "SELECT SHOP_ORDER_DETAIL.ITEM_ORDER_ID, SHOP_ORDER_DETAIL.ORDER_QUANTITY, SHOP_ORDER_DETAIL.ITEM_FINAL_AMOUNT, SHOP.ITEM_NAME, SHOP.ITEM_FEE FROM SHOP_ORDER_DETAIL INNER JOIN SHOP ON SHOP_ORDER_DETAIL.ITEM_ID = SHOP.ITEM_ID WHERE SHOP.ITEM_ID = ?";
+
 	@Override
 	public void insert(ShopOrderDetailVO shopOrderDetailVO) {
 
@@ -159,7 +161,7 @@ public class ShopOrderDetailJDBCDAO implements ShopOrderDetailDAO_interface {
 				shopOrderDetailVO = new ShopOrderDetailVO();
 				shopOrderDetailVO.setItemOrderId(rs.getInt("ITEM_ORDER_ID"));
 				shopOrderDetailVO.setItemId(rs.getInt("ITEM_ID"));
-				shopOrderDetailVO.setItemQuantity(rs.getInt("ITEM_QUANTITY"));
+				shopOrderDetailVO.setItemQuantity(rs.getInt("ORDER_QUANTITY"));
 				shopOrderDetailVO.setItemPromotionId(rs.getInt("ITEM_PROMOTION_ID"));
 				shopOrderDetailVO.setItemAmounts(rs.getInt("ITEM_AMOUNTS"));
 				shopOrderDetailVO.setItemFinalAmount(rs.getInt("ITEM_FINAL_AMOUNT"));
@@ -215,7 +217,7 @@ public class ShopOrderDetailJDBCDAO implements ShopOrderDetailDAO_interface {
 				shopOrderDetailVO = new ShopOrderDetailVO();
 				shopOrderDetailVO.setItemOrderId(rs.getInt("ITEM_ORDER_ID"));
 				shopOrderDetailVO.setItemId(rs.getInt("ITEM_ID"));
-				shopOrderDetailVO.setItemQuantity(rs.getInt("ITEM_QUANTITY"));
+				shopOrderDetailVO.setItemQuantity(rs.getInt("ORDER_QUANTITY"));
 				shopOrderDetailVO.setItemPromotionId(rs.getInt("ITEM_PROMOTION_ID"));
 				shopOrderDetailVO.setItemAmounts(rs.getInt("ITEM_AMOUNTS"));
 				shopOrderDetailVO.setItemFinalAmount(rs.getInt("ITEM_FINAL_AMOUNT"));
@@ -277,10 +279,11 @@ public class ShopOrderDetailJDBCDAO implements ShopOrderDetailDAO_interface {
 				shopOrderDetailVO = new ShopOrderDetailVO();
 				shopVO = new ShopVO();
 				shopOrderDetailVO.setItemOrderId(rs.getInt("SHOP_ORDER_DETAIL.ITEM_ORDER_ID"));
+				shopOrderDetailVO.setOrderQuantity(rs.getInt("SHOP_ORDER_DETAIL.ORDER_QUANTITY"));
+				shopOrderDetailVO.setItemFinalAmount(rs.getInt("SHOP_ORDER_DETAIL.ITEM_FINAL_AMOUNT"));
 				shopVO.setItemName(rs.getString("SHOP.ITEM_NAME"));
-				shopVO.setItemQuantity(rs.getInt("SHOP.ITEM_QUANTITY"));
 				shopVO.setItemFee(rs.getInt("SHOP.ITEM_FEE"));
-				System.out.println("shopVO" + shopVO);
+				shopVO.setItemId(itemId);
 				shopOrderDetailVO.setShopVO(shopVO);
 				listShopOrderDetailVO.add(shopOrderDetailVO);
 			}
@@ -313,59 +316,49 @@ public class ShopOrderDetailJDBCDAO implements ShopOrderDetailDAO_interface {
 		return listShopOrderDetailVO;
 	}
 
-	public static void main(String[] args) {
+	@Override
+	public void insert2(ShopOrderDetailVO shopOrderDetailVO,Connection con) {
 
-		ShopOrderDetailJDBCDAO dao = new ShopOrderDetailJDBCDAO();
+		PreparedStatement pstmt = null;
 
-		// 新增
-//		ShopOrderDetailVO shopOrderDetailVO1 = new ShopOrderDetailVO();
-//		shopOrderDetailVO1.setItemOrderId(5);
-//		shopOrderDetailVO1.setItemId(15);
-//		shopOrderDetailVO1.setItemQuantity(1);
-//		shopOrderDetailVO1.setItemPromotionId(0);
-//		shopOrderDetailVO1.setItemAmounts(10000);
-//		shopOrderDetailVO1.setItemFinalAmount(10000);
-//		dao.insert(shopOrderDetailVO1);
+		try {
+			pstmt = con.prepareStatement(INSERT_STMT2);
 
-		// 修改
-//		ShopOrderDetailVO shopOrderDetailVO2 = new ShopOrderDetailVO();
-//		shopOrderDetailVO2.setItemId(2);
-//		shopOrderDetailVO2.setItemQuantity(1);
-//		shopOrderDetailVO2.setItemPromotionId(1001);
-//		shopOrderDetailVO2.setItemAmounts(5000);
-//		shopOrderDetailVO2.setItemFinalAmounts(5000);
-//		shopOrderDetailVO2.setItemOrderId(1);
-//		dao.update(shopOrderDetailVO2);
+			pstmt.setInt(1, shopOrderDetailVO.getItemOrderId());
+			pstmt.setInt(2, shopOrderDetailVO.getItemId());
+			pstmt.setInt(3, shopOrderDetailVO.getOrderQuantity());
+			pstmt.setInt(4, shopOrderDetailVO.getItemPromotionId());
+			pstmt.setInt(5, shopOrderDetailVO.getItemAmounts());
+			pstmt.setInt(6, shopOrderDetailVO.getItemFinalAmount());
 
-		// 刪除
-//		dao.delete(2);
 
-		// 單一查詢
-//		ShopOrderDetailVO shopOrderDetailVO3 = dao.findByPK(2);
-//		System.out.println("訂單編號： " + shopOrderDetailVO3.getItemOrderId());
-//		System.out.println("商品編號： " + shopOrderDetailVO3.getItemId());
-//		System.out.println("商品數量： " + shopOrderDetailVO3.getItemQuantity());
-//		System.out.println("優惠方案編號： " + shopOrderDetailVO3.getItemPromotionId());
-//		System.out.println("商品金額： " + shopOrderDetailVO3.getItemAmounts());
-//		System.out.println("商品原價： " + shopOrderDetailVO3.getItemFinalAmount());
-		
-		// 全部查詢
-//		List<ShopOrderDetailVO> list = dao.getAll();
-//		for(ShopOrderDetailVO sShop : list) {
-//			System.out.println("訂單編號： " + sShop.getItemOrderId());
-//			System.out.println("商品編號： " + sShop.getItemId());
-//			System.out.println("商品數量： " + sShop.getItemQuantity());
-//			System.out.println("商品金額： " + sShop.getItemAmounts());
-//			System.out.println("=====================");
-//		}
-		
-		List<ShopOrderDetailVO> list = dao.shopJoinDetail(55);
-		for(ShopOrderDetailVO sShop : list) {
-			System.out.println("訂單編號： " + sShop.getItemOrderId());
-			System.out.println("商品編號： " + sShop.getShopVO().getItemName());
-			System.out.println("商品數量： " + sShop.getShopVO().getItemQuantity());
-			System.out.println("商品金額： " + sShop.getShopVO().getItemFee());
-			System.out.println("=====================");
+			int rowCount = pstmt.executeUpdate();
+			System.out.println("新增 " + rowCount + "筆資料");
+			//更新資料庫,傳回更新成功的筆數
+
+		} catch (SQLException se) {
+			if (con != null) {
+				try {
+					System.err.print("Transaction is being");
+					System.err.println("rolled back-由-order");
+					con.rollback();
+				} catch (SQLException excep) {
+					throw new RuntimeException("rollback error occured. "
+							+excep.getMessage());
+				}
+			}
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
 		}
 	}
+
+
 }

@@ -3,10 +3,7 @@ package com.mem.controller;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -29,19 +26,18 @@ public class MemServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		
-		//註冊會員
+
+		// 註冊會員
 		if ("insert".equals(action)) { // 來自addMember.jsp的請求
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-
 
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 				String memAccount = req.getParameter("memAccount");
 				if (memAccount == null || memAccount.trim().length() == 0) {
 					errorMsgs.put("memAccount", "會員帳號: 請勿空白");
-				} 
+				}
 
 				String memName = req.getParameter("memName");
 				String memNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
@@ -107,15 +103,32 @@ public class MemServlet extends HttpServlet {
 				Timestamp memUpdate = new Timestamp(System.currentTimeMillis());
 
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front-end/mem/addMember.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/mem/addMember.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 				/*************************** 2.開始新增資料 ***************************************/
-				MemService memServive = new MemService();
-				memServive.addMem(memAccount, memName, memPassword, memAddress, memPhone, memUid, memEmail, memSex, memDob, memStatus, memUpdate);
-				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
+				MemService memSvc = new MemService();
+				memSvc.addMem(memAccount, memName, memPassword, memAddress, memPhone, memUid, memEmail, memSex, memDob,
+						memStatus, memUpdate);
+
+				/*************************** 3.新增完成,準備寄信 ***********************************/
+				String to = "whatever016015@gmail.com"; // memVO.getMemEmail();
+				String subject = "驗證通知";
+				String memname = memName; // memVO.getMemName();
+
+				Base64.Encoder encoder = Base64.getEncoder();
+				byte[] memAccountByte = memAccount.getBytes("UTF-8");
+				String memAccountBase64 = encoder.encodeToString(memAccountByte);
+
+				String checkAuthentication = "http://localhost:8081/CFA101G2/front-end/mem/mem.do?action=auth&memAccount="
+						+ memAccountBase64;
+				String messageText = "您好! " + memname + " 請按以下連結完成驗證: " + checkAuthentication;
+
+//			    MailService mailService = new MailService();
+				memSvc.sendMail(to, subject, messageText);
+
+				/*************************** 4.新增完成,準備轉交(Send the Success view) ***********/
 				String url = "/front-end/mem/index.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交index.jsp
 				successView.forward(req, res);
@@ -127,6 +140,26 @@ public class MemServlet extends HttpServlet {
 				failureView.forward(req, res);
 				e.printStackTrace();
 			}
+		}
+		//Status啟用驗證
+		if ("auth".equals(action)) {
+			try {
+
+				MemService memSvc = new MemService();
+				String memAccountBase64 = req.getParameter("memAccount");
+
+				Base64.Decoder decoder = Base64.getDecoder();
+				byte[] memAccountByte = decoder.decode(memAccountBase64);
+				String memAccount = new String(memAccountByte, "UTF-8");
+
+				memSvc.updateMem(memAccount);
+				String url = "/front-end/mem/authentication.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交index.jsp
+				successView.forward(req, res);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
 		}
 		//後台會員顯示修改資料
 		if ("getOne_For_Update".equals(action)) { // 來自listAllMemEmp.jsp的請求
@@ -143,14 +176,14 @@ public class MemServlet extends HttpServlet {
 				MemVO memVO = memSvc.getOneMem(memId);
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("memVO", memVO);
-				String url = "/mem/update_mem_input.jsp";
+				String url = "/back-end/mem/update_mem_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_mem_input.jsp
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/mem/listAllMem.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/back-end/mem/listAllMem.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -279,7 +312,7 @@ public class MemServlet extends HttpServlet {
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("memVO", memVO);
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front-end/mem/update_mem_input.jsp");
+							.getRequestDispatcher("/back-end/mem/update_mem_input.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -319,7 +352,7 @@ public class MemServlet extends HttpServlet {
 
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/mem/select_page.jsp");
+							.getRequestDispatcher("/back-end/mem/select_page.jsp");
 					failureView.forward(req, res);
 
 					return;
@@ -334,7 +367,7 @@ public class MemServlet extends HttpServlet {
 
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/mem/select_page.jsp");
+							.getRequestDispatcher("/back-end/mem/select_page.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -348,14 +381,14 @@ public class MemServlet extends HttpServlet {
 
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/mem/select_page.jsp");
+							.getRequestDispatcher("/back-end/mem/select_page.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("memVO", memVO);
-				String url = "/mem/listOneMem.jsp";
+				String url = "/back-end/mem/listOneMem.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
 
@@ -363,7 +396,7 @@ public class MemServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/mem/select_page.jsp");
+						.getRequestDispatcher("/back-end/mem/select_page.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -514,7 +547,8 @@ public class MemServlet extends HttpServlet {
 				
 				/*************************** 3.處理e-mail ****************************************/
 			    String to = "whatever016015@gmail.com"; // memVO.getMemEmail();
-			      
+//			    String to = memVO.getMemEmail(); // memVO.getMemEmail();
+				System.out.println(memVO.getMemEmail());
 			    String subject = "密碼通知";
 			      
 			    String memname = memVO.getMemName(); // memVO.getMemName();

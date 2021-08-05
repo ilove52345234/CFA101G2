@@ -116,10 +116,10 @@
 <br>
 
 <div class="container">
-  <div id="booking"><font color="red">如果內容確認無誤請按確定,若有變更情況請點擊修改按鈕</font></div>
+<%--  <div id="booking"><font color="red">如果內容確認無誤請按確定,若有變更情況請點擊修改按鈕</font></div>--%>
 <br>
 <div style="text-align: center;">
-<input type="submit" class="press-confirm" name="按鈕名稱" value="確定">&nbsp;
+<%--<input type="submit" class="press-confirm" name="按鈕名稱" value="確定">&nbsp;--%>
   <input type="button" onclick="history.back()"  class="press-confirm" name="按鈕名稱" value="返回">
 </div>
 <br>

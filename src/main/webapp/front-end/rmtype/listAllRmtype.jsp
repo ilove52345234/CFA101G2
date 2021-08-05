@@ -36,8 +36,9 @@
  <!--  開啟路徑 使用get方法 http://localhost:8081/CFA101G2/rmtype/RmtypeServlet?action=getAllRoomType -->
 
 <html>
+
 <head>
-<head>
+<jsp:include page="/front-end/header.jsp"></jsp:include>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport"
@@ -142,7 +143,6 @@
 							</select> &nbsp;&nbsp; 					
 							<input type="hidden" name="action" value="find_roomname">
 						    <input type="submit" class="btn btn-success" value="送出">
-							
 							<a href="<%=request.getContextPath()%>/front-end/rmtype/roomCarts.jsp"
 							class="btn btn-default">查看購物車</a>
 							<br> 

@@ -18,5 +18,7 @@ public interface ShopDAO_interface {
 	
 	// 把 Item_Id 放進去 <Shop> 這個集合
 	public List<ShopVO> getAll();
+
+	public ShopVO findByitemName(String itemName);
 	
 }

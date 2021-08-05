@@ -28,7 +28,6 @@ import com.carte.model.CarteVO;
 
 import com.mem.model.MemService;
 import com.mem.model.MemVO;
-@WebServlet("/carte.do")
 @MultipartConfig
 public class CarteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -40,7 +39,7 @@ public class CarteServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-	
+		System.out.println("action:"+ action);
 		//新增名片
 		if("addCarte".equals(action)) { //來自addcarte.jsp的請求
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
@@ -81,7 +80,7 @@ public class CarteServlet extends HttpServlet {
 				
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/carte/addCarte2.jsp");
+							.getRequestDispatcher("/front-end/carte/addCarte2.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -89,16 +88,17 @@ public class CarteServlet extends HttpServlet {
 				/*************************** 2.開始新增資料 ***************************************/
 				CarteService carteService = new CarteService();
 				carteService.addCarte(memId, userName, userPic, userStatus, userUpdate);
-				
+				CarteVO carteVO = carteService.getOneCarte(memId);
+				req.setAttribute("carteVO", carteVO);
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				String url = "/mem/HomePage.jsp";
+				String url = "/front-end/carte/showCarte2.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交showCarte.jsp
 				successView.forward(req, res);
 				
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch(Exception e) {
 				errorMsgs.put("Exception", e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/carte/addCarte2.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/carte/addCarte2.jsp");
 				failureView.forward(req, res);
 				e.printStackTrace();
 			}
@@ -114,23 +114,29 @@ public class CarteServlet extends HttpServlet {
 				HttpSession session = req.getSession();
 				MemVO memVO = (MemVO)session.getAttribute("memVO");
 				Integer memId = memVO.getMemId();
-				
+
 				/***************************2.開始查詢資料****************************************/
 				CarteService carteSvc = new CarteService();
 				CarteVO carteVO = carteSvc.getOneCarte(memId);
-				if (carteVO == null) {
-					errorMsgs.add("尚未新增名片");
-				}
 				
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/carte/addCarte2.jsp");
+							.getRequestDispatcher("/front-end/carte/showCarte2.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 				/***************************3.查詢完成,準備轉交***********************************/
 				req.setAttribute("carteVO", carteVO);
-				String url = "/carte/showCarte2.jsp";
+				
+				if(carteVO == null) {
+					errorMsgs.add("尚未新增名片");
+					String url = "/front-end/carte/addCarte2.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
+					return;
+				}
+				
+				String url = "/front-end/carte/showCarte2.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				
@@ -138,7 +144,7 @@ public class CarteServlet extends HttpServlet {
 			} catch(Exception e){
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/carte/addCarte2.jsp");
+						.getRequestDispatcher("/front-end/carte/showCarte2.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -161,7 +167,7 @@ public class CarteServlet extends HttpServlet {
 								
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				req.setAttribute("carteVO", carteVO);
-				String url = "/carte/updateCarte.jsp";
+				String url = "/front-end/carte/updateCarte.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
@@ -169,7 +175,7 @@ public class CarteServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/carte/showCarte.jsp");
+						.getRequestDispatcher("/front-end/carte/showCarte.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -209,7 +215,7 @@ public class CarteServlet extends HttpServlet {
 				
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/carte/updateCarte.jsp");
+							.getRequestDispatcher("/front-end/carte/updateCarte.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -225,7 +231,7 @@ public class CarteServlet extends HttpServlet {
 				carteVO = carteSvc.updateCarte(memId, userName, userPic, userUpdate);// userStatus
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("carteVO", carteVO);
-				String url = "/carte/showCarte2.jsp";
+				String url = "/front-end/carte/showCarte2.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				/***************************其他可能的錯誤處理*************************************/	
@@ -233,10 +239,9 @@ public class CarteServlet extends HttpServlet {
 				e.printStackTrace();
 				errorMsgs.add("修改資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/carte/showCarte2.jsp");
+						.getRequestDispatcher("/front-end/carte/showCarte2.jsp");
 				failureView.forward(req, res);
 			}
 		}
 	}
-	
 }

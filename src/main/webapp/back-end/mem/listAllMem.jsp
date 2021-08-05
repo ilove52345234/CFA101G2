@@ -99,7 +99,7 @@
 			<td>${memVO.memStatus == 1 ? "啟用" : "未啟用" }</td>
 			<td><fmt:formatDate value="${memVO.memUpdate}" pattern="yyyy-MM-dd hh:mm:ss" /></td>
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/mem/mem.do" style="margin-bottom: 0px;">
 			     <input type="submit" value="修改">
 			     <input type="hidden" name="memId"  value="${memVO.memId}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>

@@ -33,6 +33,10 @@ public class ActDAO implements ActDAOInterface{
 
 	JDBCUtils jdbcUtils = new JDBCUtils();
 
+	private static final String UPDATE2 = "UPDATE ACTIVITY set  ACT_CATEGORY_ID=?, ACT_PROMOTION_ID=?, ACT_DESCRIPTION=?, ACT_START=?, ACT_END=?, ACT_STATUS=?, ACT_FEE=?, APPLICANTS=?, PART_START=?, PART_END=?, ACT_MAX_PART=?, ACT_ACT_MIN_PART=?  where ACT_ID=?";
+
+	private static final String INSERT_STMT2 = "INSERT INTO ACTIVITY (ACT_CATEGORY_ID,ACT_PROMOTION_ID,ACT_DESCRIPTION,ACT_START,ACT_END,ACT_STATUS,ACT_FEE, APPLICANTS, PART_START, PART_END, ACT_MAX_PART, ACT_ACT_MIN_PART) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
 
 	//SQL need to be overwritten;
 	private static final String INSERT_STMT = 
@@ -47,9 +51,57 @@ public class ActDAO implements ActDAOInterface{
 		"UPDATE ACTIVITY set  ACT_DESCRIPTION=?, ACT_STATUS=? where ACT_ID=?";
 	private static final String UPDATE_STATUS = 
 			"UPDATE ACTIVITY set ACT_STATUS=? where ACT_ID=?";
-	
-	
-	
+
+	@Override
+	public void insert2(ActVO actVO) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = jdbcUtils.getConnection();
+
+			pstmt = con.prepareStatement(INSERT_STMT2);
+
+			pstmt.setInt(1, actVO.getActCategoryId());
+			pstmt.setInt(2, actVO.getActPromotionId());
+			pstmt.setString(3, actVO.getActDescription());
+			pstmt.setTimestamp(4, actVO.getActStart());
+			pstmt.setTimestamp(5, actVO.getActEnd());
+			pstmt.setString(6, actVO.getActStatus());
+			pstmt.setInt(7, actVO.getActFee());
+			pstmt.setInt(8, actVO.getApplicants());
+			pstmt.setTimestamp(9, actVO.getPartStart());
+			pstmt.setTimestamp(10, actVO.getPartEnd());
+			pstmt.setInt(11, actVO.getActMaxPart());
+			pstmt.setInt(12, actVO.getActMinPart());
+
+			pstmt.executeUpdate();
+
+		}  catch (SQLException se) {
+			throw new RuntimeException("A database error occured while inserting. " + se.getMessage());
+
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
+
+
+
 	@Override
 	public void updateStatus(ActVO actVO) {
 
@@ -240,6 +292,56 @@ public class ActDAO implements ActDAOInterface{
 			}
 		}
 	}
+
+	@Override
+	public void update2(ActVO actVO) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = jdbcUtils.getConnection();
+			// con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE2);
+
+			pstmt.setInt(1, actVO.getActId());
+			pstmt.setInt(2, actVO.getActCategoryId());
+			pstmt.setInt(3, actVO.getActPromotionId());
+			pstmt.setString(4, actVO.getActDescription());
+			pstmt.setTimestamp(5, actVO.getActStart());
+			pstmt.setTimestamp(6, actVO.getActEnd());
+			pstmt.setString(7, actVO.getActStatus());
+			pstmt.setInt(8, actVO.getActFee());
+			pstmt.setInt(9, actVO.getApplicants());
+			pstmt.setTimestamp(10, actVO.getPartStart());
+			pstmt.setTimestamp(11, actVO.getPartEnd());
+			pstmt.setInt(12, actVO.getActMaxPart());
+			pstmt.setInt(13, actVO.getActMinPart());
+
+			pstmt.executeUpdate();
+
+		}  catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
+
 
 	@Override
 	public ActVO findByPrimaryKey(Integer actId) {

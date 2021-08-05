@@ -5,6 +5,8 @@
 <head>
 
 
+	<jsp:include page="/front-end/header.jsp"></jsp:include>
+
 	<title>島旅登入</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -36,7 +38,7 @@
 	
 	<div class="container-login100" style="background-image: url('images/backGround.png');">
 		<div class="wrap-login100 p-l-55 p-r-55 p-t-80 p-b-30">
-			<form class="login100-form validate-form" method="post" action="/CFA101G2/mem/mem.do" name="form1">
+			<form class="login100-form validate-form" method="post" action="/CFA101G2/front-end/mem/mem.do" name="form1">
 				
 				<span class="login100-form-title p-b-37">
 					登入

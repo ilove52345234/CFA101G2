@@ -10,6 +10,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<jsp:include page="/front-end/header.jsp"></jsp:include>
 <style>
 
 .box {
@@ -54,7 +55,7 @@
 
 	<div class="container-login100" style="background-image: url('images/backGround.png');">
 		<div class="wrap-login100-regist p-l-55 p-r-55 p-t-80 p-b-30">
-			<form class="login100-form validate-form" method="post" action="mem.do" name="form1">
+			<form id="form1" class="login100-form validate-form" method="post" action="/CFA101G2/front-end/mem/mem.do" name="form1">
 
 				<span class="login100-form-title p-b-37"> 註冊 </span>
 <div class='box'>
@@ -128,7 +129,7 @@
 	</ul>
 </c:if>
 				<div class="container-login100-form-btn">
-					<input type="hidden" name="memStatus" value="1" /><!-- test -->
+					<input type="hidden" name="memStatus" value="0" /><!-- test -->
 					<input type="hidden" name="memUpdate" /><!-- test -->
 					<input type="hidden" name="action" value="insert" /><!-- test -->
 					<button class="login100-form-btn">註冊</button>
@@ -186,5 +187,9 @@
            //minDate:               '-1970-01-01', // 去除今日(不含)之前
            //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
         });
+        
+
+
+      
 </script>
 </html>

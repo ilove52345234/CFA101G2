@@ -9,6 +9,7 @@
 %>
 <html lang="en">
 <head>
+<jsp:include page="/front-end/header.jsp"></jsp:include>
 <style>
 
 .box {
@@ -53,7 +54,7 @@
 
 	<div class="container-login100" style="background-image: url('images/backGround.png');">
 		<div class="wrap-login100-regist p-l-55 p-r-55 p-t-80 p-b-30">
-			<form class="login100-form validate-form" method="post" action="mem.do" name="form1">
+			<form class="login100-form validate-form" method="post" action="/CFA101G2/front-end/mem/mem.do" name="form1">
 				<span class="login100-form-title p-b-37">修改個人資料 </span>
 <div class='box'>
 			<div class='a'>帳號:
@@ -137,7 +138,7 @@
 			</form>
 
 				<div class="text-right">
-					<a href="<%=request.getContextPath()%>/front-end/frontEndPage.jsp" class="txt2 hov1">回首頁</a>
+<%-- 					<a href="<%=request.getContextPath()%>/front-end/frontEndPage.jsp" class="txt2 hov1">回首頁</a> --%>
 				</div>
 		</div>
 	</div>

@@ -27,6 +27,7 @@
             type="text/javascript"></script>
     <!-- 引入 layui.css -->
     <link rel="stylesheet" href="//unpkg.com/layui@2.6.8/dist/css/layui.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
 
     <!-- 引入 layui.js -->
     <script src="//unpkg.com/layui@2.6.8/dist/layui.js"></script>
@@ -220,6 +221,7 @@
 
 
         <a class="btn btn-primary" href="javascript:calendar();" id="delSelected">數量查詢</a>
+        <a class="btn btn-primary" href="javascript:addRoom();" id="delSelected">增加房間</a>
 
     </div>
     <div style="float: right;margin: 5px;">
@@ -424,7 +426,6 @@
 
         var url = "<%=request.getContextPath()%>/back-end/room/FullCalendar.html?RoomCategoryId=" + RoomCategoryId;
 
-
         layer.open({
             title: '房型編號:' + RoomCategoryId,
             type: 2,
@@ -436,6 +437,67 @@
 
 
         });
+
+    }
+
+    function addRoom() {
+        <%--document.open("<%=request.getContextPath()%>/back-end/room/addRoom.jsp?roomId=" + roomId, "", "height=250,width=850,left=65,top=157,resizable=yes,scrollbars=yes");--%>
+        var RoomCategoryId = $('#RoomCategoryId').val();
+
+        var url = "<%=request.getContextPath()%>/room/roomAddServlet?RoomCategoryId=" + RoomCategoryId;
+
+
+        Swal.fire({
+            title: '房型編號:'+RoomCategoryId,
+            input: 'text',
+            inputPlaceholder: '請輸入房間數量',
+            inputAttributes: {
+                autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: '確定新增',
+            showLoaderOnConfirm: true,
+            preConfirm: (login) => {
+                // alert(url+"&amount="+login)
+                return fetch(url+"&amount="+login)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(response.statusText)
+                        }
+                        return response.json()
+                    })
+                    .catch(error => {
+                        Swal.showValidationMessage(
+                            `新增失敗: ${error}`
+                        )
+                    })
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        }).then((result) => {
+            alert(result)
+            if (result.flag) {
+                Swal.fire({
+                    title: '新增成功'
+                    // imageUrl: result.value.avatar_url
+                })
+            }else {
+                Swal.showValidationMessage(
+                    `新增失敗: ${result.errorMsg}`
+                )
+            }
+        })
+
+        // layer.open({
+        //     title: '房型編號:' + RoomCategoryId,
+        //     type: 2,
+        //     content: url,
+        //     shade: 0.2,
+        //     shadeClose: true,
+        //     maxmin: true,
+        //     area: ['800px', '600px'],
+        //
+        //
+        // });
 
     }
 

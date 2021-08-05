@@ -8,8 +8,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
+import com.act.model.ActVO;
 import com.actphoto.model.ActPhotoDAO;
 import com.actphoto.model.ActPhotoService;
 import com.actphoto.model.ActPhotoVO;
@@ -42,6 +45,8 @@ public class ActTypeDAO implements ActTypeDAOInterface {
 
 	JDBCUtils jdbcUtils = new JDBCUtils();
 
+
+	private static final String GET_Act_ByActCategoryId_STMT = "SELECT ACT_ID, ACT_CATEGORY_ID,ACT_PROMOTION_ID,ACT_DESCRIPTION,ACT_START,ACT_END,ACT_STATUS,ACT_FEE, APPLICANTS, PART_START, PART_END, ACT_MAX_PART, ACT_ACT_MIN_PART FROM ACTIVITY where ACT_CATEGORY_ID = ? order by ACT_ID";
 
 
 	//SQL need to be overwritten;
@@ -215,14 +220,75 @@ stmt.executeUpdate("set auto_increment_increment=1;"); //自增主鍵-遞增
 		}
 
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+	@Override
+	public Set<ActVO> getActByActCategoryId(Integer actCategoryId) {
+		Set<ActVO> set = new LinkedHashSet<ActVO>();
+		ActVO actVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = jdbcUtils.getConnection();
+
+			pstmt = con.prepareStatement(GET_Act_ByActCategoryId_STMT);
+			pstmt.setInt(1, actCategoryId);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				actVO = new ActVO();
+				actVO.setActId(rs.getInt("ACT_ID"));
+				actVO.setActCategoryId(rs.getInt("ACT_CATEGORY_ID"));
+				actVO.setActPromotionId(rs.getInt("ACT_PROMOTION_ID"));
+				actVO.setActDescription(rs.getString("ACT_DESCRIPTION"));
+				actVO.setActStart(rs.getTimestamp("ACT_START"));
+				actVO.setActEnd(rs.getTimestamp("ACT_END"));
+				actVO.setActStatus(rs.getString("ACT_STATUS"));
+				actVO.setActFee(rs.getInt("ACT_FEE"));
+				actVO.setApplicants(rs.getInt("APPLICANTS"));
+				actVO.setPartStart(rs.getTimestamp("PART_START"));
+				actVO.setPartEnd(rs.getTimestamp("PART_END"));
+				actVO.setActMaxPart(rs.getInt("ACT_MAX_PART"));
+				actVO.setActMinPart(rs.getInt("ACT_ACT_MIN_PART"));
+				set.add(actVO);
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return set;
+	}
+
+
+
+
+
 	@Override
 	public void insert(ActTypeVO actTypeVO) {
 		

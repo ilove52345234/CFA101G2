@@ -80,7 +80,7 @@
 </c:if>
 
 
-<FORM METHOD="post" ACTION="mem.do" name="form1">
+<FORM METHOD="post" ACTION="/CFA101G2/front-end/mem/mem.do" name="form1">
 <table>
 	<tr>
 		<td>會員編號:<font color=red><b>*</b></font></td>

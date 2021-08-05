@@ -53,7 +53,7 @@
 
 	<div class="container-login100" style="background-image: url('images/backGround.png');">
 		<div class="wrap-login100-regist p-l-55 p-r-55 p-t-80 p-b-30">
-			<form class="login100-form validate-form" method="post" action="mem.do" name="form1">
+			<form class="login100-form validate-form" method="post" action="/CFA101G2/front-end/mem/mem.do" name="form1">
 				<span class="login100-form-title p-b-37"> 個人資料 </span>
 <div class='box'>
 			<div class='a'>帳號:
@@ -122,7 +122,7 @@
 
 				
 <div class="container-login100-form-btn">
-	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do" style="margin-bottom: 0px;">
+	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/mem/mem.do" style="margin-bottom: 0px;">
 	   <input type="hidden" name="action" value="getOne_For_Update2">
     	<button class="login100-form-btn">修改</button>
     </FORM>

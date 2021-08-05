@@ -12,9 +12,38 @@ public class ShopOrderDetailVO implements java.io.Serializable {
 	private Integer itemPromotionId;
 	private Integer itemAmounts;
 	private Integer itemFinalAmount;
-	// JOIN 商品訂單
+	private Integer orderQuantity;
+
+	@Override
+	public String toString() {
+		return "ShopOrderDetailVO{" +
+				"itemOrderId=" + itemOrderId +
+				", itemId=" + itemId +
+				", itemQuantity=" + itemQuantity +
+				", itemPromotionId=" + itemPromotionId +
+				", itemAmounts=" + itemAmounts +
+				", itemFinalAmount=" + itemFinalAmount +
+				", orderQuantity=" + orderQuantity +
+				", shopOrderVO=" + shopOrderVO +
+				", shopVO=" + shopVO +
+				'}';
+	}
+
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
+	}
+
+	public Integer getOrderQuantity() {
+		return orderQuantity;
+	}
+
+	public void setOrderQuantity(Integer orderQuantity) {
+		this.orderQuantity = orderQuantity;
+	}
+
+	// JOIN
 	private ShopOrderVO shopOrderVO;
-	// JOIN 商品
+	// JOIN
 	private ShopVO shopVO;
 	
 	public Integer getItemOrderId() {
@@ -65,12 +94,5 @@ public class ShopOrderDetailVO implements java.io.Serializable {
 	public void setShopVO(ShopVO shopVO) {
 		this.shopVO = shopVO;
 	}
-	
-	@Override
-	public String toString() {
-		return "ShopOrderDetailVO [itemOrderId=" + itemOrderId + ", itemId=" + itemId + ", itemQuantity=" + itemQuantity
-				+ ", itemPromotionId=" + itemPromotionId + ", itemAmounts=" + itemAmounts + ", itemFinalAmount="
-				+ itemFinalAmount + ", shopOrderVO=" + shopOrderVO + ", shopVO=" + shopVO + "]";
-	}
-	
+
 }

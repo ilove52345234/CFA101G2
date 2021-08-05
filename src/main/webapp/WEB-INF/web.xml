@@ -13,40 +13,6 @@
         <welcome-file>default.jsp</welcome-file>
     </welcome-file-list>
 
-    <!-- 會員 -->
-    <servlet>
-        <servlet-name>MemServlet</servlet-name>
-        <servlet-class>com.mem.controller.MemServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>MemServlet</servlet-name>
-        <url-pattern>/mem/mem.do</url-pattern>
-    </servlet-mapping>
-
-    <!-- FILTER -->
-    <filter>
-        <filter-name>LoginFilter</filter-name>
-        <filter-class>com.login.filter.LoginFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>LoginFilter</filter-name>
-        <!-- 		<url-pattern>/mem/update_mem_input.jsp</url-pattern> -->
-        <url-pattern>/front-end/mem/memData.jsp</url-pattern>
-        <!-- 		<url-pattern>/mem/testLoginSuccess.jsp</url-pattern> -->
-        <url-pattern>/front-end/carte/showCarte2.jsp</url-pattern>
-        <url-pattern>/front-end/carte/addCarte2.jsp</url-pattern>
-        <url-pattern>/front-end/carte/updateCarte.jsp</url-pattern>
-        <url-pattern>/rmorder/RmorderServlet</url-pattern>
-        <!--     這樣設濾器路徑可以防止進入網頁後 整個頁面都被濾器影響 -->
-        <url-pattern>/rmorder/RmorderFromCartServlet</url-pattern>
-        <dispatcher>REQUEST</dispatcher>
-        <dispatcher>FORWARD</dispatcher>
-        <dispatcher>INCLUDE</dispatcher>
-        <dispatcher>ERROR</dispatcher>
-        <dispatcher>ASYNC</dispatcher>
-    </filter-mapping>
-
-
     <!--管理員登入驗證-->
     <filter>
         <filter-name>EmpLoginFilter</filter-name>
@@ -222,6 +188,40 @@
         <dispatcher>ASYNC</dispatcher>
     </filter-mapping>
 
+    <!-- 會員 -->
+    <servlet>
+        <servlet-name>MemServlet</servlet-name>
+        <servlet-class>com.mem.controller.MemServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MemServlet</servlet-name>
+        <url-pattern>/front-end/mem/mem.do</url-pattern>
+    </servlet-mapping>
+
+    <!-- FILTER -->
+    <filter>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>com.login.filter.LoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <!-- 		<url-pattern>/mem/update_mem_input.jsp</url-pattern> -->
+        <url-pattern>/front-end/mem/memData.jsp</url-pattern>
+        <!-- 		<url-pattern>/mem/testLoginSuccess.jsp</url-pattern> -->
+        <url-pattern>/front-end/carte/showCarte2.jsp</url-pattern>
+        <url-pattern>/front-end/carte/addCarte2.jsp</url-pattern>
+        <url-pattern>/front-end/carte/updateCarte.jsp</url-pattern>
+        <url-pattern>/front-end/shop/shoppingCart.jsp</url-pattern>
+        <url-pattern>/front-end/retype/roomCarts.jsp</url-pattern>
+        <url-pattern>/rmorder/RmorderServlet</url-pattern>
+        <url-pattern>/rmorder/RmorderFromCartServlet</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+        <dispatcher>ASYNC</dispatcher>
+    </filter-mapping>
+
     <!-- 個人名片 -->
     <servlet>
         <servlet-name>CarteServlet</servlet-name>
@@ -229,7 +229,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>CarteServlet</servlet-name>
-        <url-pattern>/carte/carte.do</url-pattern>
+        <url-pattern>/front-end/carte/carte.do</url-pattern>
     </servlet-mapping>
 
     <!-- 最新消息 -->

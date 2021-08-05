@@ -47,7 +47,7 @@
   
   
   <li>
-    <FORM METHOD="post" ACTION="/CFA101G2/mem/mem.do" >
+    <FORM METHOD="post" ACTION="/CFA101G2/front-end/mem/mem.do" >
         <b>輸入會員編號 (如1):</b>
         <input type="text" name="memId">
         <input type="hidden" name="action" value="getOne_For_Display">
@@ -58,7 +58,7 @@
   <jsp:useBean id="memSvc" scope="page" class="com.mem.model.MemService" />
    
   <li>
-     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do" >
+     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/mem/mem.do" >
        <b>選擇會員編號:</b>
        <select size="1" name="memId">
          <c:forEach var="memVO" items="${memSvc.all}" > 
@@ -71,7 +71,7 @@
   </li>
   
   <li>
-     <FORM METHOD="post" ACTION="/CFA101G2/mem/mem.do" >
+     <FORM METHOD="post" ACTION="/CFA101G2/front-end/mem/mem.do" >
        <b>選擇會員姓名:</b>
        <select size="1" name="memId">
          <c:forEach var="memVO" items="${memSvc.all}" > 

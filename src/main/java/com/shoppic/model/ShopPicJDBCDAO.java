@@ -19,6 +19,7 @@ public class ShopPicJDBCDAO implements ShopPicDAO_interface {
 
 	JDBCUtils jdbcUtils = new JDBCUtils();
 
+	private static final String getOneForPDid = "SELECT * FROM SHOP_PIC WHERE ITEM_ID = ?";
 
 	private static final String INSERT_STMT = "INSERT INTO SHOP_PIC (ITEM_ID,ITEM_PHOTO) VALUE (?,?)";
 	private static final String GET_ALL_STMT = "SELECT * FROM SHOP_PIC ORDER BY ITEM_PHOTO_ID";
@@ -227,5 +228,43 @@ public class ShopPicJDBCDAO implements ShopPicDAO_interface {
 
 		return list;
 	}
+	public byte[] getOnePic(Integer pdid) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		byte[] img = null;
+		System.out.println(pdid);
+		try {
+			con = jdbcUtils.getConnection();
+			pstmt = con.prepareStatement(getOneForPDid);
+			pstmt.setInt(1, pdid);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				img = rs.getBytes("ITEM_PHOTO");
+			}
+		}  catch (SQLException se) {
+			throw new RuntimeException("資料庫發生錯誤" + se.getMessage());
+			// 關閉JDBC的資源
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);// System.err API預設方法
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return img;
+	}
+
+
 
 }

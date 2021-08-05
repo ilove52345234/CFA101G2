@@ -1,5 +1,8 @@
 package com.shoppic.model;
 
+import java.util.Base64;
+import java.util.List;
+
 public class ShopPicService {
 
 	private ShopPicDAO_interface dao;
@@ -35,4 +38,37 @@ public class ShopPicService {
 		return shopPicVO;
 
 	}
+
+	public void deleteShopPic(Integer itemPhotoId) {
+		dao.delete(itemPhotoId);
+	}
+
+	public String getOneShopPic(Integer pdid) {
+		byte[] img =  dao.getOnePic(pdid);//photodataId
+		System.out.println(pdid);
+		System.out.println(img);
+		if(img != null) {
+			String data = Base64.getEncoder().encodeToString(img);
+
+			System.out.println(data);
+			return data;
+		} else {
+			return "";
+		}
+	}
+
+	public List<ShopPicVO> getAll() {
+		return dao.getAll();
+
+	}
+
+	// 鬼哥教的 將ShopPicVO中的itemPhoto陣列化作字串才能輸出
+	public String out(byte[] itemPhoto) {
+		String data;
+		data = Base64.getEncoder().encodeToString(itemPhoto);
+		return data;
+	}
+
+
+
 }

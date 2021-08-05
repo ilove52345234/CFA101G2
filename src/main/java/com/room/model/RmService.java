@@ -15,6 +15,17 @@ public class RmService {
         dao = new RmJDBCDAO();
     }
 
+
+    public RmVO addRmVO2( Integer RoomCategoryId) {
+        RmVO rmVO = new RmVO();
+        Byte i = 0 ;
+        rmVO.setRoomCategoryId(RoomCategoryId);
+        rmVO.setRoomCheckStatus(i);
+        rmVO.setRoomSaleStatus(i);
+        dao.insert2(rmVO);
+        return rmVO;
+    }
+
     public RmVO addRmVO(Integer roomCategoryId, Byte roomCheckStatus, Byte roomSaleStatus, String roomInformation) {
         RmVO rmVO = new RmVO();
         rmVO.setRoomCategoryId(roomCategoryId);
@@ -48,6 +59,10 @@ public class RmService {
 
     public RmVO getOneRm(Integer roomId) {
         return dao.findByPrimaryKey(roomId);
+    }
+    public Integer getOneRmByRoomCategoryId(Integer roomCategoryId) {
+        Integer allBy = dao.getAllBy(roomCategoryId);
+        return allBy;
     }
 
     public List<RmVO> getAll() {

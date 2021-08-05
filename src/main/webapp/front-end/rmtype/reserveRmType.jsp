@@ -85,7 +85,6 @@
 			</div>
 		</div>
 	</div>
-
 	<!--內容區===================================================================-->
 	<div class="container content">
 		<!--功能及麵包屑==========================================-->
@@ -97,8 +96,6 @@
 		</div>
 
 		<%--    <jsp:useBean id="rtSvc" scope="page" class="com.rmtype.model.RtService" /> --%>
-
-
 		<div class="row">
 			<div class="col-md-12 col-sm-12">
 				<div class="avt_title">
@@ -109,8 +106,6 @@
 				</div>
 			</div>
 		</div>
-
-
 		<div class="avt_detail">
 			<div class="row">
 				<div class="col-md-6 col-sm-12">
@@ -126,13 +121,12 @@
 					<p>
 						&nbsp;<label>房間費用 :</label>&nbsp;${rtVO.roomPrice}
 					</p>
-					<p style="color: red">
-						&nbsp;<label>房間剩餘數量 :</label>&nbsp;${rtVO.roomTypeAmount}&nbsp;間
+<%--					<p style="color: red">--%>
+<%--						&nbsp;<label>房間剩餘數量 :</label>&nbsp;${rtVO.roomTypeAmount}&nbsp;間--%>
 
-					</p>
+<%--					</p>--%>
 					<br>
 					<p>
-
 						<%-- 錯誤表列 --%>
 						<%
 							List<String> errorMsgs = (List<String>) request.getAttribute("errorMsgs");
@@ -140,6 +134,7 @@
 						%>
 						<font style="color: red">輸入錯誤:</font>
 					<ul>
+
 						<%
 							for (int i = 0; i < errorMsgs.size(); i++) {
 						%>

@@ -19,7 +19,7 @@ import java.sql.Statement;
 
 @WebServlet("/actphoto/GetFirstActPhotoServlet")
 public class GetFirstActPhotoServlet extends HttpServlet {
-       
+
 
 	private static final long serialVersionUID = 1L;
 
@@ -91,6 +91,10 @@ public class GetFirstActPhotoServlet extends HttpServlet {
 			in.close();
 			   e.printStackTrace();
 		}
-	}//end of if
+			finally {
+				jdbcUtils.close(null ,con);
+			}
+		}
+	}
 	
-}
+

@@ -15,5 +15,6 @@ public interface ShopPicDAO_interface {
 	
 	// 把 Item_Photo_Id 放進去 <ShopPic> 這個集合
 	public List<ShopPicVO> getAll();
+	public byte[] getOnePic(Integer pdid);
 	
 }

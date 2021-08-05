@@ -397,23 +397,23 @@ iframe {
   background-color: #fff;
 }
 
-.true-validate::after {
-  content: "\f269";
-  font-family: Material-Design-Iconic-Font;
-  font-size: 15px;
-  color: #57b846;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  height: 62px;
-  top: 0px;
-  right: 23px;
-}
+/* .true-validate::after { */
+/*   content: "\f269"; */
+/*   font-family: Material-Design-Iconic-Font; */
+/*   font-size: 15px; */
+/*   color: #57b846; */
+/*   display: -webkit-box; */
+/*   display: -webkit-flex; */
+/*   display: -moz-box; */
+/*   display: -ms-flexbox; */
+/*   display: flex; */
+/*   align-items: center; */
+/*   justify-content: center; */
+/*   position: absolute; */
+/*   height: 62px; */
+/*   top: 0px; */
+/*   right: 23px; */
+/* } */
 
 
 

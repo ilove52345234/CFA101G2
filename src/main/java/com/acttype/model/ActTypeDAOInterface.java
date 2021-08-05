@@ -2,6 +2,7 @@ package com.acttype.model;
 
 import java.util.*;
 
+import com.act.model.ActVO;
 import com.actphoto.model.ActPhotoVO;
 
 public interface ActTypeDAOInterface {
@@ -11,7 +12,7 @@ public interface ActTypeDAOInterface {
 		public ActTypeVO findByPrimaryKey(Integer actCategoryId);
 		public List<ActTypeVO> getAll();
 		public void insertWithActPhotos(ActTypeVO actTypeVO, List<ActPhotoVO> list);
-		
-		public void inserComment(ActTypeVO actTypeVO);
+	public Set<ActVO> getActByActCategoryId(Integer actCategoryId);
+	public void inserComment(ActTypeVO actTypeVO);
 		public void updateComment(ActTypeVO actTypeVO);
 }

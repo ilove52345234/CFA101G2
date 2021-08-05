@@ -51,9 +51,13 @@
 
             /* 59 */       RtService rtService = new RtService();
 
-            /* 62 */       rtService.addRoomTypeAndPic(rtVO, list);
+            /* 62 */
+                 RtVO rtVO1 = rtService.addRoomTypeAndPic(rtVO, list);
 
-            /* 65 */       System.out.println("順利執行完畢");
+                 System.out.println(rtVO1);
+
+
+                 /* 65 */       System.out.println("順利執行完畢");
             /* 66 */       info.flag = true;
                  }
         /* 68 */     catch (Exception e) {

@@ -1,5 +1,8 @@
 package com.shoporder.model;
 
+import com.shoporderdetail.model.ShopOrderDetailVO;
+
+import java.sql.Connection;
 import java.util.List;
 
 public class ShopOrderService {
@@ -68,5 +71,46 @@ public class ShopOrderService {
 		shopOrderVO.setEndDate(endDate);
 		return dao.getIntervalOrder(shopOrderVO);
 	}
+
+
+	public Integer insertWithShopOrderDetail(ShopOrderVO shopOrderVO,List<ShopOrderDetailVO> list){
+		return dao.insertWithShopOrderDetail(shopOrderVO,list);
+	}
+	//進行透過購物車達成訂單生成並且減去庫存
+	public void confirmShopOrder(Integer shippingStatus,Integer itemOrderId) {
+		dao.confirmShopOrder(shippingStatus, itemOrderId);
+	}
+	//確認訂單
+	public ShopOrderVO findByPK(Integer itemOrderId ) {
+		return dao.findByPK(itemOrderId);
+	}
+
+	//用訂單編號查訂單
+	public List<ShopOrderDetailVO> getShopOrderDetailByItemOrderId(Integer itemOrderId){
+		return dao.getShopOrderDetailByItemOrderId(itemOrderId);
+	}
+	//用訂單編號找訂單明細
+	public void reduceStock(Integer itemId,Integer orderQuantity,Connection con) {
+		dao.reduceStock(itemId, orderQuantity, con);
+	}
+	//減去庫存
+	public void addStock(Integer itemId, Integer orderQuantity, Connection con) {
+		dao.addStock(itemId, orderQuantity, con);
+	}
+	//加回庫存
+	public void cancelShopOrder(Integer shippingStatus,Integer itemOrderId) {
+		dao.cancelShopOrder(shippingStatus, itemOrderId);
+	}
+	//取消訂單
+
+	public ShopOrderVO getOneOrder(Integer itemOrderId) {
+		return dao.findByPK(itemOrderId);
+	}
+
+	public List<ShopOrderVO> listAllByMemId(Integer memId){
+		return dao.listAllByMemId(memId);
+	}
+
+
 	
 }

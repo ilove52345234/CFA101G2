@@ -9,4 +9,5 @@ public interface MemJDBCDAO_interface {
 	public List<MemVO> getAll();
     public MemVO findByPrimaryKey(Integer memVO);
     public MemVO findByPrimaryKeyByMemAcc(String memAccount);
+	public void updateStatus(MemVO memVO);
 }

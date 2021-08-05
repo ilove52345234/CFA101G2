@@ -3,7 +3,9 @@ package com.acttype.model;
 import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
+import com.act.model.ActVO;
 import com.actphoto.model.*;
 
 
@@ -115,8 +117,12 @@ public class ActTypeService {
 		return dao.getAll();
 		
 	}
-	
-	
+
+	public Set<ActVO> getActByActCategoryId(Integer actCategoryId) {
+		return dao.getActByActCategoryId(actCategoryId);
+	}
+
+
 }
 
 

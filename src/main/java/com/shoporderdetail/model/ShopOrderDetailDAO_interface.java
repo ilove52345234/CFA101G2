@@ -1,5 +1,6 @@
 package com.shoporderdetail.model;
 
+import java.sql.Connection;
 import java.util.List;
 
 public interface ShopOrderDetailDAO_interface {
@@ -17,5 +18,5 @@ public interface ShopOrderDetailDAO_interface {
 	public List<ShopOrderDetailVO> getAll();
 	
 	public List<ShopOrderDetailVO> shopJoinDetail(Integer itemId);
-	
+	public void insert2(ShopOrderDetailVO shopOrderDetailVO, Connection con);
 }

@@ -4,7 +4,7 @@
 	background: url(../images/wVBmMJnq95.jpg) no-repeat center;
 	background-size: 100% 780px;
 	overflow: hidden;
-	filter: brightness(90%);
+	/*filter: brightness(90%);*/
 }
 .rg_layout .rg_form{
 	width: 886px;

@@ -22,7 +22,17 @@ public class MemService {
 	public MemService() {
 		jdbcdao = new MemJDBCDAO();
 	}
-	
+
+
+	public MemVO updateMem(String memAccount) {
+
+		MemVO memVO = new MemVO();
+		memVO.setMemAccount(memAccount);
+		jdbcdao.updateStatus(memVO);
+		return memVO;
+	}
+
+
 	//註冊會員
 	public MemVO addMem(String memAccount, String memName, String memPassword, String memAddress, 
 			String memPhone, String memUid, String memEmail, String memSex, Date memDob, Integer memStatus, Timestamp memUpdate) {

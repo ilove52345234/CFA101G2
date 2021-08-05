@@ -20,6 +20,8 @@ public class MemJDBCDAO implements MemJDBCDAO_interface{
 
 	JDBCUtils jdbcUtils = new JDBCUtils();
 
+	private static final String UPDATE_STATUS =
+			"UPDATE MEM set MEM_STATUS = 1 where MEM_ACCOUNT = ?";
 
 	private static final String INSERT_STMT = 
 			"INSERT INTO MEM (MEM_ACCOUNT, MEM_NAME, MEM_PASSWORD, MEM_ADDRESS, MEM_PHONE, MEM_UID, MEM_EMAIL, MEM_SEX, MEM_DOB, MEM_STATUS, MEM_UPDATE) values(?,?,?,?,?,?,?,?,?,?,?)";
@@ -241,6 +243,41 @@ public class MemJDBCDAO implements MemJDBCDAO_interface{
 			pstmt.setTimestamp(11, memVO.getMemUpdate());
 			pstmt.setInt(12, memVO.getMemId());
 			
+			pstmt.executeUpdate();
+
+		}  catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
+	@Override
+	public void updateStatus(MemVO memVO) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = jdbcUtils.getConnection();
+			pstmt = con.prepareStatement(UPDATE_STATUS);
+
+			pstmt.setString(1, memVO.getMemAccount());
 			pstmt.executeUpdate();
 
 		}  catch (SQLException se) {

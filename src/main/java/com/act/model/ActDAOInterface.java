@@ -13,7 +13,8 @@ public interface ActDAOInterface {
 	public List<ActVO> complexSearch(Map<String, String[]> condition);
 	public void updateStatus(ActVO actVO);
 
-
+	public void insert2(ActVO actVO);
+	public void update2(ActVO actVO);
 	
 	
 }

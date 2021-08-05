@@ -2,6 +2,8 @@ package com.shop.model;
 
 import com.shoppic.model.ShopPicVO;
 
+import java.util.Objects;
+
 public class ShopVO implements java.io.Serializable {
 
 	private static final long serialVersionUID = 4007142691851599904L;
@@ -17,7 +19,63 @@ public class ShopVO implements java.io.Serializable {
 	// JOIN 商品圖片
 	private ShopPicVO shopPicVO;
 	private String shopPicSrc;
-	
+	private Integer orderQuantity; // 用來暫存購物車的購買商品數量
+
+	@Override
+	public String toString() {
+		return "ShopVO{" +
+				"itemId=" + itemId +
+				", itemCategoryId=" + itemCategoryId +
+				", itemDescribtion='" + itemDescribtion + '\'' +
+				", itemFee=" + itemFee +
+				", itemName='" + itemName + '\'' +
+				", itemQuantity=" + itemQuantity +
+				", itemStatus=" + itemStatus +
+				", commentNumber=" + commentNumber +
+				", commentTotalScore=" + commentTotalScore +
+				", shopPicVO=" + shopPicVO +
+				", shopPicSrc='" + shopPicSrc + '\'' +
+				", orderQuantity=" + orderQuantity +
+				'}';
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((itemName == null) ? 0 : itemName.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ShopVO other = (ShopVO) obj;
+		if (itemName == null) {
+			if (other.itemName != null)
+				return false;
+		} else if (!itemName.equals(other.itemName))
+			return false;
+		return true;
+	}
+
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
+	}
+
+	public Integer getOrderQuantity() {
+		return orderQuantity;
+	}
+
+	public void setOrderQuantity(Integer orderQuantity) {
+		this.orderQuantity = orderQuantity;
+	}
+
 	public Integer getItemId() {
 		return itemId;
 	}
@@ -108,12 +166,4 @@ public class ShopVO implements java.io.Serializable {
 		this.shopPicSrc = shopPicSrc;
 	}
 
-	@Override
-	public String toString() {
-		return "ShopVO [itemId=" + itemId + ", itemCategoryId=" + itemCategoryId + ", itemDescribtion="
-				+ itemDescribtion + ", itemFee=" + itemFee + ", itemName=" + itemName + ", itemQuantity=" + itemQuantity
-				+ ", itemStatus=" + itemStatus + ", commentNumber=" + commentNumber + ", commentTotalScore="
-				+ commentTotalScore + ", shopPicVO=" + shopPicVO + ", shopPicSrc=" + shopPicSrc + "]";
-	}
-	
 }
