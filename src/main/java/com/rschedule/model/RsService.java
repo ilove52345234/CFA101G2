@@ -1,6 +1,7 @@
 package com.rschedule.model;
 
 import com.rmorderlist.model.RmolVO;
+import com.room.model.RmService;
 
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -10,6 +11,7 @@ import java.util.List;
 public class RsService {
 
     private RsDAO_interface dao;
+    RmService rmService = new RmService();
 
     public RsService() {
         dao = new RsJDBCDAO();
@@ -81,36 +83,42 @@ public class RsService {
         }
     }
 
-    public List<RsVO> getAllValidAmount() {
-        List<RsVO> list = new ArrayList<RsVO>();
-        List<RsVO> all = dao.getAll();
-        for (RsVO rsVO : all) {
-            Integer roomCheckOut = rsVO.getRoomCheckOut();
-            Integer roomCheckIn = rsVO.getRoomCheckIn();
-            Integer roomRsvBooked = rsVO.getRoomRsvBooked();
-            Integer roomAmount = rsVO.getRoomAmount();
-            //總數量  - (入住數量 + 未離店數量 ) + 當天退房數量
-            int i = roomAmount - (roomCheckIn + roomRsvBooked) + roomCheckOut;
-            if (i >= roomAmount) {
-                //如果超出最大數量
-                rsVO.setRoomValidAmount(roomAmount);
-            } else {
-                //設定有效數量
-                rsVO.setRoomValidAmount(i);
-            }
-            list.add(rsVO);
-        }
-        return list;
-    }
+
+//    public List<RsVO> getAllValidAmount() {
+//        List<RsVO> list = new ArrayList<RsVO>();
+//        List<RsVO> all = dao.getAll();
+//        for (RsVO rsVO : all) {
+//            Integer roomCheckOut = rsVO.getRoomCheckOut();
+//            Integer roomCheckIn = rsVO.getRoomCheckIn();
+//            Integer roomRsvBooked = rsVO.getRoomRsvBooked();
+//            Integer roomAmount = rsVO.getRoomAmount();
+//            //總數量  - (入住數量 + 未離店數量 ) + 當天退房數量
+//            int i = roomAmount - (roomCheckIn + roomRsvBooked) + roomCheckOut;
+//            if (i >= roomAmount) {
+//                //如果超出最大數量
+//                rsVO.setRoomValidAmount(roomAmount);
+//            } else {
+//                //設定有效數量
+//                rsVO.setRoomValidAmount(i);
+//            }
+//            list.add(rsVO);
+//        }
+//        return list;
+//    }
 
     public List<RsVO> getAllByRoomCategoryId( Integer RoomCategoryId) {
         List<RsVO> list = new ArrayList<RsVO>();
+
         List<RsVO> all = dao.getAllByRoomCategoryId(RoomCategoryId);
+        int rm = rmService.getOneRmByRoomCategoryId(RoomCategoryId);
+
         for (RsVO rsVO : all) {
+
             Integer roomCheckOut = rsVO.getRoomCheckOut();
             Integer roomCheckIn = rsVO.getRoomCheckIn();
             Integer roomRsvBooked = rsVO.getRoomRsvBooked();
-            Integer roomAmount = rsVO.getRoomAmount();
+//            Integer roomAmount = rsVO.getRoomAmount();
+            Integer roomAmount = rm;
             //總數量  - (入住數量 + 未離店數量 ) + 當天退房數量
             int i = roomAmount - (roomCheckIn + roomRsvBooked) + roomCheckOut;
             if (i >= roomAmount) {
@@ -129,11 +137,13 @@ public class RsService {
     public List<RsVO> getOneValidAmount(Integer RoomCategoryId,Date CheckInDate,Date CheckOutDate) {
         List<RsVO> list = new ArrayList<RsVO>();
         List<RsVO> oneInterval = dao.getOneInterval(RoomCategoryId, CheckInDate, CheckOutDate);
+        int rm = rmService.getOneRmByRoomCategoryId(RoomCategoryId);
         for (RsVO rsVO : oneInterval) {
             Integer roomCheckOut = rsVO.getRoomCheckOut();
             Integer roomCheckIn = rsVO.getRoomCheckIn();
             Integer roomRsvBooked = rsVO.getRoomRsvBooked();
-            Integer roomAmount = rsVO.getRoomAmount();
+//            Integer roomAmount = rsVO.getRoomAmount();
+            Integer roomAmount = rm;
             //總數量  - (入住數量 + 未離店數量 ) + 當天退房數量
             int i = roomAmount - (roomCheckIn + roomRsvBooked) + roomCheckOut;
             if (i >= roomAmount) {

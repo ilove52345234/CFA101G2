@@ -474,16 +474,20 @@
             },
             allowOutsideClick: () => !Swal.isLoading()
         }).then((result) => {
-            alert(result)
-            if (result.flag) {
+            if (result.value.flag) {
                 Swal.fire({
-                    title: '新增成功'
-                    // imageUrl: result.value.avatar_url
-                })
+                    title: '新增成功',
+                    text: "已經增加房間數量",
+                    type: "success",
+                }).then(function() {
+            location.reload(true);
+        });
             }else {
-                Swal.showValidationMessage(
-                    `新增失敗: ${result.errorMsg}`
-                )
+                Swal.fire({
+                    title: '新增失敗',
+                    text: '超過房型最大數量',
+                    type: 'error'
+                });
             }
         })
 

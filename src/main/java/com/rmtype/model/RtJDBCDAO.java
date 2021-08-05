@@ -4,6 +4,7 @@ package com.rmtype.model;
 
 import com.rmtypepic.model.RtpService;
 import com.utils.Base64VO;
+import com.utils.DateUtils;
 import com.utils.JDBCUtils;
 
 import java.sql.Connection;
@@ -49,6 +50,61 @@ public class RtJDBCDAO implements RtDAO_interface {
 
 
     private static final String UPDATE_NORMAL = "UPDATE ROOM_TYPE set ROOM_TYPE_AMOUNT=?, ROOM_TYPE_CONTENT=?, ROOM_SALE_STATUS=?, ROOM_NAME=?, ROOM_PRICE=?  where ROOM_CATEGORY_ID = ?";
+    private static final String CALL_BatchInsert= "CALL BatchInsert(?, ?, ?, ?, ?)";
+
+//1. 每次增加天數
+//2. 起始日期
+//3. 房間ID
+//4. 增加幾次
+//5. 房間數量
+
+    @Override
+    public void updateCount(Integer inint,
+                            String date,
+                            Integer rtpid,
+                            Integer loop,
+                            Integer amount,Connection con) {
+        PreparedStatement pstmt = null;
+        try {
+            pstmt  = con.prepareStatement(CALL_BatchInsert);
+
+            pstmt.setInt(1,inint);
+            pstmt.setString(2,date);
+            pstmt.setInt(3,rtpid);
+            pstmt.setInt(4,loop);
+            pstmt.setInt(5,amount);
+
+            int i = pstmt.executeUpdate();
+            System.out.println("新增資料筆數:"+i);
+
+        }catch (SQLException se) {
+
+            if (con != null) {
+                try {
+                    System.err.print("交易中失敗 ");
+                    System.err.println("rolled back由-Rt");
+                    con.rollback();
+                } catch (SQLException excep) {
+                    throw new RuntimeException("rollback 失敗. " + excep.getMessage());
+                }
+            }
+            throw new RuntimeException("發生錯誤. " + se.getMessage());
+        } finally {
+            if (pstmt != null) {
+
+                try {
+                    /* 291 */
+                    pstmt.close();
+                    /* 292 */
+                } catch (SQLException se) {
+                    /* 293 */
+                    se.printStackTrace(System.err);
+
+                }
+
+            }
+        }
+    }
 
 
     public void insert(RtVO rtVO) {
@@ -554,85 +610,66 @@ public class RtJDBCDAO implements RtDAO_interface {
 
             con = jdbcUtils.getConnection();
 
-            /* 370 */
             con.setAutoCommit(false);
 
 
-            /* 373 */
 
             //取得哪個欄位
             String[] cols = new String[]{"ROOM_CATEGORY_ID"};
 
-            /* 375 */
             pstmt = con.prepareStatement("INSERT INTO ROOM_TYPE (ROOM_TYPE_AMOUNT, ROOM_TYPE_CONTENT, ROOM_SALE_STATUS, ROOM_TOTAL_PERSON, ROOM_TOTAL_SCORE,ROOM_NAME, ROOM_PRICE) VALUES (?,?,?,?,?,?,?)", cols);
 
 
-            /* 378 */
             pstmt.setInt(1, rtVO.getRoomTypeAmount().intValue());
-            /* 379 */
             pstmt.setString(2, rtVO.getRoomTypeContent());
-            /* 380 */
             pstmt.setByte(3, rtVO.getRoomSaleStatus().byteValue());
-            /* 381 */
             pstmt.setInt(4, rtVO.getRoomTotalPerson().intValue());
-            /* 382 */
             pstmt.setInt(5, rtVO.getRoomTotalScore().intValue());
-            /* 383 */
             pstmt.setString(6, rtVO.getRoomName());
-            /* 384 */
             pstmt.setInt(7, rtVO.getRoomPrice().intValue());
 
 
-            /* 386 */
             int i = pstmt.executeUpdate();
-
-
-            /* 389 */
             System.out.println("新增筆" + i + "成功");
 
 
-            /* 392 */
             String nextRoomCategoryId = null;
 
-            /* 394 */
 
             //取得
             ResultSet rs = pstmt.getGeneratedKeys();
 
 
 
-            /* 398 */
             if (rs.next()) {
 
                 //ID拿出來
                 nextRoomCategoryId = rs.getString(1);
 
-                /* 402 */
                 System.out.println("自增主鍵值= " + nextRoomCategoryId + "(剛新增成功的房型編號)");
 
             } else {
-                /* 404 */
                 System.out.println("未取得自增主鍵值");
-
             }
-            /* 406 */
+
+
+
+
             rs.close();
 
-
-            /* 409 */
             System.out.println("list.size()-A=" + list.size());
 
 
-            /* 411 */
             int nrcid = Integer.parseInt(nextRoomCategoryId);
 
-            /* 413 */
+
+            updateCount(1,new DateUtils().getCurrentTimestamp(),nrcid,60,rtVO.getRoomTypeAmount(),con);
+
+
             RtpService rtpService = new RtpService();
 
-            /* 415 */
             Base64.Decoder decoder = Base64.getDecoder();
 
-            /* 417 */
             for (Base64VO base64VO : list) {
 
                 String base64 = base64VO.getBase64();
@@ -651,79 +688,43 @@ public class RtJDBCDAO implements RtDAO_interface {
 
 
 
-            /* 438 */
             con.commit();
 
-            /* 440 */
             con.setAutoCommit(true);
 
-            /* 442 */
             System.out.println("list.size()-B=" + list.size());
-            /* 443 */
             System.out.println("新增房型編號" + nextRoomCategoryId + "時,共有圖片" + list.size() + "張同時被新增");
 
 
-        }
-        /* 447 */
-        /* 448 */
-        /* 451 */ catch (SQLException se) {
-            /* 452 */
+        } catch (SQLException se) {
             if (con != null) {
-
-
                 try {
-                    /* 455 */
                     System.err.print("交易中失敗 ");
-                    /* 456 */
                     System.err.println("rolled back由-Rt");
-                    /* 457 */
                     con.rollback();
-                    /* 458 */
                 } catch (SQLException excep) {
-                    /* 459 */
-                    throw new RuntimeException("rollback 失敗. " + excep
-                            /* 460 */.getMessage());
-
+                    throw new RuntimeException("rollback 失敗. " + excep.getMessage());
                 }
-
             }
-            /* 463 */
-            throw new RuntimeException("發生錯誤. " + se
-                    /* 464 */.getMessage());
-
+            throw new RuntimeException("發生錯誤. " + se.getMessage());
         } finally {
 
-            /* 467 */
             if (pstmt != null) {
 
                 try {
-                    /* 469 */
                     pstmt.close();
-                    /* 470 */
                 } catch (SQLException se) {
-                    /* 471 */
                     se.printStackTrace(System.err);
-
                 }
-
             }
-            /* 474 */
             if (con != null) {
-
                 try {
-                    /* 476 */
                     con.close();
-                    /* 477 */
                 } catch (Exception e) {
-                    /* 478 */
                     e.printStackTrace(System.err);
-
                 }
-
             }
-
         }
-
     }
 
 

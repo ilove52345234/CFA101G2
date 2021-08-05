@@ -90,7 +90,7 @@
 		<!--功能及麵包屑==========================================-->
 		<div class="row">
 			<ul class="breadcrumb">
-				<li><a href="#">房間專區</a></li>
+				<li><a href="<%=request.getContextPath()%>/rmtype/RmtypeServlet?action=getAllRoomType">房間專區</a></li>
 				<li class="active">房間總覽</li>
 			</ul>
 		</div>

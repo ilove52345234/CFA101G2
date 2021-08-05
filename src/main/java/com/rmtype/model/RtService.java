@@ -4,6 +4,8 @@
  import com.rmtypepic.model.RtpVO;
  import com.utils.Base64VO;
  import com.utils.PageBean;
+
+ import java.sql.Connection;
  import java.util.Base64;
  import java.util.List;
  import java.util.Map;
@@ -17,9 +19,19 @@
  public class RtService
 		 {
 	/*  19 */   private RtDAO_interface dao = new RtJDBCDAO();
-	
-	
-	
+
+
+
+			 public void updateRschedule(Integer inint,
+										 String date,
+										 Integer rtpid,
+										 Integer loop,
+										 Integer amount, Connection con){
+			 	dao.updateCount(inint,date,rtpid,loop,amount,con);
+				 System.out.println("更新完成");
+
+			 }
+
 	
 	   public RtVO addRtVO(Integer roomTypeAmount, String roomTypeContent, Byte roomSaleStatus, Integer roomTotalPerson, Integer roomTotalScore, String roomName, Integer roomPrice) {
 		/*  25 */     RtVO rtVO = new RtVO();
@@ -70,12 +82,12 @@
 	
 	
 	/*  72 */   public void updateNormal(RtVO rtVO) { this.dao.updateByNormal(rtVO); }
-	
+
 	
 	
 	   public RtVO addRoomTypeAndPic(RtVO rtVO, List<Base64VO> list) {
 		/*  77 */     this.dao.insertWithRtAndPic(rtVO, list);
-		
+
 		/*  79 */     return rtVO;
 		   }
 	

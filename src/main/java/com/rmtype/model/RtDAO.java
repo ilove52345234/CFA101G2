@@ -54,6 +54,7 @@ import com.utils.Base64VO;
        private static final String UPDATE = "UPDATE ROOM_TYPE set ROOM_TYPE_AMOUNT=?, ROOM_TYPE_CONTENT=?, ROOM_SALE_STATUS=?, ROOM_TOTAL_PERSON=?, ROOM_TOTAL_SCORE=?, ROOM_NAME=?, ROOM_PRICE=? where ROOM_CATEGORY_ID = ?";
     
        private static final String FIND_ROOM = "SELECT ROOM_CATEGORY_ID, ROOM_TYPE_AMOUNT, ROOM_TYPE_CONTENT, ROOM_SALE_STATUS, ROOM_TOTAL_PERSON, ROOM_TOTAL_SCORE,ROOM_NAME,ROOM_PRICE FROM ROOM_TYPE WHERE ROOM_NAME= ? ";
+       private static final String CALL_BatchInsert= "CALL BatchInsert(?, ?, ?, ?, ?)";
 
     
     
@@ -586,6 +587,7 @@ import com.utils.Base64VO;
     public void updateByNormal(RtVO rtVO) {
     }
 
+
     
     
     
@@ -603,8 +605,13 @@ import com.utils.Base64VO;
     public List<RtVO> findByPage(int start, int rows, Map<String, String> condition) {
         return null;
     }
-    
-}
+
+     @Override
+     public void updateCount(Integer inint, String date, Integer rtpid, Integer loop, Integer amount,Connection con) {
+
+     }
+
+ }
 
 
 /* Location:              /Users/ilove52345234/eclipse_TestWorkspace/Test/src/main/ImportedClasses/com/rmtype/model/RtDAO.class

@@ -82,7 +82,7 @@
 						<img src="<%=request.getContextPath()%>/front-end/images/1.jpeg" align="right" alt="" class="img_gray">
 						<div class="top-left">
 							<a href="avt-item.html" class="link_activity"> 優惠方案<br>
-								108/10/26(六) 19:00<br> 雙人房優惠
+								110/8/17(二) 19:00<br> 單人房優惠
 							</a>
 						</div>
 						<div class="top-right"></div>
@@ -95,7 +95,7 @@
 						</div>
 						<div class="top-right">
 							<a href="avt-item.html" class="link_activity"> 優惠方案<br>
-								108/05/12(日) 10:00<br> 單人房優惠<br>
+								110/8/12(四) 10:00<br> 雙人房優惠<br>
 							</a>
 						</div>
 					</div>

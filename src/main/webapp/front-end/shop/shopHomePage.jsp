@@ -99,9 +99,9 @@ body {
 
 					</FORM></li>
 
-				<li><a href="#"> <i class='bx bx-grid-alt'></i> <span
-						class="links_name">最新消息</span>
-				</a> <span class="tooltip">查看</span></li>
+				<li><a href="<%=request.getContextPath()%>/front-end/frontEndPage.jsp"> <i class='bx bx-grid-alt'></i> <span
+						class="links_name">首頁</span>
+				</a> <span class="tooltip">回島旅囉</span></li>
 
 				<li><a href="#"> <i class='bx bxs-user'></i> <span
 						class="links_name">會員</span>
@@ -137,8 +137,8 @@ body {
 					<div class="profile_details">
 						<img src="images/TestFGO.jpg" alt="">
 						<div class="name_job">
-							<div class="name">學妹</div>
-							<div class="job">御靈</div>
+							<div class="name">尊榮</div>
+							<div class="job">會員</div>
 						</div>
 					</div>
 					<i class='bx bx-log-out-circle' id="log_out"></i>
@@ -164,7 +164,7 @@ body {
 				</div>
 			</div>
 		</div>
-		<div class="bigcards" style="width:100%;display:flex;flex-wrap:wrap;margin-left:40px;">
+		<div class="bigcards" style="width:100%;display:flex;flex-wrap:wrap;margin-left:150px;">
 		<c:forEach var="shopVO" items="${list}">
 			<div class="card" style="margin:30px 30px;">
 				<form name="shoppingForm" action="<%=request.getContextPath()%>/CFA101G2/front-end/shop/shop.do" method="POST">

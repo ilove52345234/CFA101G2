@@ -9,6 +9,7 @@ public class DateUtils {
 
     //格式化自行修改
     SimpleDateFormat dateformatAll = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//定義返回的日期格式
+    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
 
     //java.sql.Date.valueOf(String s)的s格式必須為YYYY-MM-DD格式
@@ -60,12 +61,20 @@ public class DateUtils {
 
         return dateformatAll.format(ts);//格式化傳過來的時間就可以去掉毫秒數
     }
+    public String getDFTimestamp(Timestamp ts) {
+        if (ts == null) {//如果時間為空返回當前時間
+            return df.format(getCurrentTimestamp());
+        }
+
+        return df.format(ts);//格式化傳過來的時間就可以去掉毫秒數
+    }
 
     //獲取當前時間字串類型,其他類型請直接用System.currentTimeMillis()
     public String getCurrentTimestamp() {
         Date nowTime = new Date(System.currentTimeMillis());
-        SimpleDateFormat sdFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:dd");
-        String retStrFormatNowDate = sdFormatter.format(nowTime);
+//        SimpleDateFormat sdFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:dd");
+
+        String retStrFormatNowDate = df.format(nowTime);
         return retStrFormatNowDate;
     }
 

@@ -323,7 +323,7 @@ public class MemServlet extends HttpServlet {
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("memVO", memVO);
-				String url = "/front-end/mem/memData.jsp";
+				String url = "/back-end/mem/listAllMem.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交HomePage.jsp
 				successView.forward(req, res);
 
@@ -332,7 +332,7 @@ public class MemServlet extends HttpServlet {
 				e.printStackTrace();
 				errorMsgs.add("修改資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/front-end/mem/updateMemData2.jsp");
+						.getRequestDispatcher("/back-end/mem/update_mem_input.jsp");
 				failureView.forward(req, res);
 			}
 		}

@@ -1,6 +1,8 @@
 package com.rmtype.model;
 
 import com.utils.Base64VO;
+
+import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +26,11 @@ public interface RtDAO_interface {
     int findTotalCount(Map<String, String> paramMap);
 
     List<RtVO> findByPage(int paramInt1, int paramInt2, Map<String, String> paramMap);
+    public void updateCount(Integer inint,
+                            String date,
+                            Integer rtpid,
+                            Integer loop,
+                            Integer amount, Connection con);
 }
 
 

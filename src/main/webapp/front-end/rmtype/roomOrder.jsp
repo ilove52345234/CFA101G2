@@ -51,18 +51,23 @@
                 <div class="col-xs-12 col-sm-12">
                     <ol class="breadcrumb">
                         <li><a
-                            href="/xxx/xxx/front-end/index.do?action=navbar&title=index">首頁</a></li>
-                        <li><a
-                            href="/xxx/xxx/front-end/class/member/member.jsp">會員中心</a></li>
+                                href="<%=request.getContextPath()%>/front-end/frontEndPage.jsp" >首頁</a></li>
+                        <!--            <li><a
+                                       href="/xxx/xxx/front-end/class/member/member.jsp">會員中心</a></li> -->
+
+                        <li><c:if test="${memVO != null}">
+                            <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/mem/mem.do"  class="glyphicon glyphicon-user">
+                                <input type="hidden" name="action" value="getOne_For_Display2">
+                                <input type="submit" value="會員中心">
+                            </FORM></c:if></li>
                     </ol>
                 </div>
             </div>
         </div>
-    
+
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 col-sm-3">
-    
     
     
     <head> 
@@ -76,22 +81,22 @@
                         <thead></thead>
                         <tbody>
                             <ul>
-    
+
                                 <tr>
                                     <td class="profile-img"><img class="profile-img-card"
-                                        src='/xxx/xxx/front-end/class/member/images/profile-img-card.png' width=80% /></td>
+                                        src='https://i.imgur.com/INGDvWS.png' width=80% /></td>
                                 </tr>
-    
-                                <tr	onclick="window.document.location='/xxx/xxx/front-end/class/member/member.jsp';">
-                                    <td class="list member"><span
-                                        class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;會員訂單</td>
-                                </tr>
-    
-                                <tr	onclick="window.document.location='/xxx/xxx/front-end/class/member/member_information.jsp';">
-                                    <td class="list informatiom"><span
-                                        class="glyphicon glyphicon-user list"></span>&nbsp;&nbsp;會員資料</td align="center">
-                                </tr>
-    
+
+<%--                                <tr	onclick="window.document.location='/xxx/xxx/front-end/class/member/member.jsp';">--%>
+<%--                                    <td class="list member"><span--%>
+<%--                                        class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;會員訂單</td>--%>
+<%--                                </tr>--%>
+
+<%--                                <tr	onclick="window.document.location='/xxx/xxx/front-end/class/member/member_information.jsp';">--%>
+<%--                                    <td class="list informatiom"><span--%>
+<%--                                        class="glyphicon glyphicon-user list"></span>&nbsp;&nbsp;會員資料</td align="center">--%>
+<%--                                </tr>--%>
+
                                 <tr onclick="window.document.location='<%=request.getContextPath()%>/rmtype/RmtypeServlet?action=getAllRoomType';">
                                     <td class="list Room"><span
                                         class="glyphicon glyphicon-heart list"></span>&nbsp;&nbsp;房間列表</td>
@@ -107,7 +112,7 @@
                             <li data-target="#myCarousel" data-slide-to="1"></li>
                             <li data-target="#myCarousel" data-slide-to="2"></li>
                         </ol>
-    
+
                         <h4 class="text-center">
                             <b>廣告</b>
                         </h4>
@@ -127,23 +132,23 @@
                 <div class="carousel-inner">
                   
                     <div class="item active" >
-                        <a href="/xxx/xxx/front-end/class/search/search.do?action=enter_store_select&select=introduce&str_no=STR_0001">
-                        <img src="/xxx/tools/Mem_Red_Img?adv_no=ADV_0005" ></a>
+                        <a href="#">
+                        <img src="https://i.imgur.com/VPIFjsE.jpg" ></a>
                         <div class="container" aling="right">
                             <div class="carousel-caption"><b>
-                                <h3>xxx</h3>
-                                <p>2020-12-27至<br>2020-12-31</p>                           
+                                <h3>雙人房優惠</h3>
+                                <p>2021-08-12至<br>2021-10-12</p>
                             </b></div>
                         </div>
                     </div>
                     
                     <div class="item " >
-                        <a href="/xxx/xxx/front-end/class/search/search.do?action=enter_store_select&select=introduce&str_no=STR_0001">
-                        <img src="/xxx/tools/Mem_Red_Img?adv_no=ADV_0006" ></a>
+                        <a href="#">
+                        <img src="https://i.imgur.com/KGH9ZCB.jpg" ></a>
                         <div class="container" aling="right">
                             <div class="carousel-caption"><b>
-                                <h3>xxx</h3>
-                                <p>2020-12-27至<br>2021-01-02</p>                           
+                                <h3>單人房優惠</h3>
+                                <p>2021-08-17至<br>2021-10-17</p>
                             </b></div>
                         </div>
                     </div>
