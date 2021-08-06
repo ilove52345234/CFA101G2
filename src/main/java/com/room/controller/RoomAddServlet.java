@@ -48,7 +48,7 @@ public class RoomAddServlet extends HttpServlet {
                 info.setErrorMsg("超出最大房間數,房間最大數量為:"+roomTypeAmount);
             }else{
 
-                for (int j = 0; j <= anInt; j++) {
+                for (int j = 0; j < anInt; j++) {
                     RmVO rmVO = rmService.addRmVO2(CategoryId);
                     System.out.println(rmVO);
                 }
