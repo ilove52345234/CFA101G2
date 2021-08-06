@@ -17,14 +17,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3個meta標籤*必須*放在最前面，任何其他內容都*必須*跟隨其後！ -->
     <title>房間系統</title>
-    <%--    <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>--%>
+<%--        <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>--%>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
     <script src="//code.jquery.com/jquery-1.9.1.js"></script>
     <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-    <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">
+<%--    <link rel="stylesheet" href="http://jqueryui.com/resources/demos/style.css">--%>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.css"/>
-<%--    <link rel="stylesheet" href="../css/jqueryui-demo.css"/>--%>
+    <link rel="stylesheet" href="/CFA101G2/back-end/css/jqueryui-demo.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.10.3/sweetalert2.js"
             type="text/javascript"></script>
     <!-- 引入 layui.css -->
@@ -554,14 +554,14 @@
 
                     success: function (data) {
                         if (data.flag) {
-                            swal("完成!", "2秒後回到列表", "success",);
+                            Swal.fire("完成!", "2秒後回到列表", "success",);
                             setTimeout(function () {
                                 window.parent.location.reload(); //刷新父頁面
                                 var index = parent.layer.getFrameIndex(window.name); //獲取窗口索引
                                 parent.layer.close(index); // 關閉圖層
                             }, 2000);
                         } else {
-                            swal("失敗", "原因" + data.errorMsg, "error");
+                            Swal.fire("失敗", "原因" + data.errorMsg, "error");
                             setTimeout(function () {
                                 window.parent.location.reload(); //刷新父頁面
                                 var index = parent.layer.getFrameIndex(window.name); //獲取窗口索引
@@ -579,13 +579,14 @@
     function done(roomId) {
 
         var url = "<%=request.getContextPath()%>/back-end/room/information.jsp?roomId=" + roomId;
-
         Swal.fire({
             title: '確認房間清潔完成',
             input: 'checkbox',
             inputPlaceholder: '房況確認完畢'
         }).then(function (result) {
-            if (result === 1) {
+
+// console.log(result)
+            if (result.value === 1 ) {
                 $.ajax({
                     type: "post",
 
@@ -594,15 +595,16 @@
                     data: {},
 
                     success: function (data) {
+                       // alert(data.flag)
                         if (data.flag) {
-                            swal("完成!", "2秒後回到列表", "success",);
+                            Swal.fire("完成!", "2秒後回到列表", "success",);
                             setTimeout(function () {
                                 window.parent.location.reload(); //刷新父頁面
                                 var index = parent.layer.getFrameIndex(window.name); //獲取窗口索引
                                 parent.layer.close(index); // 關閉圖層
                             }, 2000);
                         } else {
-                            swal("失敗", "原因" + data.errorMsg, "error");
+                            Swal.fire("失敗", "原因" + data.errorMsg, "error");
                             setTimeout(function () {
                                 window.parent.location.reload(); //刷新父頁面
                                 var index = parent.layer.getFrameIndex(window.name); //獲取窗口索引
@@ -612,9 +614,9 @@
                     }
                 });
 
-            } else if (result === 0) {
-                swal({
-                    type: 'error',
+            } else if (result.value === 0) {
+                Swal.fire({
+                    icon: 'error',
                     text: "請確認房況"
                 });
             }

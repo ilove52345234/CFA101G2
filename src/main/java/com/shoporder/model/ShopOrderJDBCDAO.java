@@ -261,6 +261,10 @@ public class ShopOrderJDBCDAO implements ShopOrderDAO_interface {
 				shopOrderVO.setPaymentMethod(rs.getByte("PAYMENT_METHOD"));
 				shopOrderVO.setShippingMethod(rs.getByte("SHIPPING_METHOD"));
 				shopOrderVO.setShippingStatus(rs.getByte("SHIPPING_STATUS"));
+				shopOrderVO.setOrderName(rs.getString("ORDER_NAME"));
+				shopOrderVO.setOrderAddress(rs.getString("ORDER_MOBILE"));
+				shopOrderVO.setOrderMobile(rs.getString("ORDER_ADDRESS"));
+
 				list.add(shopOrderVO);
 			}
 

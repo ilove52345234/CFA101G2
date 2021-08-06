@@ -86,9 +86,9 @@
 		<tr style="vertical-align: middle !important; text-align: center;">
 			<td>訂單編號</td>
 			<td>會員編號</td>
-<%--			<td>收件人姓名</td>--%>
-<%--			<td>收件人電話</td>--%>
-<%--			<td>收件人地址</td>--%>
+			<td>收件人姓名</td>
+			<td>收件人電話</td>
+			<td>收件人地址</td>
 			<td>訂單成立時間</td>
 			<td>訂單總金額</td>
 			<td>付款方式</td>
@@ -103,9 +103,9 @@
 			<tr id="listShopId">
 				<td>${shopOrderVO.itemOrderId}</td>
 				<td>${shopOrderVO.memId}</td>
-<%--				<td>${shopOrderVO.orderName}</td>--%>
-<%--				<td>${shopOrderVO.orderMobile}</td>--%>
-<%--				<td>${shopOrderVO.orderAddress}</td>--%>
+				<td>${shopOrderVO.orderName}</td>
+				<td>${shopOrderVO.orderMobile}</td>
+				<td>${shopOrderVO.orderAddress}</td>
 				<td>${shopOrderVO.itemOrderDate}</td>
 				<td>${shopOrderVO.itemAmounts}</td>
 				<td>${shopOrderVO.paymentMethod==0?"信用卡":shopOrderVO.paymentMethod==1?"現金":"匯款"}</td>

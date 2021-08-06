@@ -184,7 +184,7 @@ h2.entry-title {
 				</button>
 				<!-- 點擊商標跳轉至首頁 #要放首頁網址 -->
 				<a class="navbar-header" href="<%=request.getContextPath()%>/front-end/frontEndPage.jsp"> 
-				<img src="https://i.imgur.com/INGDvWS.png" height="45" title="島旅 Island Brigade" alt="島旅 Island Brigade"></a>
+				<img src="https://i.imgur.com/INGDvWS.png" height="45" title="島旅 Island Travel" alt="島旅 Island Travel"></a>
 			</div>
 			<!-- class="collapse navbar-collapse" 這兩個是關鍵字 幫助我們在正常視窗的情況下 可以看到原本的導覽列 -->
 			<div class="collapse navbar-collapse" id="myNavbar">
