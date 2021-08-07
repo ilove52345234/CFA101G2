@@ -4,7 +4,9 @@ package com.rmtype.model;
 
 
 import com.utils.Base64VO;
- import java.sql.Connection;
+import com.utils.JDBCUtils;
+
+import java.sql.Connection;
  import java.sql.PreparedStatement;
  import java.sql.ResultSet;
  import java.sql.SQLException;
@@ -25,19 +27,21 @@ import com.utils.Base64VO;
 
        static {
         
-        try {
-            /*  25 */
-            Context ctx = new InitialContext();
-            /*  26 */
-            ds = (DataSource) ctx.lookup("java:comp/env/jdbc/resort");
-            /*  27 */
-        } catch (NamingException e) {
-            /*  28 */
-            e.printStackTrace();
-            
-        }
-        
-    }
+//        try {
+//            /*  25 */
+//            Context ctx = new InitialContext();
+//            /*  26 */
+//            ds = (DataSource) ctx.lookup("java:comp/env/jdbc/resort");
+//            /*  27 */
+//        } catch (NamingException e) {
+//            /*  28 */
+//            e.printStackTrace();
+//
+//        }
+           JDBCUtils jdbcUtils = new JDBCUtils();
+           ds = jdbcUtils.getDataSource();
+
+       }
 
     
     

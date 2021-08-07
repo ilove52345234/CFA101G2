@@ -485,7 +485,7 @@ div.shadow{
 <h3 style="text-align:center;">島旅商城細細看</h3>
 
 
-<a id="view-code" href="" target="_blank">VIEW CODE</a>
+<a id="view-code" href="" target="_blank"></a>
 <form name="shoppingForm" action="<%=request.getContextPath()%>/ShoppingCart.do" method="POST">
 <div id="make-3D-space" >
     <div id="product-card">

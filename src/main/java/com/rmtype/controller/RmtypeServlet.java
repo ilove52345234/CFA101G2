@@ -73,7 +73,12 @@ public class RmtypeServlet extends HttpServlet {
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 				// 資料庫取出的rtVO物件,存入req
-				req.setAttribute("list", roomTypeResultList);
+				if("".equals(rmname)){
+					req.setAttribute("list", roomTypeAllList);
+
+				}else {
+					req.setAttribute("list", roomTypeResultList);
+				}
 				req.setAttribute("roomTypeAllList", roomTypeAllList);
 				String url = "/front-end/rmtype/listAllRmtype.jsp";
 				System.out.println("forward url:"+url);

@@ -336,7 +336,128 @@ public class MemServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
-		
+
+		//前端送出修改
+		if ("update2".equals(action)) { // 來自update_mem_input.jsp的請求
+
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+				Integer memId = new Integer(req.getParameter("memId"));
+				String memAccount = req.getParameter("memAccount");
+				if (memAccount == null || memAccount.trim().length() == 0) {
+					errorMsgs.add("會員帳號: 請勿空白");
+				}
+
+				String memName = req.getParameter("memName");
+				String memNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
+				if (memName == null || memName.trim().length() == 0) {
+					errorMsgs.add("會員姓名: 請勿空白");
+				} else if(!memName.trim().matches(memNameReg)) {
+					errorMsgs.add("會員姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
+				}
+
+				String memPassword = req.getParameter("memPassword").trim();
+				if (memPassword == null || memPassword.trim().length() == 0) {
+					errorMsgs.add("密碼請勿空白");
+				}
+
+				String memAddress = req.getParameter("memAddress").trim();
+				String memAddressReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9)]{2,66}$";
+				if (memAddress == null || memAddress.trim().length() == 0) {
+					errorMsgs.add("地址: 請勿空白");
+				} else if (!memAddress.trim().matches(memAddressReg)) {
+					errorMsgs.add("地址: 只能是中文、英文字母、數字 ");
+				}
+
+				String memPhone = req.getParameter("memPhone").trim();
+				if (memPhone == null || memPhone.trim().length() == 0) {
+					errorMsgs.add("電話請勿空白");
+				}
+
+				String memUid = req.getParameter("memUid").trim();
+				String memUidReg = "^[A-Z]{1}[1-2]{1}[0-9]{8}$";
+				if (memUid == null || memUid.trim().length() == 0) {
+					errorMsgs.add("身分證字號: 請勿空白");
+				} else if (!memUid.trim().matches(memUidReg)) {
+					errorMsgs.add("身分證字號: 請輸入正確身分證格式 ");
+				}
+
+				String memEmail = req.getParameter("memEmail").trim();
+				String memEmailReg = "^\\w{1,63}@[a-zA-Z0-9]{2,63}\\.[a-zA-Z]{2,63}(\\.[a-zA-Z]{2,63})?$";
+				if (memEmail == null || memEmail.trim().length() == 0) {
+					errorMsgs.add("電子信箱: 請勿空白");
+				} else if (!memEmail.trim().matches(memEmailReg)) {
+					errorMsgs.add("電子信箱: 請輸入正確電子信箱格式 ");
+				}
+
+				String memSex = req.getParameter("memSex").trim();
+				if (memSex == null || memSex.trim().length() == 0) {
+					errorMsgs.add("性別請勿空白");
+				}
+
+				Date memDob = null;
+				try {
+					memDob = Date.valueOf(req.getParameter("memDob").trim());
+				} catch (IllegalArgumentException e) {
+					memDob = new Date(System.currentTimeMillis());
+					errorMsgs.add("請輸入生日日期!");
+				}
+
+				Integer memStatus = null;
+				try {
+					memStatus = new Integer(req.getParameter("memStatus").trim());
+				} catch (NumberFormatException e) {
+					memStatus = null;
+					errorMsgs.add("會員狀態請填數字");
+				}
+
+				Timestamp memUpdate = new Timestamp(System.currentTimeMillis());
+
+				MemVO memVO = new MemVO();
+				memVO.setMemId(memId);
+				memVO.setMemAccount(memAccount);
+				memVO.setMemName(memName);
+				memVO.setMemPassword(memPassword);
+				memVO.setMemAddress(memAddress);
+				memVO.setMemPhone(memPhone);
+				memVO.setMemUid(memUid);
+				memVO.setMemEmail(memEmail);
+				memVO.setMemSex(memSex);
+				memVO.setMemDob(memDob);
+				memVO.setMemStatus(memStatus);
+				memVO.setMemUpdate(memUpdate);
+
+
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("memVO", memVO);
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front-end/mem/updateMemData2.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+
+				/***************************2.開始修改資料*****************************************/
+				MemService memSvc = new MemService();
+				memVO = memSvc.updateMem(memId, memAccount, memName, memPassword, memAddress, memPhone, memUid, memEmail, memSex, memDob, memStatus, memUpdate);
+
+				/***************************3.修改完成,準備轉交(Send the Success view)*************/
+				req.setAttribute("memVO", memVO);
+				String url = "/front-end/mem/memData.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交HomePage.jsp
+				successView.forward(req, res);
+
+				/***************************其他可能的錯誤處理*************************************/
+			} catch (Exception e) {
+				e.printStackTrace();
+				errorMsgs.add("修改資料失敗:"+e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/front-end/mem/updateMemData2.jsp");
+				failureView.forward(req, res);
+			}
+		}
 		//後台查單一
 		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 

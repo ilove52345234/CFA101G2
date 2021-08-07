@@ -57,6 +57,16 @@
 			font-weight:bold;
 			font-family:DFKai-sb;
 		}
+
+
+		select {
+			border-radius: 5px;
+			background: lightcyan;
+			box-shadow: 0 1px 3px -2px #9098A9;
+			font-family: DFKai-sb;
+		}
+
+
 </style>
 	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 	<script src="/CFA101G2/back-end/js/include.js"></script>
@@ -124,7 +134,12 @@
 	</tr>
 	<tr>
 		<td>狀態:</td>
-		<td><input type="TEXT" name="memStatus" size="45"	value="<%=memVO.getMemStatus() %>" /></td>
+		<td>
+		<select name="memStatus" required >
+			<option value="" disabled selected >請選擇啟用或停用</option>
+			<option value="1">啟用</option>
+			<option value="0">停用</option>
+		</select></td>
 	</tr>
 
 

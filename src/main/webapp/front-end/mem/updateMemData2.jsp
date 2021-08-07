@@ -131,7 +131,7 @@
 					<input type="hidden" name="memStatus" value="<%=memVO.getMemStatus()%>" /><!-- test -->
 					<input type="hidden" name="memId" value="<%=memVO.getMemId()%>"><!-- test -->
 					<input type="hidden" name="memUpdate" /><!-- test -->
-					<input type="hidden" name="action" value="update" /><!-- test -->
+					<input type="hidden" name="action" value="update2" /><!-- test -->
 					<button class="login100-form-btn">送出修改</button>
 				</div>
 				

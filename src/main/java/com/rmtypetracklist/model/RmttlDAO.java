@@ -1,5 +1,7 @@
 package com.rmtypetracklist.model;
 
+import com.utils.JDBCUtils;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -14,15 +16,18 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 public class RmttlDAO implements RmttlDAO_interface{
-	
+	JDBCUtils jdbcUtils = new JDBCUtils();;
+
 	private static DataSource ds = null;
 	static {
-		try {
-			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/resort");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			Context ctx = new InitialContext();
+//			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/resort");
+//		} catch (NamingException e) {
+//			e.printStackTrace();
+//		}
+		JDBCUtils jdbcUtils = new JDBCUtils();
+		ds = jdbcUtils.getDataSource();
 	}
 	private static final String INSERT_STMT = "INSERT INTO ROOM_TYPE_TRACK_LIST (ROOM_CATEGORY_ID, MEM_ID) VALUES (?,?)";
 	private static final String GET_ALL_STMT = "SELECT ROOM_CATEGORY_ID, MEM_ID FROM ROOM_TYPE_TRACK_LIST order by ROOM_CATEGORY_ID";

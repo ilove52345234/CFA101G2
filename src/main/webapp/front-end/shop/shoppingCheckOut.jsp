@@ -66,7 +66,7 @@ body {
   style="margin-left: 160px; text-align: center;">
   <thead>
    <tr>
-    <td width="170">商品</td>
+    <td width="200">商品</td>
     <th width="200">商品名稱</th>
     <th width="200">詳細資訊</th>
     <th width="100">數量</th>

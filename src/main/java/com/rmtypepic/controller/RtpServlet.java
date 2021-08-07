@@ -36,7 +36,7 @@ public class RtpServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 //		doGet(req, res);   使用/rmtypepic/RtpServlet?roomCategoryId=${rtVO.roomCategoryId}傳遞方式 所以不能用
-
+		JDBCUtils jdbcUtils = new JDBCUtils();;
 		req.setCharacterEncoding("UTF-8");
 		res.setContentType("img/gif"); // p129
 		ServletOutputStream out = res.getOutputStream();
@@ -46,7 +46,6 @@ public class RtpServlet extends HttpServlet {
 		if ("show_pics".equals(action)) {
 			try {
 
-				JDBCUtils jdbcUtils = new JDBCUtils();;
 				con = jdbcUtils.getConnection();
 				Statement stmt = con.createStatement(); // 連接stmt內的ROOM_PHOTO_ID
 				String roomPhotoId = req.getParameter("roomCategoryId");
@@ -104,9 +103,10 @@ public class RtpServlet extends HttpServlet {
 		if ("show_many_pics".equals(action)) {
 			try {
 
-				Context ctx = new javax.naming.InitialContext();
-				DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/resort");
-				con = ds.getConnection();
+				con = jdbcUtils.getConnection();
+//				Context ctx = new javax.naming.InitialContext();
+//				DataSource ds = (DataSource) ctx.lookup("java:comp/env/jdbc/resort");
+//				con = ds.getConnection();
 
 				Statement stmt = con.createStatement(); // 連接stmt內的ROOM_PHOTO_ID
 				String roomPhotoId = req.getParameter("roomPhotoId");

@@ -115,7 +115,7 @@ body {
 						class="links_name">限時優惠</span>
 				</a> <span class="tooltip">手刀購買</span></li>
 
-				<li><a href="#"> <i class='bx bxs-folder-open'></i> <span
+				<li><a href="<%=request.getContextPath()%>/front-end/shop/shopOrdered_page.jsp"> <i class='bx bxs-folder-open'></i> <span
 						class="links_name">訂單查詢</span>
 				</a> <span class="tooltip">付款or看單</span></li>
 

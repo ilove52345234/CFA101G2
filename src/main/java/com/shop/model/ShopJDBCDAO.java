@@ -22,7 +22,7 @@ JDBCUtils jdbcUtils = new JDBCUtils();
 	private static final String GET_ONE_STMT2 = "SELECT * FROM SHOP WHERE ITEM_NAME = ?";
 
 	private static final String INSERT_STMT = "INSERT INTO SHOP(ITEM_CATEGORY_ID,ITEM_DESCRIBTION,ITEM_FEE,ITEM_NAME,ITEM_QUANTITY,ITEM_STATUS,COMMENT_NUMBER,COMMENT_TOTAL_SCORE) VALUE(?, ?, ?, ?, ?, ?, ?, ?)";
-	private static final String GET_ALL_STMT = "SELECT * FROM SHOP";
+	private static final String GET_ALL_STMT = "SELECT * FROM SHOP where Item_status!=1 ORDER BY ITEM_ID";
 	private static final String GET_ONE_STMT = "SELECT * FROM SHOP WHERE ITEM_ID = ?";
 	private static final String DELETE = "DELETE FROM SHOP WHERE ITEM_ID = ?";
 	private static final String UPDATE = "UPDATE SHOP SET ITEM_CATEGORY_ID = ?,ITEM_DESCRIBTION = ?,ITEM_FEE = ?,ITEM_NAME = ?,ITEM_QUANTITY = ?,ITEM_STATUS = ?,COMMENT_NUMBER = ?,COMMENT_TOTAL_SCORE = ? WHERE ITEM_ID = ?";

@@ -15,6 +15,7 @@ import java.util.List;
 
 @WebServlet("/emp/addEmpServlet")
 public class AddEmpServlet extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         this.doPost(request, response);

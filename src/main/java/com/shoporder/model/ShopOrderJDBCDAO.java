@@ -17,6 +17,13 @@ public class ShopOrderJDBCDAO implements ShopOrderDAO_interface {
 	JDBCUtils jdbcUtils = new JDBCUtils();
 
 
+
+	private static final String list_ALL_BY_MEM_ID_STMT =
+			"SELECT * FROM SHOP_ORDER WHERE MEM_ID=? AND SHIPPING_STATUS!=3 AND SHIPPING_STATUS!=2 ORDER BY ITEM_ORDER_ID DESC";
+
+
+
+
 	private static final String INSERT_STMT2 =
 			"INSERT INTO SHOP_ORDER (MEM_ID, ITEM_ORDER_DATE, ITEM_AMOUNTS, PAYMENT_METHOD, SHIPPING_METHOD, SHIPPING_STATUS,ORDER_NAME,ORDER_MOBILE,ORDER_ADDRESS) VALUE(?, NOW(), ?, ?, ?, ?, ?, ?, ?)";
 
@@ -26,8 +33,6 @@ public class ShopOrderJDBCDAO implements ShopOrderDAO_interface {
 			"UPDATE SHOP SET ITEM_QUANTITY = ITEM_QUANTITY + ? where ITEM_ID = ?";
 
 
-	private static final String list_ALL_BY_MEM_ID_STMT =
-			"SELECT * FROM SHOP_ORDER WHERE MEM_ID=? ORDER BY ITEM_ORDER_ID DESC";
 
 	private static final String UPDATE_STATUS_STMT =
 			"UPDATE SHOP_ORDER SET SHIPPING_STATUS = ? WHERE ITEM_ORDER_ID = ?";

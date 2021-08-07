@@ -11,6 +11,8 @@ public class RecentNewsJDBCDAO implements RecentNewsJDBCDAO_interface{
 //	String userid = "root"; //CFA101G2
 //	String passwd = "sao124154"; //123456
 
+
+
 	JDBCUtils jdbcUtils = new JDBCUtils();
 
 	private static final String INSERT_STMT = 
