@@ -113,7 +113,8 @@ public class MemServlet extends HttpServlet {
 						memStatus, memUpdate);
 
 				/*************************** 3.新增完成,準備寄信 ***********************************/
-				String to = "whatever016015@gmail.com"; // memVO.getMemEmail();
+//				String to = "whatever016015@gmail.com"; // memVO.getMemEmail();
+				String to =  memEmail;
 				String subject = "驗證通知";
 				String memname = memName; // memVO.getMemName();
 
