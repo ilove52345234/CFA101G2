@@ -112,7 +112,8 @@ public class RmorderServlet extends HttpServlet {
 
 			Date date = new Date(checkInDate.getTime());
 //
-			List<RsVO> oneValidAmount = rsService.getOneValidAmount(1,date,date);
+			List<RsVO> oneValidAmount = rsService.getOneValidAmount(roomCategoryId,date,date);
+
 			for (RsVO rsVO : oneValidAmount) {
 				System.out.println("預定表:"+rsVO);
 				if (bookRoomRequestVO.getRoomNumber() > rsVO.getRoomValidAmount()) {

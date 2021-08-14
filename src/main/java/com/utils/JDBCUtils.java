@@ -2,6 +2,8 @@ package com.utils;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
+import javax.naming.Context;
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -41,7 +43,17 @@ public class JDBCUtils {
 
     static {
         //僅僅在類別被載入時系統建立一個連線池，自動識別配置檔案
-        ds = new ComboPooledDataSource();
+//        ds = new ComboPooledDataSource();
+
+
+        Context ctx;
+        try {
+            ctx = new javax.naming.InitialContext();
+            ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CFA101G2");
+        } catch (NamingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
 

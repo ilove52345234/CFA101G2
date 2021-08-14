@@ -92,9 +92,9 @@ public class RmolService {
 
 		List<RmolVO> byPage = dao.findByPage(start, rows, condition);
 
-		for (RmolVO rmolVO : byPage) {
-			System.out.println(rmolVO);
-		}
+//		for (RmolVO rmolVO : byPage) {
+//			System.out.println(rmolVO);
+//		}
 
 		RmolVOPageBean.setList(byPage);
 

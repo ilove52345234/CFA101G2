@@ -120,11 +120,8 @@
                         <!--                    <a :href="`XXX?id=${tableDataList.row.roomCategoryId}`"-->
                         <!--                       target="_blank">查看-->
                         <!--                    </a>-->
-
                         <!--                        <el-link type="primary" :href="`XXX?id=${tableDataList.row.roomOrderId}`">查看</el-link>-->
-
                         <!--                        <div v-if="tableDataList.row.roomOrderStatus===0 ">等待確認</div>-->
-
                         <!--                        <div v-if="tableDataList.row.roomOrderStatus=== 1">-->
                         <el-link v-if="tableDataList.row.roomOrderStatus===0" type="primary"
                                  @click="showEditStu(tableDataList.row.roomOrderId)">查看
@@ -154,7 +151,6 @@
                     </template>
 
                 </el-table-column>
-
             </el-table>
         </el-col>
         <el-col :span="3">
@@ -560,7 +556,6 @@
         },
         mounted() {
             this.selectByPage();
-
         }
     });
 

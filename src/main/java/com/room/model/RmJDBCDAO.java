@@ -446,7 +446,7 @@ public class RmJDBCDAO implements RmDAO_interface {
             //獲取值
             String value = condition.get(key);
 
-            System.out.println(value);
+//            System.out.println(value);
             //判斷是否有值
             if (value != null && !"".equals(value)) {
                 //有值

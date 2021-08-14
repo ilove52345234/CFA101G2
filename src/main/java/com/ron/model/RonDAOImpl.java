@@ -44,7 +44,7 @@ public class RonDAOImpl implements RonDAO {
 
             int i = pstmt.executeUpdate();
 
-            System.out.println("新增" + i + "筆完成");
+//            System.out.println("新增" + i + "筆完成");
 
 
         } catch (SQLException se) {
@@ -76,7 +76,7 @@ public class RonDAOImpl implements RonDAO {
 
             int i = pstmt.executeUpdate();
 
-            System.out.println("更新" + i + "筆完成");
+//            System.out.println("更新" + i + "筆完成");
 
         } catch (SQLException se) {
             throw new RuntimeException("發生錯誤:" + se.getMessage());
@@ -101,7 +101,7 @@ public class RonDAOImpl implements RonDAO {
 
             int i = pstmt.executeUpdate();
 
-            System.out.println("刪除" + i + "筆完成");
+//            System.out.println("刪除" + i + "筆完成");
 
 
         } catch (SQLException se) {

@@ -26,19 +26,19 @@ public class jdbcUtil_CompositeQuery_Act {
 		//數字類直接用 columnName=value 來查
 		if ("ACT_ID".equals(columnName) || "ACT_CATEGORY_ID".equals(columnName) || "ACT_PROMOTION_ID".equals(columnName) || "ACT_FEE".equals(columnName)) { //  for numbers
 			aCondition = columnName + "=" + value;
-		System.out.println(aCondition);
+//		System.out.println(aCondition);
 
 		//varchar 等字串類要用" like '%"+value+"%' ==>才能達成“模糊查詢”
 	} else if ("ACT_DESCRIPTION".equals(columnName) || "ACT_STATUS".equals(columnName)) { // for varchar 
 			aCondition = columnName + " like '%" + value + "%'";
-		System.out.println(aCondition);
+//		System.out.println(aCondition);
 
 		//date ==> MySQL的datetime dialect跟其他DB不同
 		//個別DB dialect 可藉由Hibernate...等ORM framework來解決;
 	} else if ("PART_START".equals(columnName) || "ACT_START".equals(columnName) ) {                         // for date
 			aCondition = columnName + "=" + "'"+ value +"'";                          //for the other DB(ex:MySQL) type  date
 //		    aCondition = "to_char(" + columnName + ",'yyyy-mm-dd')='" + value + "'";  //for Oracle type date
-		System.out.println(aCondition);
+//		System.out.println(aCondition);
 	}
 		
 		// aCondition 後面加空格 （防呆 取得正確的SQL串接字串） 
@@ -51,7 +51,7 @@ public class jdbcUtil_CompositeQuery_Act {
 	//每個key都是ParameterValues的 欄位名
 	public static String get_WhereCondition(Map<String, String[]> map) {
 		Set<String> keys = map.keySet();
-		System.out.println("前端form傳來的參數keys一共如下： "+keys);
+//		System.out.println("前端form傳來的參數keys一共如下： "+keys);
 
 		//用StringBuilder一樣可以
 		StringBuffer whereCondition = new StringBuffer();
@@ -62,14 +62,14 @@ public class jdbcUtil_CompositeQuery_Act {
 		for (String key : keys) {
 			//注意：取出的value是array的第一個
 			String value = map.get(key)[0];
-			System.out.println("從Key取得的value是： "+value);
+//			System.out.println("從Key取得的value是： "+value);
 
 			//!"action".equals(key) <=== action是給servlet判斷哪段code要執行，不屬於“萬用搜尋條件的KeySet”，
 			//但還是會被map.keySet()抓出來，要“過濾掉避免誤查”；
 			if (value != null && value.trim().length() != 0	&& !"action".equals(key)) {
 				count++;
 				String aCondition = get_aCondition_For_myDB(key, value.trim());
-				System.out.println("經過 get_aCondition_For_myDB 按type分別處理後的條件如下： "+aCondition);
+//				System.out.println("經過 get_aCondition_For_myDB 按type分別處理後的條件如下： "+aCondition);
 
 
 				//用 count 來判斷 萬用搜尋的條件組有幾個， aka 查詢資料的欄位數
@@ -81,12 +81,12 @@ public class jdbcUtil_CompositeQuery_Act {
 					whereCondition.append(" and " + aCondition);
 					
 				//確認 查詢條件append進去的總共幾筆（排除了action)
-				System.out.println("有送出查詢資料的欄位數count = " + count);
+//				System.out.println("有送出查詢資料的欄位數count = " + count);
 			}
 		}// end or for-each
 		
 		//注意：StringBuffer whereCondition 最後一定要toString()
-		System.out.println("最後的condition： " +whereCondition);
+//		System.out.println("最後的condition： " +whereCondition);
 
 		return whereCondition.toString();
 	}
@@ -131,7 +131,7 @@ public class jdbcUtil_CompositeQuery_Act {
 				          + "order by ACT_ID";
 		
 		// 拿這段 finalSQL  去MySQL workbench測試過再上線
-		System.out.println("finalSQL = " + finalSQL);
+//		System.out.println("finalSQL = " + finalSQL);
 		
 	}
 }

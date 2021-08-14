@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+
 <%
     EmpVO emp = (EmpVO) request.getSession().getAttribute("Emp");
     pageContext.setAttribute("emp", emp);
@@ -102,8 +103,8 @@
             <!-- class="navbar-toggle" 這是關鍵字 有它才能讓我們順利的看到「三」 而且出現在視窗的右方 -->
             <!-- data-toggle="collapse" 這是用來製作動畫效果的 沒有的話 我們點「三」的時候不會有任何反應-->
             <!-- data-target="#myNavbar" 這裡面的myNavbar是一個CSS的id 我們可以取任意的名字 只是一定要跟下面縮放的id對應到 -->
-            <!-- 				<button type="button" class="navbar-toggle" data-toggle="collapse" -->
-            <!-- 					data-target="#myNavbar"> -->
+            				<button type="button" class="navbar-toggle" data-toggle="collapse"
+             					data-target="#myNavbar">
             <!-- <span class="icon-bar"></span>這段這是用來產生「一」 當有三個「一」時 合在一起就會變「三」的按鍵了 -->
             <span class="icon-bar"></span> <span class="icon-bar"></span> <span
                 class="icon-bar"></span>

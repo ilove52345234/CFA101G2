@@ -75,7 +75,7 @@ public class RtJDBCDAO implements RtDAO_interface {
             pstmt.setInt(5,amount);
 
             int i = pstmt.executeUpdate();
-            System.out.println("新增資料筆數:"+i);
+//            System.out.println("新增資料筆數:"+i);
 
         }catch (SQLException se) {
 
@@ -630,7 +630,7 @@ public class RtJDBCDAO implements RtDAO_interface {
 
 
             int i = pstmt.executeUpdate();
-            System.out.println("新增筆" + i + "成功");
+//            System.out.println("新增筆" + i + "成功");
 
 
             String nextRoomCategoryId = null;
@@ -646,7 +646,7 @@ public class RtJDBCDAO implements RtDAO_interface {
                 //ID拿出來
                 nextRoomCategoryId = rs.getString(1);
 
-                System.out.println("自增主鍵值= " + nextRoomCategoryId + "(剛新增成功的房型編號)");
+//                System.out.println("自增主鍵值= " + nextRoomCategoryId + "(剛新增成功的房型編號)");
 
             } else {
                 System.out.println("未取得自增主鍵值");
@@ -657,7 +657,7 @@ public class RtJDBCDAO implements RtDAO_interface {
 
             rs.close();
 
-            System.out.println("list.size()-A=" + list.size());
+//            System.out.println("list.size()-A=" + list.size());
 
 
             int nrcid = Integer.parseInt(nextRoomCategoryId);
@@ -692,7 +692,7 @@ public class RtJDBCDAO implements RtDAO_interface {
 
             con.setAutoCommit(true);
 
-            System.out.println("list.size()-B=" + list.size());
+//            System.out.println("list.size()-B=" + list.size());
             System.out.println("新增房型編號" + nextRoomCategoryId + "時,共有圖片" + list.size() + "張同時被新增");
 
 

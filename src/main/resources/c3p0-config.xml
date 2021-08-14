@@ -1,9 +1,24 @@
 <c3p0-config>
     <!-- 使用默認的配置讀取連線池對象 -->
+<!--    <default-config>-->
+<!--        &lt;!&ndash; 連線參數 &ndash;&gt;-->
+<!--        <property name="driverClass">com.mysql.cj.jdbc.Driver</property>-->
+<!--        <property name="jdbcUrl">jdbc:mysql://localhost:3306/CFA101G2?serverTimezone=Asia/Taipei</property>-->
+<!--        <property name="user">root</property>-->
+<!--        <property name="password">123456</property>-->
+
+<!--        &lt;!&ndash; 連線池參數 &ndash;&gt;-->
+<!--        <property name="initialPoolSize">5</property>-->
+<!--        <property name="maxPoolSize">10</property>-->
+<!--        <property name="checkoutTimeout">3000</property>-->
+<!--    </default-config>-->
+
+
+
     <default-config>
         <!-- 連線參數 -->
         <property name="driverClass">com.mysql.cj.jdbc.Driver</property>
-        <property name="jdbcUrl">jdbc:mysql://localhost:3306/CFA101G2?serverTimezone=Asia/Taipei</property>
+        <property name="jdbcUrl">jdbc:mysql://34.81.152.152:3307/CFA101G2?serverTimezone=Asia/Taipei</property>
         <property name="user">root</property>
         <property name="password">123456</property>
 

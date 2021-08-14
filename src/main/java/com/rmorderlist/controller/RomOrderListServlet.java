@@ -35,7 +35,7 @@ public class RomOrderListServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        System.out.println("接收到了");
+//        System.out.println("接收到了");
         ObjectMapper mapper = new ObjectMapper();
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json;charset=utf-8");
@@ -69,7 +69,7 @@ public class RomOrderListServlet extends HttpServlet {
         rmorder.put("all", all);
         rmorder.put("allroomtype", allroomtype);
 
-        System.out.println("開始轉交");
+//        System.out.println("開始轉交");
         mapper.writeValue(response.getOutputStream(), rmorder);
     }
 }

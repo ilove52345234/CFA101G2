@@ -103,17 +103,17 @@ body {
 						class="links_name">首頁</span>
 				</a> <span class="tooltip">回島旅囉</span></li>
 
-				<li><a href="#"> <i class='bx bxs-user'></i> <span
-						class="links_name">會員</span>
-				</a> <span class="tooltip">會員</span></li>
+<%--				<li><a href="#"> <i class='bx bxs-user'></i> <span--%>
+<%--						class="links_name">會員</span>--%>
+<%--				</a> <span class="tooltip">會員</span></li>--%>
 
-				<li><a href="#"> <i class='bx bx-chat'></i> <span
-						class="links_name">聊天室</span>
-				</a> <span class="tooltip">聊天室</span></li>
+<%--				<li><a href="#"> <i class='bx bx-chat'></i> <span--%>
+<%--						class="links_name">聊天室</span>--%>
+<%--				</a> <span class="tooltip">聊天室</span></li>--%>
 
-				<li><a href="#"> <i class='bx bxs-pie-chart-alt'></i> <span
-						class="links_name">限時優惠</span>
-				</a> <span class="tooltip">手刀購買</span></li>
+<%--				<li><a href="#"> <i class='bx bxs-pie-chart-alt'></i> <span--%>
+<%--						class="links_name">限時優惠</span>--%>
+<%--				</a> <span class="tooltip">手刀購買</span></li>--%>
 
 				<li><a href="<%=request.getContextPath()%>/front-end/shop/shopOrdered_page.jsp"> <i class='bx bxs-folder-open'></i> <span
 						class="links_name">訂單查詢</span>
@@ -124,13 +124,13 @@ body {
 						class="links_name">購物車</span>
 				</a> <span class="tooltip">購物車</span></li>
 
-				<li><a href="#"> <i class='bx bx-heart'></i> <span
-						class="links_name">追蹤清單</span>
-				</a> <span class="tooltip">追蹤清單</span></li>
+<%--				<li><a href="#"> <i class='bx bx-heart'></i> <span--%>
+<%--						class="links_name">追蹤清單</span>--%>
+<%--				</a> <span class="tooltip">追蹤清單</span></li>--%>
 
-				<li><a href="#"> <i class='bx bx-cog'></i> <span
-						class="links_name">設置</span>
-				</a> <span class="tooltip">設置</span></li>
+<%--				<li><a href="#"> <i class='bx bx-cog'></i> <span--%>
+<%--						class="links_name">設置</span>--%>
+<%--				</a> <span class="tooltip">設置</span></li>--%>
 			</ul>
 			<div class="profile_content">
 				<div class="profile">

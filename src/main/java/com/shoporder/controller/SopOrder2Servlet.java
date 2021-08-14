@@ -25,7 +25,7 @@ public class SopOrder2Servlet extends HttpServlet {
         String action = req.getParameter("action");
 
         // 取消訂單
-        System.out.println(action);
+//        System.out.println(action);
         if ("cancel_shoporder".equals(action)) {
             String requestURL = req.getParameter("requestURL");
             String whichPage = req.getParameter("whichPage");
@@ -61,9 +61,9 @@ public class SopOrder2Servlet extends HttpServlet {
 
             String requestURL = req.getParameter("requestURL");
             String whichPage = req.getParameter("whichPage");
-            System.out.println(requestURL + whichPage);
+//            System.out.println(requestURL + whichPage);
             Integer itemOrderId = new Integer(req.getParameter("itemOrderId"));
-            System.out.println(itemOrderId);
+//            System.out.println(itemOrderId);
 
             try {
                 ShopOrderService ordSvc = new ShopOrderService();

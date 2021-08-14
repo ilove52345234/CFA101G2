@@ -34,7 +34,7 @@ public class ShopOrderDetailService {
 			Integer itemPromotionId, Integer itemAmounts, Integer itemFinalAmount, ShopOrderVO shopOrderVO, ShopVO shopVO) {
 
 		ShopOrderDetailVO shopOrderDetailVO = new ShopOrderDetailVO();		
-		System.out.println("12  " + shopOrderDetailVO.toString());
+//		System.out.println("12  " + shopOrderDetailVO.toString());
 		
 		shopOrderDetailVO.setItemOrderId(itemOrderId);
 		shopOrderDetailVO.setItemId(itemId);

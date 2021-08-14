@@ -27,7 +27,7 @@ public class ShopOrderLoginFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
         //0.強制轉型,因為方法在http裡面
-        System.out.println("ShopOrderLoginFilter被執行了");
+//        System.out.println("ShopOrderLoginFilter被執行了");
         HttpServletRequest req = (HttpServletRequest) request;
         boolean flag = false;
         //1.獲取資源請求路徑
@@ -47,11 +47,11 @@ public class ShopOrderLoginFilter implements Filter {
             //如果包含這些,代表用戶想登入,
             // 必須放行,否則會陷入我要登入就必須先登入的情況
 
-            System.out.println(requestURI+"包含,放行");
+//            System.out.println(requestURI+"包含,放行");
 
             chain.doFilter(request, response);
         } else {
-            System.out.println("不包含,開始驗證");
+//            System.out.println("不包含,開始驗證");
 //            request.setCharacterEncoding("UTF-8");
 //            response.setContentType("text/html;charset=UTF-8");
             //不包含,就判斷是否登入過
@@ -70,10 +70,10 @@ public class ShopOrderLoginFilter implements Filter {
 
             if (flag) {
                 //代表登入過了,放行
-                System.out.println("權限足夠,放行");
+//                System.out.println("權限足夠,放行");
                 chain.doFilter(request, response);
             } else {
-                System.out.println("權限不足");
+//                System.out.println("權限不足");
                 //空的,沒登入過,叫他去登入
                 req.getRequestDispatcher("/back-end/AuthorityError.html").forward(request, response);
             }

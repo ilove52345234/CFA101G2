@@ -74,7 +74,7 @@ public class jdbcUtil_CompositeQuery_ActType {
 					whereCondition.append(" and " + aCondition);
 					
 				//確認 查詢條件append進去的總共幾筆（排除了action)
-				System.out.println("有送出查詢資料的欄位數count = " + count);
+//				System.out.println("有送出查詢資料的欄位數count = " + count);
 			}
 		}// end or for-each
 		

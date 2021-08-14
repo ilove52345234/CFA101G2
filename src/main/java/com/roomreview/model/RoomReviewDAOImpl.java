@@ -43,7 +43,7 @@ public class RoomReviewDAOImpl implements RoomReviewDAO {
 
             int i = pstmt.executeUpdate();
 
-            System.out.println("新增" + i + "筆完成");
+//            System.out.println("新增" + i + "筆完成");
 
 
         } catch (SQLException se) {
@@ -75,7 +75,7 @@ public class RoomReviewDAOImpl implements RoomReviewDAO {
             pstmt.setInt(6, roomReviewVO.getRoomReviewId());
             int i = pstmt.executeUpdate();
 
-            System.out.println("修改" + i + "筆完成");
+//            System.out.println("修改" + i + "筆完成");
 
 
         } catch (SQLException se) {
@@ -101,7 +101,7 @@ public class RoomReviewDAOImpl implements RoomReviewDAO {
 
             int i = pstmt.executeUpdate();
 
-            System.out.println("刪除" + i + "筆完成");
+//            System.out.println("刪除" + i + "筆完成");
 
 
         } catch (SQLException se) {

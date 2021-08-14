@@ -23,7 +23,7 @@ public class ShopOrderDetailJDBCDAO implements ShopOrderDetailDAO_interface {
 	private static final String GET_ONE_STMT = "SELECT * FROM SHOP_ORDER_DETAIL WHERE ITEM_ORDER_ID = ?";
 	private static final String DELETE = "DElETE FROM SHOP_ORDER_DETAIL WHERE ITEM_ORDER_ID = ?";
 	private static final String UPDATE = "UPDATE SHOP_ORDER_DETAIL SET ITEM_ID = ? ,ORDER_QUANTITY = ? ,ITEM_PROMOTION_ID = ? ,ITEM_AMOUNTS = ? ,ITEM_FINAL_AMOUNT =? WHERE ITEM_ORDER_ID = ?";
-	private static final String SHOP_JOIN_DETAIL = "SELECT SHOP_ORDER_DETAIL.ITEM_ORDER_ID, SHOP_ORDER_DETAIL.ORDER_QUANTITY, SHOP_ORDER_DETAIL.ITEM_FINAL_AMOUNT, SHOP.ITEM_NAME, SHOP.ITEM_FEE FROM SHOP_ORDER_DETAIL INNER JOIN SHOP ON SHOP_ORDER_DETAIL.ITEM_ID = SHOP.ITEM_ID WHERE SHOP.ITEM_ID = ?";
+	private static final String SHOP_JOIN_DETAIL = "SELECT SHOP_ORDER_DETAIL.ITEM_ORDER_ID, SHOP_ORDER_DETAIL.ORDER_QUANTITY, SHOP_ORDER_DETAIL.ITEM_FINAL_AMOUNT, SHOP.ITEM_NAME, SHOP.ITEM_FEE FROM SHOP_ORDER_DETAIL INNER JOIN SHOP ON SHOP_ORDER_DETAIL.ITEM_ID = SHOP.ITEM_ID WHERE SHOP_ORDER_DETAIL.ITEM_ORDER_ID = ?";
 
 	@Override
 	public void insert(ShopOrderDetailVO shopOrderDetailVO) {
@@ -42,7 +42,7 @@ public class ShopOrderDetailJDBCDAO implements ShopOrderDetailDAO_interface {
 			pstmt.setInt(5, shopOrderDetailVO.getItemAmounts());
 			pstmt.setInt(6, shopOrderDetailVO.getItemFinalAmount());
 			int rowCount = pstmt.executeUpdate();
-			System.out.println("新增 " + rowCount + "筆資料");
+//			System.out.println("新增 " + rowCount + "筆資料");
 			//更新資料庫,傳回更新成功的筆數
 
 		} catch (SQLException se) {
@@ -333,7 +333,7 @@ public class ShopOrderDetailJDBCDAO implements ShopOrderDetailDAO_interface {
 
 
 			int rowCount = pstmt.executeUpdate();
-			System.out.println("新增 " + rowCount + "筆資料");
+//			System.out.println("新增 " + rowCount + "筆資料");
 			//更新資料庫,傳回更新成功的筆數
 
 		} catch (SQLException se) {

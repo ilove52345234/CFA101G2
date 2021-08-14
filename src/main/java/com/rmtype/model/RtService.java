@@ -28,7 +28,7 @@
 										 Integer loop,
 										 Integer amount, Connection con){
 			 	dao.updateCount(inint,date,rtpid,loop,amount,con);
-				 System.out.println("更新完成");
+//				 System.out.println("更新完成");
 
 			 }
 

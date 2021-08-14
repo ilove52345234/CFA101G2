@@ -22,7 +22,7 @@ public class ShopServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		System.out.println("ShopServlet");
+//		System.out.println("ShopServlet");
 		// 新增
 		if ("insert".equals(action)) { // 來自addShop.jsp的請求
 
@@ -119,7 +119,7 @@ public class ShopServlet extends HttpServlet {
 						shopPicVO);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				String url = "/back-end/shop/listAllShop.jsp";
+				String url = "/back-end/shop/searchCommodity.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllShop.jsp
 				successView.forward(req, res);
 
@@ -204,7 +204,7 @@ public class ShopServlet extends HttpServlet {
 
 				Byte itemStatus = null;
 				itemStatus = new Byte(req.getParameter("itemStatus"));
-				System.out.println("itemStatus: " + itemStatus);
+//				System.out.println("itemStatus: " + itemStatus);
 
 				Integer commentNumber = new Integer(req.getParameter("commentNumber"));
 
@@ -242,8 +242,8 @@ public class ShopServlet extends HttpServlet {
 				
 				ShopPicVO shopPicVO = new ShopPicVO();
 				if (shopPic == null || shopPic.trim().length() == 0) {
-					System.out.println("沒有選擇要修改的圖片!");
-					System.out.println("shopPic: "+shopPic.toString());
+//					System.out.println("沒有選擇要修改的圖片!");
+//					System.out.println("shopPic: "+shopPic.toString());
 				}else {
 					String[] picArr = shopPic.split(",");
 					String imageString = picArr[1];
@@ -270,7 +270,7 @@ public class ShopServlet extends HttpServlet {
 				
 				/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 				req.setAttribute("shopVO", shopVO); // 資料庫update成功後,正確的的ShopVO物件,存入req
-				String url = "/back-end/shop/listOneShop.jsp";
+				String url = "/back-end/shop/searchCommodity.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneShop.jsp
 				successView.forward(req, res);
 
@@ -285,7 +285,7 @@ public class ShopServlet extends HttpServlet {
 
 		// 拿取一個來 修改 or 刪除
 		if ("getOne_For_Update".equals(action)) { // 來自listAllShop.jsp的請求
-			System.out.println("ShopServlet-getOne_For_Update");
+//			System.out.println("ShopServlet-getOne_For_Update");
 			List<String> errorMsgs = new LinkedList<String>();
 			// 將此集合存儲在請求範圍中，以防我們需要
 			// 發送錯誤頁面視圖
@@ -298,10 +298,10 @@ public class ShopServlet extends HttpServlet {
 				/*************************** 2.開始查詢資料 ****************************************/
 				ShopService shopSvc = new ShopService();
 				ShopVO shopVO = shopSvc.getOneShop(itemId);
-				System.out.println("getOne_For_Update__status: " + shopVO.getItemStatus());
+//				System.out.println("getOne_For_Update__status: " + shopVO.getItemStatus());
 
 				shopVO.setShopPicSrc("images?queryImg=ITEM_PHOTO&tableName=SHOP_PIC&colName=ITEM_ID&queryId=" + itemId);
-				System.out.println("ShopPicSrc: " + shopVO.getShopPicSrc());
+//				System.out.println("ShopPicSrc: " + shopVO.getShopPicSrc());
 
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("shopVO", shopVO); // 資料庫取出的shopVO物件,存入req
@@ -387,7 +387,7 @@ public class ShopServlet extends HttpServlet {
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-			System.out.println("ShopServlet-getSearch");
+//			System.out.println("ShopServlet-getSearch");
 			try {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 				Integer pageNumber = Integer.valueOf(req.getParameter("pageNumber"));
@@ -399,7 +399,7 @@ public class ShopServlet extends HttpServlet {
 
 				// 如果有錯誤，請將使用發送回表單
 				if (!errorMsgs.isEmpty()) {
-					System.out.println("errorMsgs.isEmpty() " + errorMsgs);
+//					System.out.println("errorMsgs.isEmpty() " + errorMsgs);
 					RequestDispatcher failureView = req.getRequestDispatcher("/back-end/shop/searchCommodity.jsp");
 					failureView.forward(req, res);
 					return; // 程式中斷
@@ -410,7 +410,7 @@ public class ShopServlet extends HttpServlet {
 				List<ShopVO> shopVO = shopSvc.getSearch(str);
 				// [1,2,3,4,5] [6,7]
 				int shopListCount = shopVO.size();
-				System.out.println("ShopServlet-getSearch-shopListCount: " + shopListCount);
+//				System.out.println("ShopServlet-getSearch-shopListCount: " + shopListCount);
 				shopVO = shopVO.subList((pageNumber - 1) * pageSize,
 						pageNumber * pageSize > shopListCount ? shopListCount : pageNumber * pageSize);
 				if (shopVO.isEmpty()) {
@@ -427,7 +427,7 @@ public class ShopServlet extends HttpServlet {
 				String url = "/back-end/shop/searchCommodity.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 displayResult.jsp
 				successView.forward(req, res);
-				System.out.println("ShopServlet-getSearch-成功轉交 ");
+//				System.out.println("ShopServlet-getSearch-成功轉交 ");
 				
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {

@@ -2,9 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.shoporderdetail.model.*"%>
-<%-- <%@ page import="com.shop.model.*"%> --%>
 <%
-	List<ShopOrderDetailVO> shopOrderDetailVO = (List<ShopOrderDetailVO>)request.getAttribute("shopOrderDetailVO");
+	List<ShopOrderDetailVO> shopOrderDetailVO = (List<ShopOrderDetailVO>) request.getAttribute("shopOrderDetailVO");
 	System.out.println(shopOrderDetailVO);
 	pageContext.setAttribute("shopOrderDetailVO", shopOrderDetailVO);
 %>
@@ -19,49 +18,49 @@
 	<jsp:include page="../header.jsp" flush="true" />
 
 	<style>
-		table {
-			width: 1250px;
-			background-color: white;
-			margin-top: 5px;
-			margin-bottom: 5px;
-		}
-		table, th, td {
-			border: 1px solid #CCCCFF;
-		}
-		th, td {
-			padding: 5px;
+		.from-group {
 			text-align: center;
+			font-size: 20;
 		}
 	</style>
 </head>
 
 <body>
+<div style="text-align: center;">
+	<h3><strong>訂單明細查看</strong></h3>
+</div>
+<br>
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
-	<font style="color:red">請修正以下錯誤:</font>
+	<font style="color: red">請修正以下錯誤:</font>
 	<ul>
 		<c:forEach var="message" items="${errorMsgs}">
-			<li style="color:red">${message}</li>
+			<li style="color: red">${message}</li>
 		</c:forEach>
 	</ul>
 </c:if>
-<table>
-	<tr>
-		<th>訂單編號</th>
-		<th>商品名稱</th>
-		<th>商品單價</th>
-		<th>購買數量</th>
-		<th>商品總額</th>
-	</tr>
-	<% for(int i = 0; i < shopOrderDetailVO.size(); i++) { %>
-	<tr>
-		<td><%=shopOrderDetailVO.get(i).getItemOrderId()%></td>
-		<td><%=shopOrderDetailVO.get(i).getShopVO().getItemName()%></td>
-		<td><%=shopOrderDetailVO.get(i).getShopVO().getItemFee()%></td>
-		<td><%=shopOrderDetailVO.get(i).getOrderQuantity()%></td>
-		<td><%=shopOrderDetailVO.get(i).getItemFinalAmount()%></td>
-	</tr>
-	<% } %>
-</table>
+
+<% for (int i = 0; i < shopOrderDetailVO.size(); i++) { %>
+<div class="from-group">
+	<label class="control-label">訂單編號：</label>
+	<%=shopOrderDetailVO.get(i).getItemOrderId()%>
+</div>
+<div class="from-group">
+	<label class="control-label">商品名稱：</label>
+	<%=shopOrderDetailVO.get(i).getShopVO().getItemName()%>
+</div>
+<div class="from-group">
+	<label class="control-label">商品單價：</label>
+	<%=shopOrderDetailVO.get(i).getShopVO().getItemFee()%>
+</div>
+<div class="from-group">
+	<label class="control-label">購買數量：</label>
+	<%=shopOrderDetailVO.get(i).getOrderQuantity()%>
+</div>
+<div class="from-group">
+	<label class="control-label">商品總額：</label>
+	<%=shopOrderDetailVO.get(i).getItemFinalAmount()%>
+</div>
+<% } %>
 </body>
 </html>

@@ -381,7 +381,7 @@ public class RmoJDBCDAO implements RmoDAO_interface{
 
 		String sql = sb.toString();
 
-		System.out.println(sql);
+//		System.out.println(sql);
 		return Template.query(sql,new BeanPropertyRowMapper<RmoVO>(RmoVO.class),params.toArray());
 
 
@@ -426,7 +426,7 @@ public class RmoJDBCDAO implements RmoDAO_interface{
 			pstmt.setInt(4, rmoVO.getTotalPrice());
 
 			pstmt.executeUpdate();
-			System.out.println("room order insert , rmoVO:" + rmoVO);
+//			System.out.println("room order insert , rmoVO:" + rmoVO);
 
 			rs = pstmt.getGeneratedKeys();       // 以此方式可以取得資料庫自增主鍵的物件
 			Integer newOrderId = null;
@@ -436,7 +436,7 @@ public class RmoJDBCDAO implements RmoDAO_interface{
 			} else {  //沒取得主鍵則報失敗訊息
 				throw new RuntimeException("A database getGeneratedKeys error occured. ");
 			}
-			System.out.println("住房訂單 newOrderId :" + newOrderId);
+//			System.out.println("住房訂單 newOrderId :" + newOrderId);
 
 			//2.新增 住房訂單明細
 			for (RmolVO rmolVO : rmolVOs) {
@@ -452,7 +452,7 @@ public class RmoJDBCDAO implements RmoDAO_interface{
 				pstmt.setTimestamp(8, rmolVO.getCheckOutDate());
 				pstmt.setInt(9, rmolVO.getRoomTotalPrice());
 				pstmt.executeUpdate();
-				System.out.println("room order list insert , rmolVO:" + rmolVO);
+//				System.out.println("room order list insert , rmolVO:" + rmolVO);
 			}
 
 			con.commit();
@@ -500,7 +500,7 @@ public class RmoJDBCDAO implements RmoDAO_interface{
 		try {
 			con = jdbcUtils.getConnection();
 			pstmt = con.prepareStatement(GET_PRE_ROOM_ORDER);
-			System.out.println("GET_PRE_ROOM_ORDER= "+GET_PRE_ROOM_ORDER);
+//			System.out.println("GET_PRE_ROOM_ORDER= "+GET_PRE_ROOM_ORDER);
 			pstmt.setInt(1, memberId);
 			pstmt.setInt(2, orderId);
 
@@ -560,7 +560,7 @@ public class RmoJDBCDAO implements RmoDAO_interface{
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
-			System.out.println("GET_MEM_ROOM_ORDER= "+GET_MEM_ROOM_ORDER);
+//			System.out.println("GET_MEM_ROOM_ORDER= "+GET_MEM_ROOM_ORDER);
 			con = jdbcUtils.getConnection();
 			pstmt = con.prepareStatement(GET_MEM_ROOM_ORDER);
 

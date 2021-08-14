@@ -132,12 +132,12 @@
 			<td><fmt:formatDate pattern = "yyyy-MM-dd HH:mm:ss" value ="${actVO.partEnd}"/></td> 		
 			<td>${actVO.actMaxPart}</td>
 			<td>${actVO.actMinPart}</td>	 
-			<td>
+<%--			<td>--%>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/act/ActServlet" style="margin-bottom: 0px;">
-			     <input type="submit" value="修改">
+<%--			     <input type="submit" value="修改">--%>
 			     <input type="hidden" name="actId"  value="${actVO.actId}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
-			</td>
+<%--			</td>--%>
 		</tr>
 	</c:forEach>
 </table>

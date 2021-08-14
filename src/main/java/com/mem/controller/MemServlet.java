@@ -634,7 +634,7 @@ public class MemServlet extends HttpServlet {
 			HttpSession session = req.getSession(); //取得session物件
 			session.invalidate(); //讓此次session失效
 		    String url = "/front-end/frontEndPage.jsp";
-		    System.out.println("登出成功"); //測試登出
+//		    System.out.println("登出成功"); //測試登出
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
@@ -670,7 +670,7 @@ public class MemServlet extends HttpServlet {
 				/*************************** 3.處理e-mail ****************************************/
 			    String to = "whatever016015@gmail.com"; // memVO.getMemEmail();
 //			    String to = memVO.getMemEmail(); // memVO.getMemEmail();
-				System.out.println(memVO.getMemEmail());
+//				System.out.println(memVO.getMemEmail());
 			    String subject = "密碼通知";
 			      
 			    String memname = memVO.getMemName(); // memVO.getMemName();

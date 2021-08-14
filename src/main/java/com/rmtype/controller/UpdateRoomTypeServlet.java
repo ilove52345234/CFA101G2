@@ -28,7 +28,7 @@
     
     
        protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        /* 31 */     System.out.println("接收請求");
+//            System.out.println("接收請求");
         
         /* 33 */     RtpService rtpService = new RtpService();
         /* 34 */     RtService rtService = new RtService();
@@ -42,7 +42,7 @@
         
         
         /* 44 */     RtVO oneRt = rtService.getOneRt(Integer.valueOf(roomId));
-        /* 45 */     System.out.println(oneRt);
+//          System.out.println(oneRt);
         /* 46 */     List<RtpVO> allByCategoryId = rtpService.getAllByCategoryId(Integer.valueOf(roomId));
         
         /* 48 */     List<Base64VO> base64VOS = new ArrayList<Base64VO>();

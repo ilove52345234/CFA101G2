@@ -50,31 +50,32 @@
 </head>
 
 <body>
-<div class="container" style="margin-top: 20px;">
-	<FORM METHOD="post"
-		  ACTION="<%=request.getContextPath()%>/back-end/shoporder/shoporder.do"
-		  style="margin-bottom: 0px;">
+<div class="container">
+	<div style="text-align: center;">
+		<h3><strong>日期搜尋訂單</strong></h3>
+	</div>
+	<br>
+	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back-end/shoporder/shoporder.do" style="margin-bottom: 0px;">
 		<div class="row">
 			<div class='col-sm-3'>
 				<div class='input-group date' id='datetimepicker1'>
-					<input type='text' name="startDate"
-						   value="${shopOrderVO.startDate}" class="form-control" /> <span
-						class="input-group-addon"> <span
-						class="glyphicon glyphicon-calendar"></span>
+					<input type='text' name="startDate" value="${shopOrderVO.startDate}" class="form-control" />
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-calendar"></span>
 						</span>
 				</div>
 			</div>
 			<div class='col-sm-3'>
 				<div class='input-group date' id='datetimepicker2'>
-					<input type='text' name="endDate" value="${shopOrderVO.endDate}"
-						   class="form-control" /> <span class="input-group-addon">
+					<input type='text' name="endDate" value="${shopOrderVO.endDate}" class="form-control" />
+					<span class="input-group-addon">
 							<span class="glyphicon glyphicon-calendar"></span>
 						</span>
 				</div>
 			</div>
 			<div class='col-sm-3'>
-				<input type="submit" value="查詢"> <input type="hidden"
-														name="action" value="searchOrder">
+				<input type="submit" class="btn btn-default" value="查詢">
+				<input type="hidden" name="action" value="searchOrder">
 			</div>
 		</div>
 	</FORM>
@@ -110,24 +111,20 @@
 				<td>${shopOrderVO.itemAmounts}</td>
 				<td>${shopOrderVO.paymentMethod==0?"信用卡":shopOrderVO.paymentMethod==1?"現金":"匯款"}</td>
 				<td>${shopOrderVO.shippingMethod==0?"宅配":shopOrderVO.shippingMethod==1?"超商":"郵寄"}</td>
-				<td>${shopOrderVO.shippingStatus==0?"訂單成立":shopOrderVO.shippingStatus==1?"訂單已出貨":"訂單已取消"}</td>
+				<td>${shopOrderVO.shippingStatus==0?"訂單成立":shopOrderVO.shippingStatus==1?"訂單出貨":"訂單取消"}</td>
 				<td>
-					<FORM METHOD="post"
-						  ACTION="<%=request.getContextPath()%>/back-end/shoporderdetail/shoporderdetail.do"
-						  style="margin-bottom: 0px;">
-						<input type="hidden" name="itemOrderId"
-							   value="${shopOrderVO.itemOrderId}"> <input
-							type="hidden" name="action" value="getShop_Join_Detail">
+					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back-end/shoporderdetail/shoporderdetail.do" style="margin-bottom: 0px;">
+						<input type="hidden" name="itemOrderId" value="${shopOrderVO.itemOrderId}">
+						<input type="hidden" name="action" value="getShop_Join_Detail">
 						<input type="submit" class="btn btn-default" value="查看明細">
-					</FORM> <!-- 						<form> --> <!-- 						   <div class="btn-group"> -->
+					</FORM>
+					<!-- 						<form> --> <!-- 						   <div class="btn-group"> -->
 						<%-- 						    <a href="<%=request.getContextPath()%>/back-end/shoporderdetail/listAllShopOrderDetail.jsp?itemOrderId=${shopOrderVO.itemOrderId}" class="btn btn-secondary">查看明細</a> --%>
 					<!-- 						   </div> --> <!-- 						  </form> -->
 				</td>
 				<td>
-					<FORM METHOD="post"
-						  ACTION="<%=request.getContextPath()%>/back-end/shoporder/shoporder.do"
-						  style="margin-bottom: 0px;">
-						<input type="submit" class="btn btn-default" value="修改">
+					<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back-end/shoporder/shoporder.do" style="margin-bottom: 0px;">
+						<input type="${shopOrderVO.shippingStatus==3?'hidden':'submit'}" class="btn btn-default" value="修改">
 						<input type="hidden" name="itemOrderId" value="${shopOrderVO.itemOrderId}">
 						<input type="hidden" name="action" value="getOne_For_Update">
 					</FORM>
@@ -137,6 +134,5 @@
 		</c:forEach>
 	</table>
 </div>
-<%-- <%@include file="/back-end/shop/backEndPage.jsp"%> --%>
 </body>
 </html>

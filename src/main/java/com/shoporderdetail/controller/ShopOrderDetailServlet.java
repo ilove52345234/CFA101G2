@@ -21,11 +21,11 @@ public class ShopOrderDetailServlet extends HttpServlet{
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		System.out.println("ShopServlet");
+//		System.out.println("ShopServlet");
 
 		//
 		if ("getShop_Join_Detail".equals(action)) { // 來自listAllShopOrderDetail.jsp的請求
-			System.out.println("ShopOrderDetailServlet-getShop_Join_Detail");
+//			System.out.println("ShopOrderDetailServlet-getShop_Join_Detail");
 			List<String> errorMsgs = new LinkedList<String>();
 			// 將此集合存儲在請求範圍中，以防我們需要
 			// 發送錯誤頁面視圖
@@ -34,7 +34,7 @@ public class ShopOrderDetailServlet extends HttpServlet{
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
 				Integer itemOrderId = new Integer(req.getParameter("itemOrderId"));
-				System.out.println("itemOrderId: "+itemOrderId);
+//				System.out.println("itemOrderId: "+itemOrderId);
 
 				/*************************** 2.開始查詢資料 ****************************************/
 				ShopOrderDetailService shopOrderDetailSvc = new ShopOrderDetailService();

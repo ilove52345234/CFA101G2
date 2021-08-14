@@ -43,7 +43,7 @@ public class ShopPicJDBCDAO implements ShopPicDAO_interface {
 			pstmt.setBytes(2, shopPicVO.getItemPhoto());
 
 			int rowCount = pstmt.executeUpdate();
-			System.out.println("新增 " + rowCount + "筆圖片");
+//			System.out.println("新增 " + rowCount + "筆圖片");
 			//更新資料庫,傳回更新成功的筆數
 
 			// 處理任何SQL的錯誤
@@ -78,7 +78,7 @@ public class ShopPicJDBCDAO implements ShopPicDAO_interface {
 			pstmt.setBytes(1, shopPicVO.getItemPhoto());
 			pstmt.setInt(2, shopPicVO.getItemId());
 			pstmt.executeUpdate();
-			System.out.println("修改商品圖片成功!!");
+//			System.out.println("修改商品圖片成功!!");
 
 
 			// 處理任何SQL的錯誤
@@ -233,7 +233,7 @@ public class ShopPicJDBCDAO implements ShopPicDAO_interface {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		byte[] img = null;
-		System.out.println(pdid);
+//		System.out.println(pdid);
 		try {
 			con = jdbcUtils.getConnection();
 			pstmt = con.prepareStatement(getOneForPDid);

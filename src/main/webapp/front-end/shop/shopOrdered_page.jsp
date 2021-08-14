@@ -57,46 +57,7 @@
 </head>
 <body>
 <!-- 首頁開頭 -->
-<nav class="nav navbar-default navbar-fixed-top">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <!-- class="navbar-toggle" 這是關鍵字 有它才能讓我們順利的看到「三」 而且出現在視窗的右方 -->
-      <!-- data-toggle="collapse" 這是用來製作動畫效果的 沒有的話 我們點「三」的時候不會有任何反應-->
-      <!-- data-target="#myNavbar" 這裡面的myNavbar是一個CSS的id 我們可以取任意的名字 只是一定要跟下面縮放的id對應到 -->
-      <button type="button" class="navbar-toggle" data-toggle="collapse"
-              data-target="#myNavbar">
-        <!-- <span class="icon-bar"></span>這段這是用來產生「一」 當有三個「一」時 合在一起就會變「三」的按鍵了 -->
-        <span class="icon-bar"></span> <span class="icon-bar"></span> <span
-              class="icon-bar"></span>
-      </button>
-      <!-- 點擊商標跳轉至首頁 #要放首頁網址 -->
-      <a class="navbar-header" href="#"> <img
-              src="https://i.imgur.com/2j6Zzxv.png" height="40"
-              title="島旅 Island Brigade" alt="島旅 Island Brigade"></a>
-    </div>
-    <!-- class="collapse navbar-collapse" 這兩個是關鍵字 幫助我們在正常視窗的情況下 可以看到原本的導覽列 -->
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <!-- 底下放要縮放的內容 -->
-      <ul class="nav navbar-nav navbar-left">
-        <!-- a href="#" 將要導入的網址放在" "裡面 記得把#拿掉 -->
-        <li><a href="#">線上訂房</a></li>
-        <li><a href="#">預定活動</a></li>
-        <li><a
-                href="<%=request.getContextPath()%>/front-end/shop/shopHomePage.jsp">商城</a></li>
-        <li><a href="#">社群</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <!-- a href="#" 將要導入的網址放在" "裡面 記得把#拿掉 -->
-        <!-- class="glyphicon glyphicon-log-in" 這裡是使用bootstrap所提供的icon 直接用class就可以插入這些icon -->
-        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span>
-          登入</a></li>
-        <!-- <li><a href="#">登出</a></li> -->
-        <li><a href="#"><span class="glyphicon glyphicon-user"></span>
-          會員中心</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
+<jsp:include page="/front-end/header.jsp"></jsp:include>
 <!-- 匯入bootstrap javascript -->
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 

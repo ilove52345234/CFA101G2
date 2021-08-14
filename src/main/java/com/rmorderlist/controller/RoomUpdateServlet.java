@@ -27,7 +27,7 @@ public class RoomUpdateServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        System.out.println("roomUpdate接收到了");
+//        System.out.println("roomUpdate接收到了");
         request.setCharacterEncoding("UTF-8");
         ObjectMapper mapper = new ObjectMapper();
         RmService rmService = new RmService();
@@ -66,7 +66,7 @@ public class RoomUpdateServlet extends HttpServlet {
             info.setFlag(false);
         }
 
-        System.out.println("轉交");
+//        System.out.println("轉交");
         response.setContentType("application/json;charset=utf-8");
         mapper.writeValue(response.getOutputStream(), info);
     }
